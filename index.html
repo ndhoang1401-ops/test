@@ -2,7 +2,10 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#FBF8F2">
 <title>Chuyên Hóa — Nguyễn Doãn Hoàng</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -31,15 +34,33 @@
 
   --strip: linear-gradient(90deg,#D9533C,#E8B23D,#178C6B,#2E50D6,#6F4E92);
   --radius:14px;
+  --radius-sm:10px;
   --shadow: 0 1px 2px rgba(30,38,34,.04), 0 6px 20px -8px rgba(30,38,34,.10);
+  
+  /* iPhone 14 Pro Max specific */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --dynamic-island-height: 59px;
 }
-*{box-sizing:border-box;}
-body{margin:0;}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body{
+  margin:0;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
 .app{
   font-family:'Plus Jakarta Sans',sans-serif;
   background:var(--paper);
   color:var(--ink);
   min-height:100vh;
+  min-height: -webkit-fill-available;
   display:flex;
   line-height:1.5;
 }
@@ -49,7 +70,7 @@ body{margin:0;}
 /* ===== top signature strip ===== */
 .signature-strip{
   position:fixed; top:0; left:0; right:0; height:4px;
-  background:var(--strip); z-index:50;
+  background:var(--strip); z-index:100;
 }
 
 /* ===== sidebar ===== */
@@ -79,9 +100,12 @@ body{margin:0;}
   font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600;
   color:var(--ink-soft); cursor:pointer; transition:.15s ease;
   position:relative;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .navbtn .ic{font-size:16px;}
 .navbtn:hover{background:var(--line-soft); color:var(--ink);}
+.navbtn:active{transform: scale(0.97);}
 .navbtn.active{background:var(--card); color:var(--ink); box-shadow:var(--shadow);}
 .navbtn.active::before{
   content:""; position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:3px;
@@ -96,10 +120,12 @@ body{margin:0;}
 /* ===== mobile tabs ===== */
 .mobiletabs{
   display:flex;
-  gap:8px;
+  gap:6px;
   overflow-x:auto;
-  padding-bottom:8px;
   scrollbar-width:none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobiletabs::-webkit-scrollbar{
@@ -110,10 +136,18 @@ body{margin:0;}
   min-width:max-content;
   font-size:13px;
   padding:10px 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ===== main ===== */
-.main{flex:1; min-width:0; padding:32px 40px 80px; max-width:980px;}
+.main{
+  flex:1; 
+  min-width:0; 
+  padding:32px 40px 80px; 
+  max-width:980px;
+  -webkit-overflow-scrolling: touch;
+}
 .panel{display:none;}
 .panel.active{display:block; animation:fade .35s ease;}
 @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
@@ -146,12 +180,15 @@ p.lead{color:var(--ink-soft); font-size:14.5px; max-width:680px;}
 .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px; margin-bottom:16px;}
 
 /* pill subnav */
-.pillrow{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px;}
+.pillrow{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;}
+.pillrow::-webkit-scrollbar{display: none;}
 .pill{
   font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; padding:8px 14px;
   border-radius:999px; border:1px solid var(--line); background:var(--paper-soft); color:var(--ink-soft);
-  cursor:pointer; transition:.15s;
+  cursor:pointer; transition:.15s; white-space: nowrap; flex-shrink: 0;
+  -webkit-user-select: none; user-select: none;
 }
+.pill:active{transform: scale(0.96);}
 .pill:hover{border-color:var(--ink-faint);}
 .pill.active{background:var(--ink); color:#fff; border-color:var(--ink);}
 
@@ -181,7 +218,6 @@ table.sched td.note{color:var(--ink);}
 
 /* analysis */
 .analysis-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-@media (max-width:760px){.analysis-grid{grid-template-columns:1fr;}}
 .analysis-grid .card h4{margin:0 0 8px; font-family:'Fraunces',serif; font-size:16px; display:flex; gap:8px; align-items:center;}
 .analysis-grid .card p, .analysis-grid .card li{font-size:13.5px; color:var(--ink-soft); line-height:1.65;}
 .analysis-grid .card ul{margin:0; padding-left:18px;}
@@ -256,62 +292,330 @@ table.sched td.note{color:var(--ink);}
 
 footer.note{margin-top:50px; padding-top:18px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-faint); text-align:center;}
 
-@media (max-width:860px){
-  .sidebar{display:none;}
+/* ============================================
+   IPHONE 14 PRO MAX OPTIMIZATIONS
+   ============================================ */
+@media screen and (max-width: 430px) {
+  /* Safe area handling */
+  .signature-strip{
+    top: var(--safe-top);
+  }
+  
+  /* Hide desktop sidebar */
+  .sidebar{
+    display:none;
+  }
+  
+  /* Mobile tabs container */
   .mobiletabs{
-    display:flex; gap:6px; overflow-x:auto; position:sticky; top:4px; z-index:40; background:var(--paper);
-    padding:14px 14px 10px; border-bottom:1px solid var(--line);
+    display:flex; 
+    gap:6px; 
+    overflow-x:auto; 
+    position:sticky; 
+    top: calc(4px + var(--safe-top));
+    z-index:40; 
+    background:var(--paper);
+    padding: 14px 14px 10px;
+    padding-top: calc(14px + var(--safe-top));
+    border-bottom:1px solid var(--line);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background: rgba(251, 248, 242, 0.85);
+    scroll-snap-type: x mandatory;
   }
-  .mobiletabs .navbtn{white-space:nowrap; width:auto; flex:none;}
-  .main{padding:16px 16px 60px; max-width:100%;}
-  .hero{padding:22px 18px;}
-  .hero h2{font-size:23px;}
-  table.sched td.tag{width:118px;}
-}
-@media screen and (max-width:430px){
-
+  
+  .mobiletabs .navbtn{
+    scroll-snap-align: start;
+    font-size: 12px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    gap: 6px;
+  }
+  
+  .mobiletabs .navbtn .ic{
+    font-size: 14px;
+  }
+  
+  /* Main content area */
   .main{
-    padding:12px;
+    padding: 12px;
+    padding-bottom: calc(80px + var(--safe-bottom));
+    max-width: 100%;
   }
-
-  .card{
-    padding:14px;
-  }
-
+  
+  /* Hero section */
   .hero{
-    padding:18px 14px;
+    padding: 20px 16px;
+    border-radius: 16px;
+    margin-bottom: 20px;
   }
-
+  
+  .hero .eyebrow{
+    font-size: 10px;
+  }
+  
+  .hero h2{
+    font-size: 19px;
+    margin: 6px 0 8px;
+    line-height: 1.25;
+  }
+  
+  .hero p.lede{
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  
+  /* Stats grid */
   .statrow{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
-
+  
   .stat{
-    min-width:0;
-    padding:10px;
+    min-width: 0;
+    padding: 12px 14px;
+    border-radius: 12px;
   }
-
+  
   .stat .num{
-    font-size:20px;
+    font-size: 20px;
   }
-
+  
+  .stat .lab{
+    font-size: 10px;
+  }
+  
+  /* Section titles */
+  h3.sectiontitle{
+    font-size: 17px;
+    margin: 28px 0 10px;
+    gap: 8px;
+  }
+  
+  p.lead{
+    font-size: 13px;
+  }
+  
+  /* Cards */
+  .card{
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  
+  /* Schedule table optimizations */
+  table.sched{
+    font-size: 12px;
+  }
+  
   table.sched td{
-    padding:8px 4px;
+    padding: 8px 6px;
   }
-
+  
+  table.sched td.time{
+    font-size: 10px;
+    width: 68px;
+  }
+  
+  table.sched td.tag{
+    width: 100px;
+  }
+  
+  table.sched td.note{
+    font-size: 11px;
+  }
+  
+  .tagpill{
+    font-size: 10px;
+    padding: 3px 8px;
+    gap: 4px;
+  }
+  
+  /* Period headers */
   .period-head{
-    font-size:10px;
+    font-size: 10px;
+    margin: 18px 0 8px;
   }
-
-  .theme-frame{
-    padding:14px;
+  
+  /* Day note */
+  .daynote{
+    font-size: 11px;
+    padding: 8px 12px;
   }
-
+  
+  /* Legend */
+  .legend{
+    gap: 8px;
+    margin: 10px 0 4px;
+  }
+  
+  .legend .item{
+    font-size: 10px;
+    gap: 4px;
+  }
+  
+  .legend .sw{
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* Analysis grid */
   .analysis-grid{
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
+  
+  .analysis-grid .card h4{
+    font-size: 14px;
+  }
+  
+  .analysis-grid .card p, 
+  .analysis-grid .card li{
+    font-size: 12px;
+  }
+  
+  /* Timeline map */
+  .tm-row{
+    grid-template-columns: 70px 1fr;
+    gap: 10px;
+    padding: 8px 0;
+  }
+  
+  .tm-row .tlab{
+    font-size: 10px;
+  }
+  
+  .tm-row .tbody b{
+    font-size: 12px;
+  }
+  
+  .tm-row .tbody span{
+    font-size: 11px;
+  }
+  
+  /* Callout */
+  .callout{
+    padding: 10px 14px;
+    font-size: 12px;
+    margin: 12px 0;
+    border-left-width: 2px;
+  }
+  
+  /* Theme frame */
+  .theme-frame{
+    padding: 16px;
+  }
+  
+  .gallerywrap{
+    padding: 16px;
+    border-radius: 14px;
+  }
+  
+  .theme-pick{
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  
+  /* Footer */
+  footer.note{
+    margin-top: 40px;
+    padding-top: 14px;
+    font-size: 10px;
+  }
+  
+  /* Smooth scroll behavior */
+  .panel.active{
+    animation: fadeMobile .3s ease;
+  }
+  
+  @keyframes fadeMobile{
+    from{
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Active states for touch */
+  .navbtn:active,
+  .pill:active{
+    opacity: 0.8;
+  }
+  
+  /* Fix for iOS input zoom */
+  input, textarea, select, button{
+    font-size: 16px;
+  }
+}
+
+/* iPhone 14 Pro Max specific - 430x932 */
+@media screen and (width: 430px) and (height: 932px) {
+  .main{
+    padding-bottom: calc(100px + var(--safe-bottom));
+  }
+  
+  .hero h2{
+    font-size: 18px;
+  }
+  
+  table.sched td.time{
+    width: 72px;
+  }
+  
+  table.sched td.tag{
+    width: 105px;
+  }
+}
+
+/* Landscape mode for iPhone 14 Pro Max */
+@media screen and (max-width: 932px) and (orientation: landscape) {
+  .main{
+    padding: 16px;
+  }
+  
+  .hero{
+    padding: 24px 20px;
+  }
+  
+  .statrow{
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .analysis-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  table.sched td.tag{
+    width: 120px;
+  }
+}
+
+/* Dynamic Island safe area */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .signature-strip{
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .main{
+    padding-top: calc(12px + env(safe-area-inset-top));
+  }
+}
+
+/* Haptic feedback simulation */
+@media (hover: none) and (pointer: coarse) {
+  .navbtn:active,
+  .pill:active{
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Prevent pull-to-refresh */
+body{
+  overscroll-behavior-y: contain;
 }
 </style>
 </head>
@@ -596,11 +900,11 @@ function legendHTML(keys){
    PANEL DEFINITIONS
    ============================================================ */
 const NAV = [
-  {id:"overview", icon:"📊", label:"Tổng quan & Phân tích"},
-  {id:"summer",   icon:"☀️", label:"Lịch Hè (đến 4/9)"},
-  {id:"school",   icon:"🏫", label:"Lịch Năm Học (từ 5/9)"},
-  {id:"special",  icon:"🎯", label:"Tình Huống Đặc Biệt"},
-  {id:"gallery",  icon:"🎨", label:"Phong Cách Thiết Kế"},
+  {id:"overview", icon:"📊", label:"Tổng quan"},
+  {id:"summer",   icon:"☀️", label:"Lịch Hè"},
+  {id:"school",   icon:"🏫", label:"Lịch Năm Học"},
+  {id:"special",  icon:"🎯", label:"Đặc Biệt"},
+  {id:"gallery",  icon:"🎨", label:"Phong Cách"},
 ];
 
 function buildOverview(){
@@ -803,28 +1107,44 @@ function renderPanel(id){
   if(id==="school"){ p.innerHTML = buildSchool(); wireSchool(); }
   if(id==="special"){ p.innerHTML = buildSpecial(); wireSpecial(); }
   if(id==="gallery"){ p.innerHTML = buildGallery(); wireGallery(); }
+  
+  // Scroll to top on mobile after navigation
+  if (window.innerWidth <= 860) {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    // Also scroll the main container
+    main.scrollTop = 0;
+  }
 }
 
 function setActiveNav(id){
   document.querySelectorAll(".navbtn").forEach(b=>{
     b.classList.toggle("active", b.dataset.target===id);
   });
+  
+  // On mobile, scroll the active tab into view
+  if (window.innerWidth <= 860) {
+    const mobileActiveBtn = document.getElementById(`mnav-${id}`);
+    if (mobileActiveBtn) {
+      mobileActiveBtn.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
+    }
+  }
 }
+
 function goTo(id){
   setActiveNav(id);
   renderPanel(id);
-  window.scrollTo({top:0,behavior:"instant"});
 }
+
 document.querySelectorAll(".navbtn").forEach(b=>{
   b.addEventListener("click", ()=>goTo(b.dataset.target));
 });
 
 /* ---- Summer sub-tabs ---- */
 const SUMMER_DAYS = [
-  {id:"A", label:"T2 · T4 · T6 · T7", data:sumA, note:"Ngày tự học toàn phần — không có buổi học thêm. Đây là ngày có khối thời gian dài nhất để học sâu Hóa & Toán."},
+  {id:"A", label:"T2·4·6·7", data:sumA, note:"Ngày tự học toàn phần — không có buổi học thêm. Đây là ngày có khối thời gian dài nhất để học sâu Hóa & Toán."},
   {id:"B", label:"Thứ 3", data:sumB, note:"Học thêm TOÁN buổi tối (19h30–21h00). Ban ngày tập trung Hóa + làm đề + Tiếng Anh, để buổi tối chỉ cần đi học mà không phải nhồi thêm gì."},
   {id:"C", label:"Thứ 5", data:sumC, note:"Học thêm HÓA + TOÁN buổi tối (17h00–21h00) — buổi dài nhất trong tuần. Ban ngày nhẹ hơn, chỉ ôn & xem trước, để dồn năng lượng cho 4 giờ học liên tục."},
-  {id:"D", label:"Chủ nhật", data:sumD, note:"Học thêm HÓA buổi chiều (17h00–19h00, ngắn nhất). Đây là ngày phục hồi + tổng ôn cả tuần, cường độ thấp hơn các ngày khác."},
+  {id:"D", label:"CN", data:sumD, note:"Học thêm HÓA buổi chiều (17h00–19h00, ngắn nhất). Đây là ngày phục hồi + tổng ôn cả tuần, cường độ thấp hơn các ngày khác."},
 ];
 let summerActive = "A";
 function wireSummer(){
@@ -846,9 +1166,9 @@ function renderSummerTable(){
 
 /* ---- School sub-tabs ---- */
 const SCHOOL_DAYS = [
-  {id:"N", label:"Ngày thường (T2·T4·T6·T7)", data:syNormal, note:"Học chính khóa 7h00–11h30, không có học thêm tối. Tự học dồn vào chiều/tối."},
-  {id:"T", label:"Ngày có học thêm (T3 & T5)", data:syTutor, note:"Học chính khóa sáng + học thêm tối. Thứ 5 buổi học thêm dài hơn (đến 21h00) — xem ghi chú trong từng dòng."},
-  {id:"S", label:"Chủ nhật", data:sySun, note:"KHÔNG có học chính khóa — ngày tự học quan trọng nhất trong tuần năm học, có học thêm Hóa buổi chiều."},
+  {id:"N", label:"T2·4·6·7", data:syNormal, note:"Học chính khóa 7h00–11h30, không có học thêm tối. Tự học dồn vào chiều/tối."},
+  {id:"T", label:"T3 & T5", data:syTutor, note:"Học chính khóa sáng + học thêm tối. Thứ 5 buổi học thêm dài hơn (đến 21h00) — xem ghi chú trong từng dòng."},
+  {id:"S", label:"CN", data:sySun, note:"KHÔNG có học chính khóa — ngày tự học quan trọng nhất trong tuần năm học, có học thêm Hóa buổi chiều."},
 ];
 let schoolActive = "N";
 function wireSchool(){
@@ -870,9 +1190,9 @@ function renderSchoolTable(){
 
 /* ---- Special sub-tabs ---- */
 const SPECIAL_MODES = [
-  {id:"cram", label:"🚀 Nước rút trước thi", fn:specialCram},
-  {id:"low", label:"🔋 Khi mất động lực", fn:specialLow},
-  {id:"multi", label:"⚠️ Nhiều bài KT cùng lúc", fn:specialMulti},
+  {id:"cram", label:"🚀 Nước rút", fn:specialCram},
+  {id:"low", label:"🔋 Mất động lực", fn:specialLow},
+  {id:"multi", label:"⚠️ Nhiều bài KT", fn:specialMulti},
 ];
 let specialActive = "cram";
 function wireSpecial(){
@@ -907,8 +1227,38 @@ function wireGallery(){
   });
 }
 
+/* ---- Handle orientation changes on mobile ---- */
+function handleOrientationChange() {
+  if (window.innerWidth <= 860) {
+    // Re-scroll active tab into view
+    const activePanel = document.querySelector('.panel.active');
+    if (activePanel) {
+      const panelId = activePanel.id.replace('panel-', '');
+      const mobileActiveBtn = document.getElementById(`mnav-${panelId}`);
+      if (mobileActiveBtn) {
+        setTimeout(() => {
+          mobileActiveBtn.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'center'});
+        }, 100);
+      }
+    }
+  }
+}
+
+window.addEventListener('orientationchange', handleOrientationChange);
+window.addEventListener('resize', () => {
+  // Small delay to get correct dimensions after resize
+  setTimeout(handleOrientationChange, 200);
+});
+
 /* ---- init ---- */
 goTo("overview");
+
+// Prevent double-tap zoom on buttons
+document.addEventListener('dblclick', function(e) {
+  if (e.target.tagName === 'BUTTON') {
+    e.preventDefault();
+  }
+}, {passive: false});
 </script>
 </body>
 </html>
