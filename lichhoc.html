@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lộ trình chinh phục Chuyên Hóa — Nguyễn Doãn Hoàng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF8F2;
+  --paper-soft:#F2ECDE;
+  --card:#FFFFFF;
+  --ink:#1E2622;
+  --ink-soft:#5B665F;
+  --ink-faint:#8B948C;
+  --line:#E4DBC8;
+  --line-soft:#EEE7D8;
+
+  --hoa:#178C6B;       --hoa-soft:#DBEEE5;
+  --toan:#2E50D6;      --toan-soft:#DEE5FB;
+  --anh:#C98A1E;       --anh-soft:#F6E8C8;
+  --de:#6F4E92;        --de-soft:#E9E1F1;
+  --van:#A85D3F;       --van-soft:#EFE0D6;
+  --sport:#1E8C99;     --sport-soft:#DBEFF1;
+  --school:#7C6F5E;    --school-soft:#EAE4D8;
+  --rest:#5B6B82;      --rest-soft:#E2E7EE;
+  --sleep:#3A3F66;     --sleep-soft:#E4E3EF;
+  --meal:#B8862E;      --meal-soft:#F3E8CE;
+  --prep:#6B7560;      --prep-soft:#E5E8DD;
+
+  --strip: linear-gradient(90deg,#D9533C,#E8B23D,#178C6B,#2E50D6,#6F4E92);
+  --radius:14px;
+  --shadow: 0 1px 2px rgba(30,38,34,.04), 0 6px 20px -8px rgba(30,38,34,.10);
+}
+*{box-sizing:border-box;}
+body{margin:0;}
+.app{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  line-height:1.5;
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.display{font-family:'Fraunces',serif;}
+
+/* ===== top signature strip ===== */
+.signature-strip{
+  position:fixed; top:0; left:0; right:0; height:4px;
+  background:var(--strip); z-index:50;
+}
+
+/* ===== sidebar ===== */
+.sidebar{
+  width:240px; min-width:240px;
+  padding:28px 18px 18px;
+  border-right:1px solid var(--line);
+  background:var(--paper-soft);
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+}
+.brand{padding:0 6px 22px;}
+.brand .eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.12em;
+  color:var(--hoa); text-transform:uppercase; font-weight:600;
+}
+.brand h1{
+  font-family:'Fraunces',serif; font-size:22px; font-weight:600; margin:6px 0 4px;
+  line-height:1.15; color:var(--ink);
+}
+.brand p{margin:0; font-size:12.5px; color:var(--ink-soft);}
+
+.navgroup{margin-top:10px;}
+.navbtn{
+  display:flex; align-items:center; gap:10px;
+  width:100%; text-align:left; padding:11px 12px; margin-bottom:4px;
+  border:none; background:transparent; border-radius:10px;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:600;
+  color:var(--ink-soft); cursor:pointer; transition:.15s ease;
+  position:relative;
+}
+.navbtn .ic{font-size:16px;}
+.navbtn:hover{background:var(--line-soft); color:var(--ink);}
+.navbtn.active{background:var(--card); color:var(--ink); box-shadow:var(--shadow);}
+.navbtn.active::before{
+  content:""; position:absolute; left:0; top:8px; bottom:8px; width:3px; border-radius:3px;
+  background:var(--strip);
+}
+.sidebar-foot{
+  margin-top:22px; padding:14px; border-radius:12px; background:var(--card);
+  border:1px solid var(--line); font-size:12px; color:var(--ink-soft);
+}
+.sidebar-foot b{color:var(--ink);}
+
+/* ===== mobile tabs ===== */
+.mobiletabs{display:none;}
+
+/* ===== main ===== */
+.main{flex:1; min-width:0; padding:32px 40px 80px; max-width:980px;}
+.panel{display:none;}
+.panel.active{display:block; animation:fade .35s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+/* hero */
+.hero{
+  background:linear-gradient(135deg, var(--card), var(--paper-soft));
+  border:1px solid var(--line); border-radius:20px; padding:32px 34px; box-shadow:var(--shadow);
+  position:relative; overflow:hidden; margin-bottom:26px;
+}
+.hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:5px; background:var(--strip);
+}
+.hero .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.12em; color:var(--hoa); font-weight:600; text-transform:uppercase;}
+.hero h2{font-family:'Fraunces',serif; font-size:30px; font-weight:600; margin:8px 0 10px; max-width:620px;}
+.hero p.lede{color:var(--ink-soft); font-size:15px; max-width:600px; margin:0 0 18px;}
+.statrow{display:flex; gap:14px; flex-wrap:wrap;}
+.stat{
+  background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 16px; min-width:128px;
+}
+.stat .num{font-family:'Fraunces',serif; font-size:24px; font-weight:600; color:var(--ink);}
+.stat .lab{font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+
+h3.sectiontitle{
+  font-family:'Fraunces',serif; font-size:19px; font-weight:600; margin:34px 0 12px; display:flex; align-items:center; gap:10px;
+}
+h3.sectiontitle .dot{width:8px; height:8px; border-radius:50%; background:var(--hoa); display:inline-block;}
+p.lead{color:var(--ink-soft); font-size:14.5px; max-width:680px;}
+
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 22px; margin-bottom:16px;}
+
+/* pill subnav */
+.pillrow{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 18px;}
+.pill{
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:600; padding:8px 14px;
+  border-radius:999px; border:1px solid var(--line); background:var(--paper-soft); color:var(--ink-soft);
+  cursor:pointer; transition:.15s;
+}
+.pill:hover{border-color:var(--ink-faint);}
+.pill.active{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+/* schedule table */
+.daynote{font-size:13px; color:var(--ink-soft); background:var(--paper-soft); border:1px dashed var(--line); border-radius:10px; padding:10px 14px; margin-bottom:16px;}
+.period-block{margin-bottom:6px;}
+.period-head{
+  display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin:22px 0 10px; font-weight:600;
+}
+.period-head .bar{flex:1; height:1px; background:var(--line);}
+table.sched{width:100%; border-collapse:collapse; font-size:13.5px;}
+table.sched tr{border-bottom:1px solid var(--line-soft);}
+table.sched tr:last-child{border-bottom:none;}
+table.sched td{padding:10px 8px; vertical-align:middle;}
+table.sched td.time{font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; width:108px;}
+table.sched td.tag{white-space:nowrap; width:150px;}
+table.sched td.note{color:var(--ink);}
+.tagpill{
+  display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:8px; font-size:12.5px; font-weight:700;
+}
+
+/* legend */
+.legend{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 6px;}
+.legend .item{display:flex; align-items:center; gap:6px; font-size:12px; color:var(--ink-soft);}
+.legend .sw{width:10px; height:10px; border-radius:3px;}
+
+/* analysis */
+.analysis-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media (max-width:760px){.analysis-grid{grid-template-columns:1fr;}}
+.analysis-grid .card h4{margin:0 0 8px; font-family:'Fraunces',serif; font-size:16px; display:flex; gap:8px; align-items:center;}
+.analysis-grid .card p, .analysis-grid .card li{font-size:13.5px; color:var(--ink-soft); line-height:1.65;}
+.analysis-grid .card ul{margin:0; padding-left:18px;}
+
+.timeline-map{display:flex; flex-direction:column; gap:0; margin-top:10px;}
+.tm-row{display:grid; grid-template-columns:90px 1fr; gap:14px; padding:10px 0; border-bottom:1px solid var(--line-soft); align-items:start;}
+.tm-row .tlab{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); padding-top:3px;}
+.tm-row .tbody b{display:block; font-size:13.5px; margin-bottom:2px;}
+.tm-row .tbody span{font-size:12.5px; color:var(--ink-soft);}
+
+.callout{border-left:3px solid var(--hoa); background:var(--hoa-soft); border-radius:0 10px 10px 0; padding:12px 16px; font-size:13.5px; color:#163E32; margin:14px 0;}
+.callout.warn{border-left-color:var(--anh); background:var(--anh-soft); color:#5A3F0F;}
+.callout.cool{border-left-color:var(--rest); background:var(--rest-soft); color:#2C3A4D;}
+
+/* style gallery */
+.gallerywrap{border:1px solid var(--line); border-radius:18px; padding:24px; background:var(--paper-soft);}
+.theme-frame{border-radius:14px; padding:24px; transition:.25s;}
+
+/* --- theme: apple --- */
+.theme-apple{
+  background:#F5F5F7; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',Helvetica,Arial,sans-serif;
+  color:#1D1D1F;
+}
+.theme-apple .ag-title{font-size:22px; font-weight:700; margin-bottom:4px; letter-spacing:-.01em;}
+.theme-apple .ag-sub{font-size:13px; color:#6E6E73; margin-bottom:16px;}
+.theme-apple .ag-row{
+  display:flex; align-items:center; gap:14px; background:#fff; border-radius:16px; padding:14px 18px; margin-bottom:10px;
+  box-shadow:0 1px 1px rgba(0,0,0,.03), 0 8px 24px -16px rgba(0,0,0,.18);
+}
+.theme-apple .ag-time{font-size:13px; color:#86868B; width:92px; font-weight:600;}
+.theme-apple .ag-icon{width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; background:#E8F3FF;}
+.theme-apple .ag-text b{display:block; font-size:14.5px; font-weight:600;}
+.theme-apple .ag-text span{font-size:12.5px; color:#6E6E73;}
+
+/* --- theme: notion --- */
+.theme-notion{background:#FFFFFF; font-family:Helvetica,Arial,sans-serif; color:#37352F; border:1px solid #EBEAE7;}
+.theme-notion .ag-title{font-size:24px; font-weight:700; margin-bottom:2px;}
+.theme-notion .ag-sub{font-size:13px; color:#9B9A97; margin-bottom:14px;}
+.theme-notion .ag-row{display:flex; align-items:center; gap:10px; padding:7px 6px; border-radius:4px;}
+.theme-notion .ag-row:hover{background:#F7F6F3;}
+.theme-notion .ag-icon{width:22px; text-align:center; font-size:15px;}
+.theme-notion .ag-time{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#9B9A97; width:96px;}
+.theme-notion .ag-text b{font-size:14px; font-weight:500; border-bottom:1px solid #EBEAE7; padding-bottom:1px;}
+.theme-notion .ag-text span{display:block; font-size:12.5px; color:#9B9A97;}
+.theme-notion .ag-row + .ag-row{border-top:1px solid #F1F0EC;}
+
+/* --- theme: cyberpunk --- */
+.theme-cyberpunk{
+  background:#0B0B14; font-family:'IBM Plex Mono',monospace; color:#E7FBFF;
+  border:1px solid #232140; box-shadow:0 0 40px -10px rgba(255,0,200,.15) inset;
+}
+.theme-cyberpunk .ag-title{font-size:20px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#FF2E9A; text-shadow:0 0 12px rgba(255,46,154,.6); margin-bottom:4px;}
+.theme-cyberpunk .ag-sub{font-size:11.5px; color:#5BE6FF; letter-spacing:.08em; margin-bottom:16px; text-transform:uppercase;}
+.theme-cyberpunk .ag-row{display:flex; align-items:center; gap:12px; padding:10px 12px; margin-bottom:8px; background:#11101F; border:1px solid #2B2A4A; border-left:3px solid #5BE6FF; clip-path:polygon(0 0,100% 0,100% 100%,6px 100%,0 calc(100% - 6px));}
+.theme-cyberpunk .ag-time{font-size:11.5px; color:#FF2E9A; width:90px; font-weight:600;}
+.theme-cyberpunk .ag-icon{font-size:15px;}
+.theme-cyberpunk .ag-text b{display:block; font-size:13px; color:#E7FBFF; letter-spacing:.03em;}
+.theme-cyberpunk .ag-text span{font-size:11px; color:#7E8AB8;}
+
+/* --- theme: minimalist --- */
+.theme-minimal{background:#FFFFFF; font-family:'Plus Jakarta Sans',sans-serif; color:#111; border:1px solid #000;}
+.theme-minimal .ag-title{font-size:18px; font-weight:400; letter-spacing:.02em; margin-bottom:2px; text-transform:uppercase;}
+.theme-minimal .ag-sub{font-size:11px; color:#999; margin-bottom:18px; letter-spacing:.05em;}
+.theme-minimal .ag-row{display:grid; grid-template-columns:80px 1fr; gap:16px; padding:11px 0; border-bottom:1px solid #000;}
+.theme-minimal .ag-row:first-of-type{border-top:1px solid #000;}
+.theme-minimal .ag-icon{display:none;}
+.theme-minimal .ag-time{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#111;}
+.theme-minimal .ag-text b{font-size:13px; font-weight:500;}
+.theme-minimal .ag-text span{font-size:11.5px; color:#888;}
+
+.theme-pick{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+
+footer.note{margin-top:50px; padding-top:18px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-faint); text-align:center;}
+
+@media (max-width:860px){
+  .sidebar{display:none;}
+  .mobiletabs{
+    display:flex; gap:6px; overflow-x:auto; position:sticky; top:4px; z-index:40; background:var(--paper);
+    padding:14px 14px 10px; border-bottom:1px solid var(--line);
+  }
+  .mobiletabs .navbtn{white-space:nowrap; width:auto; flex:none;}
+  .main{padding:16px 16px 60px; max-width:100%;}
+  .hero{padding:22px 18px;}
+  .hero h2{font-size:23px;}
+  table.sched td.tag{width:118px;}
+}
+</style>
+</head>
+<body>
+<div class="signature-strip"></div>
+<div class="app">
+
+  <!-- ============ SIDEBAR (desktop) ============ -->
+  <nav class="sidebar" id="sidebarNav">
+    <div class="brand">
+      <div class="eyebrow">Lộ trình thi chuyên</div>
+      <h1>Nguyễn Doãn Hoàng</h1>
+      <p>🎯 Mục tiêu: Đỗ Chuyên Hóa — Quốc Học Huế</p>
+    </div>
+    <div class="navgroup" id="navgroup"></div>
+    <div class="sidebar-foot">
+      <b>Hiện tại:</b> đang nghỉ hè 🌴 — lịch hè áp dụng đến hết <b>4/9</b>. Từ <b>5/9</b> chuyển sang lịch năm học.
+    </div>
+  </nav>
+
+  <!-- ============ MOBILE TABS ============ -->
+  <div class="mobiletabs" id="mobileNav"></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main" id="main"></main>
+</div>
+
+<script>
+/* ============================================================
+   DATA LAYER
+   ============================================================ */
+const TAGS = {
+  hoa:   {emoji:"🧪", name:"Hóa",        c:"--hoa",    cs:"--hoa-soft"},
+  toan:  {emoji:"📐", name:"Toán",       c:"--toan",   cs:"--toan-soft"},
+  anh:   {emoji:"🇬🇧", name:"T.Anh",     c:"--anh",    cs:"--anh-soft"},
+  de:    {emoji:"📝", name:"Làm đề",     c:"--de",     cs:"--de-soft"},
+  van:   {emoji:"📖", name:"Văn",        c:"--van",    cs:"--van-soft"},
+  sport: {emoji:"💪", name:"Thể thao",   c:"--sport",  cs:"--sport-soft"},
+  school:{emoji:"🏫", name:"Trường học", c:"--school", cs:"--school-soft"},
+  rest:  {emoji:"🌿", name:"Nghỉ/Tự do", c:"--rest",   cs:"--rest-soft"},
+  sleep: {emoji:"😴", name:"Ngủ",        c:"--sleep",  cs:"--sleep-soft"},
+  meal:  {emoji:"🍚", name:"Ăn uống",    c:"--meal",   cs:"--meal-soft"},
+  prep:  {emoji:"🎒", name:"Chuẩn bị",   c:"--prep",   cs:"--prep-soft"},
+};
+const PERIOD_LABEL = {sang:"🌅 Buổi sáng", chieu:"🌤️ Buổi chiều", toi:"🌙 Buổi tối"};
+
+// ---------- SUMMER (hiện tại, đến 4/9) ----------
+const sumA = [ // Thứ 2 / 4 / 6 / 7 — ngày tự học toàn phần
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân, uống 1 cốc nước lớn", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Calisthenics 30p (T7 đổi thành đi bộ/giãn cơ nhẹ)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng đầy đủ — không học khi đói", p:"sang"},
+  {t:"06:45–07:00", tag:"rest", n:"Khởi động trí não — xem nhanh 1 trang ghi chú Hóa hôm trước", p:"sang"},
+  {t:"07:00–08:30", tag:"hoa", n:"Học sâu kiến thức mới — đầu óc tỉnh táo nhất trong ngày", p:"sang"},
+  {t:"08:30–08:45", tag:"rest", n:"Nghỉ ngắn — đi lại, uống nước, không cầm điện thoại", p:"sang"},
+  {t:"08:45–10:15", tag:"toan", n:"Học sâu / chữa dạng bài khó", p:"sang"},
+  {t:"10:15–10:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:30–11:30", tag:"de", n:"Luyện đề tổng hợp Hóa + Toán — áp dụng ngay kiến thức vừa học", p:"sang"},
+  {t:"11:30–12:30", tag:"meal", n:"Ăn trưa cùng gia đình", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa — chợp mắt hoặc thư giãn để nạp lại năng lượng", p:"chieu"},
+  {t:"13:30–14:30", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"chieu"},
+  {t:"14:30–14:45", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"14:45–15:45", tag:"hoa", n:"Quay lại ôn phần Hóa/Toán còn yếu trong tuần", p:"chieu"},
+  {t:"15:45–16:45", tag:"rest", n:"Thời gian tự do — chơi, nghe nhạc, KHÔNG học (bắt buộc)", p:"chieu"},
+  {t:"16:45–17:00", tag:"prep", n:"Phụ giúp gia đình chuẩn bị bữa tối", p:"chieu"},
+  {t:"17:00–18:00", tag:"meal", n:"Ăn tối + sinh hoạt gia đình", p:"toi"},
+  {t:"18:00–19:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — nộp bài cô Trang Anh", p:"toi"},
+  {t:"19:00–20:00", tag:"rest", n:"Tự do / thư giãn — đọc sách, nói chuyện gia đình", p:"toi"},
+  {t:"20:00–20:45", tag:"rest", n:"Tổng kết ngày — 3 điều làm tốt + việc cần làm ngày mai", p:"toi"},
+  {t:"20:45–21:30", tag:"prep", n:"Tắm rửa, chuẩn bị đồ dùng cho ngày mai", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Đọc nhẹ / nghe nhạc nhẹ — KHÔNG dùng điện thoại", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumB = [ // Thứ 3 — học thêm TOÁN tối
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng", p:"sang"},
+  {t:"06:45–08:15", tag:"hoa", n:"Học sâu Hóa — môn ưu tiên số 1, làm trước trong ngày", p:"sang"},
+  {t:"08:15–08:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:30–09:30", tag:"de", n:"Luyện đề tổng hợp Hóa/Toán", p:"sang"},
+  {t:"09:30–09:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:45–10:30", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối nay bận", p:"sang"},
+  {t:"10:30–11:30", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"11:30–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"13:30–14:30", tag:"toan", n:"Xem lại bài cũ + chuẩn bị câu hỏi cho buổi học thêm tối nay", p:"chieu"},
+  {t:"14:30–16:30", tag:"rest", n:"Tự do / nghỉ ngơi dài hơn — tích năng lượng trước buổi học tối", p:"chieu"},
+  {t:"16:30–17:00", tag:"prep", n:"Chuẩn bị đồ dùng đi học thêm", p:"chieu"},
+  {t:"17:00–18:00", tag:"meal", n:"Ăn tối sớm", p:"toi"},
+  {t:"18:00–19:00", tag:"rest", n:"Nghỉ ngơi, thư giãn trước khi đi học", p:"toi"},
+  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN tại lớp (1h30)", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:30", tag:"rest", n:"Tắm rửa, ăn nhẹ nếu cần", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Thư giãn nhẹ — KHÔNG học thêm gì nữa, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumC = [ // Thứ 5 — học thêm HÓA + TOÁN tối (buổi dài nhất trong tuần)
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng", p:"sang"},
+  {t:"06:45–08:15", tag:"de", n:"Luyện đề — áp dụng kiến thức, tối nay sẽ được củng cố thêm", p:"sang"},
+  {t:"08:15–08:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:30–09:30", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối nay học rất dài", p:"sang"},
+  {t:"09:30–09:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:45–10:45", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"10:45–11:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"11:00–12:00", tag:"hoa", n:"Ôn lại + xem trước nội dung buổi học thêm tối nay", p:"sang"},
+  {t:"12:00–13:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"13:00–14:00", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"14:00–15:00", tag:"toan", n:"Ôn lại + xem trước nội dung buổi học thêm tối nay", p:"chieu"},
+  {t:"15:00–16:00", tag:"rest", n:"Tự do / nghỉ ngơi — quan trọng trước buổi học 4 tiếng liền", p:"chieu"},
+  {t:"16:00–16:30", tag:"meal", n:"Ăn nhẹ no bụng trước khi đi (tối nay học liên tục 4 tiếng)", p:"chieu"},
+  {t:"16:30–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"16:45–17:00", tag:"prep", n:"Ổn định chỗ học", p:"toi"},
+  {t:"17:00–21:00", tag:"hoa", n:"Học thêm HÓA + TOÁN tại lớp (4 tiếng liên tục)", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:45", tag:"meal", n:"Ăn nhẹ + tắm rửa — nạp lại năng lượng sau buổi học dài", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumD = [ // Chủ nhật — học thêm HÓA (nhẹ), ngày phục hồi + tổng ôn
+  {t:"05:30–06:00", tag:"rest", n:"Thức dậy thong thả, vệ sinh cá nhân", p:"sang"},
+  {t:"06:00–06:30", tag:"meal", n:"Ăn sáng thong thả", p:"sang"},
+  {t:"06:30–07:30", tag:"de", n:"Tổng ôn cả tuần — xem lại ghi chú Hóa+Toán, đánh dấu phần còn yếu", p:"sang"},
+  {t:"07:30–07:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"07:45–08:45", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"08:45–09:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:00–10:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm, không để dồn", p:"sang"},
+  {t:"10:00–11:00", tag:"rest", n:"Thời gian tự do / sở thích cá nhân", p:"sang"},
+  {t:"11:00–12:00", tag:"rest", n:"Hoạt động ngoài trời / đi dạo cùng gia đình", p:"chieu"},
+  {t:"12:00–13:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"13:00–14:30", tag:"rest", n:"Nghỉ trưa dài hơn — ngày phục hồi", p:"chieu"},
+  {t:"14:30–15:30", tag:"toan", n:"Luyện đề nhẹ", p:"chieu"},
+  {t:"15:30–16:00", tag:"prep", n:"Ăn nhẹ, chuẩn bị đồ trước khi đi học thêm", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Thư giãn, chuẩn bị tinh thần cho buổi Hóa", p:"chieu"},
+  {t:"16:45–17:00", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"17:00–19:00", tag:"hoa", n:"Học thêm HÓA tại lớp", p:"toi"},
+  {t:"19:00–19:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"19:15–20:00", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"20:00–21:00", tag:"rest", n:"Thời gian gia đình / thư giãn", p:"toi"},
+  {t:"21:00–21:45", tag:"prep", n:"Chuẩn bị sách vở, lịch học cho tuần mới — nghi thức cuối tuần", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+
+// ---------- SCHOOL YEAR (từ 5/9) ----------
+const syNormal = [ // T2 / T4 / T6 / T7 — có học chính khóa sáng, không học thêm tối
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Calisthenics 30p (T2/T4/T6)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
+  {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
+  {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
+  {t:"11:30–11:45", tag:"prep", n:"Di chuyển về nhà", p:"chieu"},
+  {t:"11:45–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa — sau buổi sáng dài cần nghỉ đủ", p:"chieu"},
+  {t:"13:30–15:00", tag:"hoa", n:"Học sâu Hóa", p:"chieu"},
+  {t:"15:00–15:15", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"15:15–16:15", tag:"toan", n:"Học sâu / chữa bài Toán", p:"chieu"},
+  {t:"16:15–16:30", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"16:30–17:15", tag:"de", n:"Luyện đề", p:"chieu"},
+  {t:"17:15–18:00", tag:"meal", n:"Ăn tối + sinh hoạt gia đình", p:"toi"},
+  {t:"18:00–18:45", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu", p:"toi"},
+  {t:"18:45–19:30", tag:"van", n:"Văn (có thể đổi thành luyện đề thêm nếu cần)", p:"toi"},
+  {t:"19:30–20:15", tag:"rest", n:"Tự do / giải trí", p:"toi"},
+  {t:"20:15–21:00", tag:"rest", n:"Ôn nhẹ + chuẩn bị ngày mai", p:"toi"},
+  {t:"21:00–21:30", tag:"prep", n:"Tắm rửa, thư giãn", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const syTutor = [ // T3 (học thêm Toán) / T5 (học thêm Hóa+Toán, tối dài hơn) — có học chính khóa sáng + học thêm tối
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ (không tập thể thao 2 ngày này)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
+  {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
+  {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
+  {t:"11:30–11:45", tag:"prep", n:"Di chuyển về nhà", p:"chieu"},
+  {t:"11:45–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:15", tag:"rest", n:"Nghỉ trưa (rút ngắn hơn ngày thường để có thêm giờ học)", p:"chieu"},
+  {t:"13:15–14:15", tag:"hoa", n:"Hóa — ưu tiên số 1, làm trước trong ngày bận", p:"chieu"},
+  {t:"14:15–14:30", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"14:30–15:15", tag:"de", n:"Luyện đề", p:"chieu"},
+  {t:"15:15–16:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối bận", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Tự do / nghỉ ngơi trước buổi học thêm tối", p:"chieu"},
+  {t:"16:45–17:15", tag:"meal", n:"Ăn tối sớm", p:"toi"},
+  {t:"17:15–19:00", tag:"rest", n:"T3: thư giãn, chuẩn bị đi học · T5: học thêm HÓA bắt đầu từ 17h00", p:"toi"},
+  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm (T3)", p:"toi"},
+  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN (T3) · T5: tiếp tục Hóa+Toán đến 21h00", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:45", tag:"rest", n:"Tắm rửa, ăn nhẹ nếu cần", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sySun = [ // Chủ nhật năm học — KHÔNG học chính khóa, có học thêm Hóa chiều — ngày tự học quan trọng nhất trong tuần
+  {t:"05:30–06:00", tag:"rest", n:"Thức dậy thong thả", p:"sang"},
+  {t:"06:00–06:30", tag:"meal", n:"Ăn sáng thong thả", p:"sang"},
+  {t:"06:30–08:00", tag:"hoa", n:"Học sâu Hóa — ngày duy nhất trong tuần có khối thời gian dài buổi sáng", p:"sang"},
+  {t:"08:00–08:15", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:15–09:45", tag:"toan", n:"Học sâu Toán", p:"sang"},
+  {t:"09:45–10:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:00–11:00", tag:"de", n:"Luyện đề tổng hợp cả tuần", p:"sang"},
+  {t:"11:00–12:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:00–13:00", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"13:00–13:45", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu", p:"chieu"},
+  {t:"13:45–14:30", tag:"van", n:"Văn", p:"chieu"},
+  {t:"14:30–15:30", tag:"rest", n:"Tự do / sở thích cá nhân — ngày của riêng em", p:"chieu"},
+  {t:"15:30–16:00", tag:"prep", n:"Ăn nhẹ, chuẩn bị đi học thêm", p:"chieu"},
+  {t:"16:00–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"17:00–19:00", tag:"hoa", n:"Học thêm HÓA tại lớp", p:"toi"},
+  {t:"19:00–19:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"19:15–20:00", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"20:00–21:00", tag:"rest", n:"Thời gian gia đình", p:"toi"},
+  {t:"21:00–21:45", tag:"prep", n:"Chuẩn bị sách vở, lịch học cho tuần mới", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+
+// ---------- CRAM (nước rút) ----------
+const cram = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy — giữ ĐÚNG giờ như mọi ngày, không phá nếp", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Vận động nhẹ 30p — KHÔNG bỏ, giúp giảm lo âu thi cử", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng đầy đủ", p:"sang"},
+  {t:"06:45–08:15", tag:"de", n:"Làm 1 đề thi thử — bấm giờ như thi thật, không tra cứu", p:"sang"},
+  {t:"08:15–08:45", tag:"de", n:"Chấm bài + khoanh vùng lỗi sai ngay khi còn nhớ rõ", p:"sang"},
+  {t:"08:45–09:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:00–10:00", tag:"hoa", n:"Ôn trọng điểm — CHỈ phần vừa sai, không học lan man", p:"sang"},
+  {t:"10:00–10:15", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:15–11:15", tag:"toan", n:"Ôn trọng điểm — CHỈ phần vừa sai", p:"sang"},
+  {t:"11:15–12:15", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:15–13:15", tag:"rest", n:"Nghỉ trưa đủ — ngủ đủ quan trọng hơn học thêm 1 giờ", p:"chieu"},
+  {t:"13:15–14:15", tag:"de", n:"Luyện 1 dạng đề khác để tránh quen tay với 1 kiểu đề", p:"chieu"},
+  {t:"14:15–14:30", tag:"de", n:"Chấm nhanh, ghi chú lỗi", p:"chieu"},
+  {t:"14:30–15:00", tag:"rest", n:"Nghỉ ngắn / đi lại", p:"chieu"},
+  {t:"15:00–16:00", tag:"anh", n:"Tiếng Anh — vẫn giữ đều, không bỏ dù đang nước rút", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Tự do / thư giãn — BẮT BUỘC, tránh kiệt sức trước thi", p:"chieu"},
+  {t:"16:45–17:30", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"17:30–18:30", tag:"hoa", n:"Đọc lại tổng hợp công thức/ghi chú quan trọng — KHÔNG học mới", p:"toi"},
+  {t:"18:30–19:15", tag:"rest", n:"(Chèn buổi học thêm cố định T3/T5/CN vào đây nếu trùng ngày)", p:"toi"},
+  {t:"19:15–20:15", tag:"rest", n:"Thư giãn — hít thở sâu, nghe nhạc nhẹ, giảm lo âu", p:"toi"},
+  {t:"20:15–21:00", tag:"prep", n:"Chuẩn bị đồ dùng, sách vở cho ngày mai", p:"toi"},
+  {t:"21:00–22:00", tag:"sleep", n:"Chuẩn bị ngủ SỚM hơn 1 chút nếu có thể — ngủ đủ là vũ khí nước rút", p:"toi"},
+];
+
+// ---------- example multi-test priority table ----------
+const multiExample = [
+  {mon:"🧪 Hóa", date:"Thứ 4 (2 ngày nữa)", weight:"Rất quan trọng", confidence:"Đang yếu", priority:"① Ưu tiên cao nhất"},
+  {mon:"📐 Toán", date:"Thứ 5 (3 ngày nữa)", weight:"Rất quan trọng", confidence:"Khá ổn", priority:"② Ưu tiên cao"},
+  {mon:"🇬🇧 T.Anh", date:"Mỗi ngày", weight:"Trung bình", confidence:"Ổn định", priority:"③ Duy trì mức tối thiểu"},
+  {mon:"📖 Văn", date:"Thứ 6 (4 ngày nữa)", weight:"Thấp hơn", confidence:"Khá ổn", priority:"④ Ôn lướt, không đầu tư nhiều"},
+];
+
+/* ============================================================
+   RENDER HELPERS
+   ============================================================ */
+function rowsToHTML(rows){
+  const groups = {sang:[], chieu:[], toi:[]};
+  rows.forEach(r=>groups[r.p].push(r));
+  let html = "";
+  ["sang","chieu","toi"].forEach(p=>{
+    if(groups[p].length===0) return;
+    html += `<div class="period-block"><div class="period-head">${PERIOD_LABEL[p]}<span class="bar"></span></div>`;
+    html += `<table class="sched"><tbody>`;
+    groups[p].forEach(r=>{
+      const tg = TAGS[r.tag];
+      html += `<tr>
+        <td class="time mono">${r.t}</td>
+        <td class="tag"><span class="tagpill" style="background:var(${tg.cs});color:var(${tg.c});">${tg.emoji} ${tg.name}</span></td>
+        <td class="note">${r.n}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  });
+  return html;
+}
+function legendHTML(keys){
+  return `<div class="legend">${keys.map(k=>{
+    const tg=TAGS[k];
+    return `<div class="item"><span class="sw" style="background:var(${tg.c});"></span>${tg.emoji} ${tg.name}</div>`;
+  }).join("")}</div>`;
+}
+
+/* ============================================================
+   PANEL DEFINITIONS
+   ============================================================ */
+const NAV = [
+  {id:"overview", icon:"📊", label:"Tổng quan & Phân tích"},
+  {id:"summer",   icon:"☀️", label:"Lịch Hè (đến 4/9)"},
+  {id:"school",   icon:"🏫", label:"Lịch Năm Học (từ 5/9)"},
+  {id:"special",  icon:"🎯", label:"Tình Huống Đặc Biệt"},
+  {id:"gallery",  icon:"🎨", label:"Phong Cách Thiết Kế"},
+];
+
+function buildOverview(){
+  return `
+  <div class="hero">
+    <div class="eyebrow">Lộ trình cá nhân hóa</div>
+    <h2 class="display">7 tháng để biến mục tiêu Chuyên Hóa thành hiện thực</h2>
+    <p class="lede">Thời gian biểu này được thiết kế riêng theo nhịp sống thật của em: giờ học thêm cố định, giờ ngủ, và 5 môn theo đúng thứ tự ưu tiên em đã chọn. Không phải một lịch chung — đây là bản thiết kế cho riêng Nguyễn Doãn Hoàng.</p>
+    <div class="statrow">
+      <div class="stat"><div class="num">5:30</div><div class="lab">Giờ thức dậy mỗi ngày</div></div>
+      <div class="stat"><div class="num">22:00</div><div class="lab">Giờ đi ngủ mỗi ngày</div></div>
+      <div class="stat"><div class="num">~6–7h</div><div class="lab">Tự học mỗi ngày (hè)</div></div>
+      <div class="stat"><div class="num">3×30p</div><div class="lab">Thể thao / tuần</div></div>
+    </div>
+  </div>
+
+  <h3 class="sectiontitle"><span class="dot"></span>Vì sao sắp xếp như vậy?</h3>
+  <p class="lead">Bốn nguyên tắc quyết định toàn bộ cấu trúc lịch — không phải sắp ngẫu nhiên, mà dựa trên cách bộ não em hoạt động trong ngày.</p>
+  <div class="analysis-grid">
+    <div class="card">
+      <h4>🧠 Môn khó nhất → đầu óc tỉnh táo nhất</h4>
+      <p>Sau một đêm ngủ, não phục hồi năng lượng và mức cortisol buổi sáng giúp tập trung tốt nhất trong 2–3 giờ đầu sau khi thức dậy. Vì vậy <b>Hóa</b> (ưu tiên #1) luôn được đặt vào khung 6h45–8h30 — sớm nhất có thể, trước khi mệt hay bị phân tâm.</p>
+    </div>
+    <div class="card">
+      <h4>📐 Toán đi liền sau Hóa</h4>
+      <p>Toán cần tư duy logic tương tự Hóa nên học liền sau khi não đã "vào mạch" sẽ hiệu quả hơn là tách rời. Vào ngày có học thêm Toán/Hóa buổi tối, phần tự học buổi sáng được rút ngắn lại để tránh trùng lặp — thay vào đó là ôn nhẹ và luyện đề.</p>
+    </div>
+    <div class="card">
+      <h4>📝 Làm đề → giữa buổi, ngay sau khi học</h4>
+      <p>Luyện đề hiệu quả nhất khi áp dụng <i>ngay</i> kiến thức vừa học, lúc kiến thức còn "nóng". Đặt làm đề ngay sau khối Hóa/Toán giúp biến lý thuyết thành kỹ năng làm bài thật.</p>
+    </div>
+    <div class="card">
+      <h4>📖 Văn & Tiếng Anh → khung năng lượng thấp</h4>
+      <p>Sau bữa trưa, cơ thể tự nhiên có một khoảng "tụt năng lượng" (post-lunch dip) — không phù hợp để học nội dung mới khó. Đây là lúc lý tưởng cho Văn (ưu tiên thấp hơn) và cho Tiếng Anh vào cuối ngày — vốn là dạng bài tập lặp lại, ghi nhớ, không cần tư duy logic căng như Hóa/Toán. Ôn từ vựng gần giờ ngủ cũng giúp não củng cố trí nhớ tốt hơn trong khi ngủ.</p>
+    </div>
+  </div>
+
+  <h3 class="sectiontitle"><span class="dot" style="background:var(--anh);"></span>Cách tránh quá tải</h3>
+  <div class="callout warn">⚠️ 7 giờ tự học/ngày vào mùa hè là cường độ <b>cao</b>, phù hợp cho mục tiêu lớn — nhưng chỉ bền vững nếu có đủ "van an toàn" sau đây. Nếu em thấy đuối, hãy chuyển ngay sang lịch "Mất động lực" ở tab Tình Huống Đặc Biệt, đừng ép.</div>
+  <div class="analysis-grid">
+    <div class="card"><h4>⏱️ Nghỉ ngắn đều đặn</h4><p>Sau mỗi 60–90 phút học là 15 phút nghỉ thật — đứng dậy, uống nước, không cầm điện thoại. Não cần "reset" để giữ chất lượng tập trung.</p></div>
+    <div class="card"><h4>🌿 Khối tự do cố định mỗi ngày</h4><p>Không phải "nếu còn thời gian thì nghỉ" — mà là một khung giờ <b>cố định, không thương lượng</b> mỗi ngày để chơi, nghe nhạc, làm điều mình thích.</p></div>
+    <div class="card"><h4>🗓️ Chủ nhật là ngày nhẹ nhất</h4><p>Cường độ thấp hơn, chủ yếu tổng ôn và phục hồi — không nhồi kiến thức mới vào ngày này.</p></div>
+    <div class="card"><h4>💪 Thể thao là giảm stress, không phải gánh nặng</h4><p>30 phút vận động giúp tăng tập trung cho cả ngày, không nên cắt bỏ khi bận — nên cắt môn khác trước.</p></div>
+  </div>
+  <div class="callout cool">💡 Lưu ý về giấc ngủ: 5h30 dậy – 22h00 ngủ là 7h30/ngày. Tuổi 14 lý tưởng cần khoảng 8–10 giờ. Nếu có thể, hãy thử ngủ sớm hơn 30 phút vào các ngày không học thêm (T2/4/6/7) để bù lại — chất lượng học phụ thuộc vào chất lượng ngủ nhiều hơn em nghĩ.</div>
+
+  <h3 class="sectiontitle"><span class="dot" style="background:var(--toan);"></span>Cách duy trì lâu dài</h3>
+  <div class="timeline-map">
+    <div class="tm-row"><div class="tlab mono">Hằng ngày</div><div class="tbody"><b>Giữ đúng giờ dậy/ngủ</b><span>Đồng hồ sinh học ổn định là nền tảng của mọi sự tập trung — quan trọng hơn việc học thêm 1 giờ.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi tối</div><div class="tbody"><b>3 dòng tổng kết</b><span>Viết 3 điều đã làm tốt trong ngày — duy trì động lực bằng cách nhìn thấy tiến bộ nhỏ, không chỉ nhìn vào đích xa.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi Chủ nhật tối</div><div class="tbody"><b>Chuẩn bị tuần mới</b><span>Soạn sách vở, xem lại lịch — biến việc bắt đầu tuần mới thành tự động, không phải quyết định lại mỗi lần.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi tuần</div><div class="tbody"><b>Cho phép 1 buổi "lệch lịch"</b><span>Nếu có đám tiệc, mệt, ốm nhẹ — lệch 1 buổi không phải thất bại. Quay lại nếp ngay buổi sau là đủ.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Luôn luôn</div><div class="tbody"><b>Người thân hỗ trợ nhẹ, không ép</b><span>Một lời nhắc nhẹ nhàng hiệu quả hơn nhiều một sự giám sát căng thẳng — áp lực quá mức dễ gây kiệt sức ngược.</span></div></div>
+  </div>
+  <footer class="note">Thiết kế riêng cho Nguyễn Doãn Hoàng · Mục tiêu: Chuyên Hóa — Quốc Học Huế 🧪</footer>
+  `;
+}
+
+function buildSummer(){
+  return `
+  <h2 class="display" style="font-size:24px;margin:0 0 6px;">☀️ Lịch Hè hiện tại</h2>
+  <p class="lead">Áp dụng từ hôm nay đến hết <b>4/9</b> — chưa vào năm học nên ban ngày hoàn toàn rảnh, trừ 3 buổi học thêm cố định. Đây là giai đoạn "vàng" để xây nền Hóa/Toán thật chắc trước khi vào năm học.</p>
+  <div class="pillrow" id="summerPills"></div>
+  ${legendHTML(["hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
+  <div class="card" id="summerTable"></div>
+  `;
+}
+
+function buildSchool(){
+  return `
+  <h2 class="display" style="font-size:24px;margin:0 0 6px;">🏫 Lịch Năm Học</h2>
+  <p class="lead">Áp dụng từ <b>5/9</b>, khi trường học lại — buổi sáng cố định 7h00–11h30. Lịch tự học được dồn vào chiều/tối, ngắn hơn mùa hè nên mỗi khối thời gian cần tập trung cao hơn.</p>
+  <div class="pillrow" id="schoolPills"></div>
+  ${legendHTML(["school","hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
+  <div class="card" id="schoolTable"></div>
+  `;
+}
+
+function buildSpecial(){
+  return `
+  <h2 class="display" style="font-size:24px;margin:0 0 6px;">🎯 Tình Huống Đặc Biệt</h2>
+  <p class="lead">Ba "chế độ" để dùng khi mọi thứ không diễn ra như bình thường — vì một lịch hay là một lịch biết uốn theo thực tế.</p>
+  <div class="pillrow" id="specialPills"></div>
+  <div id="specialBody"></div>
+  `;
+}
+
+function specialCram(){
+  return `
+  <div class="callout">🚀 <b>Nguyên tắc nước rút (1–2 tuần trước kỳ thi quan trọng):</b> không học kiến thức mới · chỉ ôn trọng điểm + luyện đề có bấm giờ · phân tích lỗi sai kỹ hơn là làm thật nhiều đề · ngủ đủ tuyệt đối · vẫn giữ thể thao nhẹ để giảm lo âu.</div>
+  ${legendHTML(["de","hoa","toan","anh","sport","rest","meal","prep","sleep"])}
+  <div class="card">${rowsToHTML(cram)}</div>
+  `;
+}
+function specialLow(){
+  return `
+  <div class="callout warn">🔋 <b>Khi mất động lực:</b> mục tiêu của ngày này không phải là "học nhiều", mà là "không bỏ nếp". Giảm độ khó, giảm thời lượng, giữ sự đều đặn.</div>
+  <div class="analysis-grid">
+    <div class="card">
+      <h4>✅ 3 việc nhỏ thay vì cả thời gian biểu</h4>
+      <ul>
+        <li><b>1 việc dễ trước tiên</b> (15p từ vựng) — tạo cảm giác "đã làm được gì đó" ngay từ sáng.</li>
+        <li><b>1 khối ngắn 25–30 phút</b> Hóa hoặc Toán — chỉ cần bắt đầu, không cần hoàn hảo, không cần xong cả bài.</li>
+        <li><b>1 việc bắt buộc tối thiểu</b>: nộp bài Tiếng Anh cô Trang Anh trước 23h — duy trì để không tích dồn.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>🌤️ Vẫn giữ những thứ này</h4>
+      <ul>
+        <li>Giờ thức dậy & đi ngủ — KHÔNG đổi, đây là thứ giữ nhịp cho những ngày sau.</li>
+        <li>30 phút vận động/đi bộ ngoài trời — cải thiện tâm trạng tốt hơn là ép ngồi học khi không có động lực.</li>
+        <li>Nói chuyện với người thân hoặc bạn về cảm giác mệt/chán — không giữ trong lòng.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout cool">💬 Một ngày nhẹ không làm chậm mục tiêu — nó giúp em không bỏ cuộc giữa đường. Quay lại lịch bình thường ngay khi thấy ổn hơn, không cần "học bù" gấp đôi.</div>
+  `;
+}
+function specialMulti(){
+  let rows = multiExample.map(r=>`
+    <tr>
+      <td class="note"><b>${r.mon}</b></td>
+      <td class="note">${r.date}</td>
+      <td class="note">${r.weight}</td>
+      <td class="note">${r.confidence}</td>
+      <td class="note"><b>${r.priority}</b></td>
+    </tr>`).join("");
+  return `
+  <div class="callout">⚠️ <b>Khi nhiều bài kiểm tra rơi cùng lúc:</b> đừng chia đều thời gian cho tất cả — hãy xếp ưu tiên theo 3 yếu tố: <b>ngày thi gần nhất</b>, <b>mức độ quan trọng</b>, và <b>mức độ tự tin hiện tại</b>. Môn thi gần + quan trọng + đang yếu luôn được học trước.</div>
+  <div class="card">
+    <h4 style="font-family:'Fraunces',serif;margin:0 0 10px;">📋 Ví dụ ma trận ưu tiên</h4>
+    <table class="sched"><tbody>
+      <tr style="border-bottom:2px solid var(--ink);">
+        <td class="note"><b>Môn</b></td><td class="note"><b>Ngày thi</b></td><td class="note"><b>Tầm quan trọng</b></td><td class="note"><b>Mức tự tin</b></td><td class="note"><b>Ưu tiên</b></td>
+      </tr>
+      ${rows}
+    </tbody></table>
+  </div>
+  <div class="callout cool">💡 Hóa & Toán không bao giờ về 0 — chỉ giảm thời lượng tạm thời. Văn có thể "ôn lướt" (đọc lại dàn ý, không luyện viết mới) trong giai đoạn này.</div>
+  `;
+}
+
+/* ---------- STYLE GALLERY ---------- */
+const galleryRows = [
+  {t:"06:45", icon:"🧪", b:"Học sâu Hóa học", s:"Kiến thức mới — ưu tiên #1"},
+  {t:"08:45", icon:"📐", b:"Luyện Toán", s:"Chữa dạng bài khó"},
+  {t:"10:30", icon:"📝", b:"Làm đề tổng hợp", s:"Áp dụng kiến thức vừa học"},
+  {t:"18:00", icon:"🇬🇧", b:"Tiếng Anh — Cô Trang Anh", s:"Ngữ pháp + Từ vựng"},
+];
+function galleryHTML(){
+  return galleryRows.map(r=>`
+    <div class="ag-row">
+      <div class="ag-time mono">${r.t}</div>
+      <div class="ag-icon">${r.icon}</div>
+      <div class="ag-text"><b>${r.b}</b><span>${r.s}</span></div>
+    </div>`).join("");
+}
+function buildGallery(){
+  return `
+  <h2 class="display" style="font-size:24px;margin:0 0 6px;">🎨 Phong Cách Thiết Kế</h2>
+  <p class="lead">Cùng một lịch học — bốn ngôn ngữ thiết kế khác nhau. Bấm để xem cùng nội dung được "mặc áo" theo từng phong cách.</p>
+  <div class="gallerywrap">
+    <div class="theme-pick" id="themePick"></div>
+    <div class="theme-frame theme-apple" id="themeFrame">
+      <div class="ag-title">Hôm nay</div>
+      <div class="ag-sub">Thứ Hai · Lịch hè</div>
+      ${galleryHTML()}
+    </div>
+  </div>
+  `;
+}
+const THEMES = [
+  {id:"apple", label:"🍎 Apple", cls:"theme-apple"},
+  {id:"notion", label:"◻️ Notion", cls:"theme-notion"},
+  {id:"cyberpunk", label:"⚡ Cyberpunk", cls:"theme-cyberpunk"},
+  {id:"minimal", label:"⬜ Minimalist", cls:"theme-minimal"},
+];
+
+/* ============================================================
+   APP WIRING
+   ============================================================ */
+const main = document.getElementById("main");
+const navgroup = document.getElementById("navgroup");
+const mobileNav = document.getElementById("mobileNav");
+
+function navButtonHTML(item, idPrefix){
+  return `<button class="navbtn" data-target="${item.id}" id="${idPrefix}-${item.id}"><span class="ic">${item.icon}</span>${item.label}</button>`;
+}
+NAV.forEach(item=>{
+  navgroup.insertAdjacentHTML("beforeend", navButtonHTML(item,"nav"));
+  mobileNav.insertAdjacentHTML("beforeend", navButtonHTML(item,"mnav"));
+});
+
+function renderPanel(id){
+  main.innerHTML = `<div class="panel active" id="panel-${id}"></div>`;
+  const p = document.getElementById(`panel-${id}`);
+  if(id==="overview") p.innerHTML = buildOverview();
+  if(id==="summer"){ p.innerHTML = buildSummer(); wireSummer(); }
+  if(id==="school"){ p.innerHTML = buildSchool(); wireSchool(); }
+  if(id==="special"){ p.innerHTML = buildSpecial(); wireSpecial(); }
+  if(id==="gallery"){ p.innerHTML = buildGallery(); wireGallery(); }
+}
+
+function setActiveNav(id){
+  document.querySelectorAll(".navbtn").forEach(b=>{
+    b.classList.toggle("active", b.dataset.target===id);
+  });
+}
+function goTo(id){
+  setActiveNav(id);
+  renderPanel(id);
+  window.scrollTo({top:0,behavior:"instant"});
+}
+document.querySelectorAll(".navbtn").forEach(b=>{
+  b.addEventListener("click", ()=>goTo(b.dataset.target));
+});
+
+/* ---- Summer sub-tabs ---- */
+const SUMMER_DAYS = [
+  {id:"A", label:"T2 · T4 · T6 · T7", data:sumA, note:"Ngày tự học toàn phần — không có buổi học thêm. Đây là ngày có khối thời gian dài nhất để học sâu Hóa & Toán."},
+  {id:"B", label:"Thứ 3", data:sumB, note:"Học thêm TOÁN buổi tối (19h30–21h00). Ban ngày tập trung Hóa + làm đề + Tiếng Anh, để buổi tối chỉ cần đi học mà không phải nhồi thêm gì."},
+  {id:"C", label:"Thứ 5", data:sumC, note:"Học thêm HÓA + TOÁN buổi tối (17h00–21h00) — buổi dài nhất trong tuần. Ban ngày nhẹ hơn, chỉ ôn & xem trước, để dồn năng lượng cho 4 giờ học liên tục."},
+  {id:"D", label:"Chủ nhật", data:sumD, note:"Học thêm HÓA buổi chiều (17h00–19h00, ngắn nhất). Đây là ngày phục hồi + tổng ôn cả tuần, cường độ thấp hơn các ngày khác."},
+];
+let summerActive = "A";
+function wireSummer(){
+  const pillrow = document.getElementById("summerPills");
+  pillrow.innerHTML = SUMMER_DAYS.map(d=>`<button class="pill ${d.id===summerActive?'active':''}" data-day="${d.id}">${d.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      summerActive = btn.dataset.day;
+      pillrow.querySelectorAll(".pill").forEach(b=>b.classList.toggle("active", b.dataset.day===summerActive));
+      renderSummerTable();
+    });
+  });
+  renderSummerTable();
+}
+function renderSummerTable(){
+  const d = SUMMER_DAYS.find(x=>x.id===summerActive);
+  document.getElementById("summerTable").innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+}
+
+/* ---- School sub-tabs ---- */
+const SCHOOL_DAYS = [
+  {id:"N", label:"Ngày thường (T2·T4·T6·T7)", data:syNormal, note:"Học chính khóa 7h00–11h30, không có học thêm tối. Tự học dồn vào chiều/tối."},
+  {id:"T", label:"Ngày có học thêm (T3 & T5)", data:syTutor, note:"Học chính khóa sáng + học thêm tối. Thứ 5 buổi học thêm dài hơn (đến 21h00) — xem ghi chú trong từng dòng."},
+  {id:"S", label:"Chủ nhật", data:sySun, note:"KHÔNG có học chính khóa — ngày tự học quan trọng nhất trong tuần năm học, có học thêm Hóa buổi chiều."},
+];
+let schoolActive = "N";
+function wireSchool(){
+  const pillrow = document.getElementById("schoolPills");
+  pillrow.innerHTML = SCHOOL_DAYS.map(d=>`<button class="pill ${d.id===schoolActive?'active':''}" data-day="${d.id}">${d.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      schoolActive = btn.dataset.day;
+      pillrow.querySelectorAll(".pill").forEach(b=>b.classList.toggle("active", b.dataset.day===schoolActive));
+      renderSchoolTable();
+    });
+  });
+  renderSchoolTable();
+}
+function renderSchoolTable(){
+  const d = SCHOOL_DAYS.find(x=>x.id===schoolActive);
+  document.getElementById("schoolTable").innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+}
+
+/* ---- Special sub-tabs ---- */
+const SPECIAL_MODES = [
+  {id:"cram", label:"🚀 Nước rút trước thi", fn:specialCram},
+  {id:"low", label:"🔋 Khi mất động lực", fn:specialLow},
+  {id:"multi", label:"⚠️ Nhiều bài KT cùng lúc", fn:specialMulti},
+];
+let specialActive = "cram";
+function wireSpecial(){
+  const pillrow = document.getElementById("specialPills");
+  pillrow.innerHTML = SPECIAL_MODES.map(m=>`<button class="pill ${m.id===specialActive?'active':''}" data-m="${m.id}">${m.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      specialActive = btn.dataset.m;
+      pillrow.querySelectorAll(".pill").forEach(b=>b.classList.toggle("active", b.dataset.m===specialActive));
+      renderSpecialBody();
+    });
+  });
+  renderSpecialBody();
+}
+function renderSpecialBody(){
+  const m = SPECIAL_MODES.find(x=>x.id===specialActive);
+  document.getElementById("specialBody").innerHTML = m.fn();
+}
+
+/* ---- Gallery theme switch ---- */
+let themeActive = "apple";
+function wireGallery(){
+  const pick = document.getElementById("themePick");
+  pick.innerHTML = THEMES.map(t=>`<button class="pill ${t.id===themeActive?'active':''}" data-theme="${t.id}">${t.label}</button>`).join("");
+  pick.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      themeActive = btn.dataset.theme;
+      pick.querySelectorAll(".pill").forEach(b=>b.classList.toggle("active", b.dataset.theme===themeActive));
+      const frame = document.getElementById("themeFrame");
+      frame.className = "theme-frame " + THEMES.find(t=>t.id===themeActive).cls;
+    });
+  });
+}
+
+/* ---- init ---- */
+goTo("overview");
+</script>
+</body>
+</html>
