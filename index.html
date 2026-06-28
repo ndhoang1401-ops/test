@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#FBF8F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1A1F1C" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Lộ trình thi Chuyên Hóa - Nguyễn Doãn Hoàng">
+<title>Chuyên Hóa — Nguyễn Doãn Hoàng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES - MOBILE FIRST
+   ============================================================ */
+:root{
+  /* Light theme colors */
+  --paper:#FBF8F2;
+  --paper-soft:#F2ECDE;
+  --card:#FFFFFF;
+  --ink:#1E2622;
+  --ink-soft:#5B665F;
+  --ink-faint:#707B73;
+  --line:#E4DBC8;
+  --line-soft:#EEE7D8;
+
+  /* Subject colors */
+  --hoa:#178C6B;       --hoa-soft:#DBEEE5;
+  --toan:#2E50D6;      --toan-soft:#DEE5FB;
+  --anh:#C98A1E;       --anh-soft:#F6E8C8;
+  --de:#6F4E92;        --de-soft:#E9E1F1;
+  --van:#A85D3F;       --van-soft:#EFE0D6;
+  --sport:#1E8C99;     --sport-soft:#DBEFF1;
+  --school:#7C6F5E;    --school-soft:#EAE4D8;
+  --rest:#5B6B82;      --rest-soft:#E2E7EE;
+  --sleep:#3A3F66;     --sleep-soft:#E4E3EF;
+  --meal:#B8862E;      --meal-soft:#F3E8CE;
+  --prep:#6B7560;      --prep-soft:#E5E8DD;
+
+  /* UI tokens */
+  --strip: linear-gradient(90deg,#D9533C,#E8B23D,#178C6B,#2E50D6,#6F4E92);
+  --radius: clamp(10px, 2vw, 14px);
+  --radius-sm: clamp(8px, 1.5vw, 10px);
+  --shadow: 0 1px 2px rgba(30,38,34,.04), 0 4px 16px -6px rgba(30,38,34,.10);
+
+  /* Safe area defaults */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* MOBILE-FIRST Typography - optimized for portrait */
+  --text-2xs: clamp(0.5625rem, 0.5rem + 0.3vw, 0.625rem);
+  --text-xs: clamp(0.625rem, 0.55rem + 0.4vw, 0.75rem);
+  --text-sm: clamp(0.6875rem, 0.6rem + 0.45vw, 0.875rem);
+  --text-base: clamp(0.75rem, 0.65rem + 0.5vw, 0.9375rem);
+  --text-md: clamp(0.8125rem, 0.7rem + 0.55vw, 1rem);
+  --text-lg: clamp(0.875rem, 0.75rem + 0.6vw, 1.125rem);
+  --text-xl: clamp(0.9375rem, 0.8rem + 0.7vw, 1.25rem);
+  --text-2xl: clamp(1rem, 0.85rem + 0.8vw, 1.375rem);
+  --text-3xl: clamp(1.125rem, 0.9rem + 1vw, 1.625rem);
+  --text-4xl: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+
+  /* Spacing scale - mobile first */
+  --space-1: clamp(4px, 0.5vw, 8px);
+  --space-2: clamp(6px, 0.8vw, 12px);
+  --space-3: clamp(8px, 1vw, 16px);
+  --space-4: clamp(10px, 1.5vw, 20px);
+  --space-5: clamp(12px, 2vw, 24px);
+  --space-6: clamp(16px, 2.5vw, 32px);
+  --space-8: clamp(20px, 3vw, 40px);
+  --space-10: clamp(24px, 4vw, 48px);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --paper:#1A1F1C;
+    --paper-soft:#222724;
+    --card:#2A2F2C;
+    --ink:#E8EBE7;
+    --ink-soft:#A8ADAA;
+    --ink-faint:#6B706D;
+    --line:#3A3F3C;
+    --line-soft:#333835;
+
+    --hoa-soft:#1A3D33;
+    --toan-soft:#1A2340;
+    --anh-soft:#3D2E14;
+    --de-soft:#2D213D;
+    --van-soft:#3D2219;
+    --sport-soft:#17373D;
+    --school-soft:#2D2A23;
+    --rest-soft:#1F2530;
+    --sleep-soft:#1A1C28;
+    --meal-soft:#3D3018;
+    --prep-soft:#262A21;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 4px 16px -6px rgba(0,0,0,.3);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   RESET & BASE - Mobile First
+   ============================================================ */
+*,*::before,*::after{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+body{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+
+img, svg{
+  max-inline-size: 100%;
+  block-size: auto;
+  display: block;
+}
+
+:focus-visible{
+  outline: 2px solid var(--hoa);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection{
+  background: var(--hoa-soft);
+  color: var(--ink);
+}
+
+/* Utility */
+.mono{font-family: 'IBM Plex Mono', monospace;}
+.display{font-family: 'Fraunces', serif;}
+
+.sr-only{
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   APP LAYOUT
+   ============================================================ */
+.app{
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+
+/* ============================================================
+   SIGNATURE STRIP
+   ============================================================ */
+.signature-strip{
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  block-size: 3px;
+  background: var(--strip);
+  z-index: 200;
+}
+
+/* ============================================================
+   SIDEBAR - Hidden on mobile, visible on desktop
+   ============================================================ */
+.sidebar{
+  display: none;
+}
+
+/* ============================================================
+   MOBILE TABS
+   ============================================================ */
+.mobiletabs{
+  display: flex;
+  gap: clamp(4px, 0.8vw, 6px);
+  overflow-x: auto;
+  position: sticky;
+  inset-block-start: 3px;
+  z-index: 150;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  padding: clamp(6px, 1vw, 10px) clamp(8px, 1.5vw, 14px);
+  padding-block-start: calc(clamp(6px, 1vw, 10px) + var(--safe-top));
+  border-block-end: 1px solid var(--line);
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobiletabs::-webkit-scrollbar{display: none;}
+
+.mobiletabs .navbtn{
+  white-space: nowrap;
+  inline-size: auto;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  min-block-size: clamp(38px, 6vw, 44px);
+  min-inline-size: clamp(38px, 6vw, 44px);
+  font-size: var(--text-xs);
+  padding: clamp(6px, 1vw, 10px) clamp(10px, 1.5vw, 14px);
+  gap: clamp(4px, 0.8vw, 8px);
+  display: inline-flex;
+  align-items: center;
+}
+
+.mobiletabs .navbtn .ic{
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   MAIN CONTENT - Mobile First
+   ============================================================ */
+.main{
+  flex: 1;
+  min-inline-size: 0;
+  padding: clamp(10px, 2vw, 16px);
+  padding-block-end: calc(clamp(40px, 8vw, 80px) + var(--safe-bottom));
+  max-inline-size: 100%;
+  overflow-x: hidden;
+}
+
+.panel{display: none;}
+.panel.active{
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity: 0; transform: translateY(2px);}
+  to{opacity: 1; transform: translateY(0);}
+}
+
+/* ============================================================
+   NAV BUTTONS
+   ============================================================ */
+.navbtn{
+  display: flex;
+  align-items: center;
+  text-align: start;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navbtn:hover{background: var(--line-soft); color: var(--ink);}
+.navbtn:active{opacity: 0.8;}
+
+.navbtn.active{
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+/* Active indicator on left for sidebar */
+.navbtn.active::before{
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 20%;
+  inset-block-end: 20%;
+  inline-size: 3px;
+  border-radius: 3px;
+  background: var(--strip);
+}
+
+/* ============================================================
+   HERO SECTION - Optimized for portrait
+   ============================================================ */
+.hero{
+  background: linear-gradient(160deg, var(--card), var(--paper-soft));
+  border: 1px solid var(--line);
+  border-radius: clamp(12px, 2vw, 20px);
+  padding: clamp(14px, 2.5vw, 24px) clamp(12px, 2vw, 28px);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  margin-block-end: clamp(12px, 2vw, 20px);
+  max-block-size: 85vh;
+  max-block-size: 85dvh;
+}
+
+.hero::after{
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  inset-block-end: 0;
+  block-size: 3px;
+  background: var(--strip);
+}
+
+.hero .eyebrow{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--text-2xs);
+  letter-spacing: 0.1em;
+  color: var(--hoa);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-block-end: clamp(2px, 0.5vw, 4px);
+}
+
+.hero h2{
+  font-family: 'Fraunces', serif;
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin: 0 0 clamp(6px, 1vw, 10px);
+  line-height: 1.2;
+  max-inline-size: 100%;
+}
+
+.hero p.lede{
+  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  max-inline-size: 100%;
+  margin: 0 0 clamp(10px, 1.5vw, 16px);
+  line-height: 1.5;
+}
+
+/* Stats - 2 columns on mobile, 4 on desktop */
+.statrow{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(4px, 0.8vw, 10px);
+}
+
+.stat{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: clamp(8px, 1.5vw, 14px);
+  padding: clamp(8px, 1.2vw, 12px) clamp(10px, 1.5vw, 16px);
+  min-inline-size: 0;
+}
+
+.stat .num{
+  font-family: 'Fraunces', serif;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.stat .lab{
+  font-size: var(--text-2xs);
+  color: var(--ink-soft);
+  margin-block-start: 2px;
+  line-height: 1.3;
+}
+
+/* ============================================================
+   SECTION TITLES
+   ============================================================ */
+h3.sectiontitle{
+  font-family: 'Fraunces', serif;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: clamp(16px, 3vw, 28px) 0 clamp(8px, 1.5vw, 12px);
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1vw, 10px);
+  line-height: 1.2;
+}
+
+h3.sectiontitle .dot{
+  inline-size: 7px;
+  block-size: 7px;
+  border-radius: 50%;
+  background: var(--hoa);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+p.lead{
+  color: var(--ink-soft);
+  font-size: var(--text-xs);
+  max-inline-size: 100%;
+  line-height: 1.55;
+  margin-block-end: clamp(8px, 1vw, 12px);
+}
+
+/* ============================================================
+   CARDS - Full width on mobile
+   ============================================================ */
+.card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(12px, 1.8vw, 20px) clamp(12px, 2vw, 22px);
+  margin-block-end: clamp(8px, 1.2vw, 14px);
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+/* ============================================================
+   PILLS - Easy to tap
+   ============================================================ */
+.pillrow{
+  display: flex;
+  gap: clamp(4px, 0.8vw, 8px);
+  flex-wrap: nowrap;
+  margin: clamp(8px, 1.2vw, 14px) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-block-end: 2px;
+}
+
+.pillrow::-webkit-scrollbar{display: none;}
+
+.pill{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  padding: clamp(6px, 1vw, 8px) clamp(10px, 1.5vw, 14px);
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-block-size: clamp(36px, 6vw, 44px);
+  min-inline-size: clamp(36px, 6vw, 44px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pill:active{opacity: 0.75;}
+.pill:hover{border-color: var(--ink-faint);}
+.pill.active{
+  background: var(--ink);
+  color: var(--card);
+  border-color: var(--ink);
+}
+
+/* ============================================================
+   SCHEDULE TABLE
+   ============================================================ */
+.daynote{
+  font-size: var(--text-2xs);
+  color: var(--ink-soft);
+  background: var(--paper-soft);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+  padding: clamp(6px, 1vw, 10px) clamp(8px, 1.2vw, 14px);
+  margin-block-end: clamp(8px, 1.2vw, 14px);
+  line-height: 1.45;
+}
+
+.period-block{margin-block-end: 4px;}
+
+.period-head{
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 0.8vw, 8px);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: clamp(10px, 2vw, 18px) 0 clamp(4px, 0.8vw, 8px);
+  font-weight: 600;
+}
+
+.period-head .bar{
+  flex: 1;
+  block-size: 1px;
+  background: var(--line);
+}
+
+/* Table wrapper for scroll */
+.schedule-table-wrapper{
+  inline-size: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-sm);
+}
+
+table.sched{
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-2xs);
+  min-inline-size: 320px;
+}
+
+table.sched tr{border-block-end: 1px solid var(--line-soft);}
+table.sched tr:last-child{border-block-end: none;}
+
+table.sched td{
+  padding: clamp(5px, 0.8vw, 8px) clamp(3px, 0.6vw, 6px);
+  vertical-align: middle;
+}
+
+table.sched td.time{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--text-2xs);
+  color: var(--ink-soft);
+  white-space: nowrap;
+  inline-size: clamp(52px, 14vw, 70px);
+}
+
+table.sched td.tag{
+  white-space: nowrap;
+  inline-size: clamp(70px, 18vw, 110px);
+}
+
+table.sched td.note{
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.tagpill{
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(2px, 0.4vw, 4px);
+  padding: clamp(2px, 0.4vw, 4px) clamp(5px, 0.8vw, 10px);
+  border-radius: 5px;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
+.legend{
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(4px, 0.8vw, 8px);
+  margin: clamp(6px, 1vw, 12px) 0 clamp(2px, 0.5vw, 4px);
+}
+
+.legend .item{
+  display: flex;
+  align-items: center;
+  gap: clamp(3px, 0.5vw, 5px);
+  font-size: var(--text-2xs);
+  color: var(--ink-soft);
+}
+
+.legend .sw{
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   ANALYSIS GRID - 1 column on mobile
+   ============================================================ */
+.analysis-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(8px, 1.2vw, 14px);
+}
+
+.analysis-grid .card h4{
+  font-family: 'Fraunces', serif;
+  font-size: var(--text-sm);
+  margin: 0 0 6px;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  line-height: 1.3;
+}
+
+.analysis-grid .card p,
+.analysis-grid .card li{
+  font-size: var(--text-xs);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.analysis-grid .card ul{
+  margin: 0;
+  padding-inline-start: 16px;
+}
+
+/* ============================================================
+   TIMELINE MAP
+   ============================================================ */
+.timeline-map{
+  display: flex;
+  flex-direction: column;
+  margin-block-start: 6px;
+}
+
+.tm-row{
+  display: grid;
+  grid-template-columns: clamp(48px, 15vw, 70px) 1fr;
+  gap: clamp(6px, 1vw, 12px);
+  padding: clamp(5px, 0.8vw, 8px) 0;
+  border-block-end: 1px solid var(--line-soft);
+  align-items: start;
+}
+
+.tm-row .tlab{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
+  padding-block-start: 2px;
+}
+
+.tm-row .tbody b{
+  display: block;
+  font-size: var(--text-xs);
+  margin-block-end: 2px;
+  line-height: 1.3;
+}
+
+.tm-row .tbody span{
+  font-size: var(--text-2xs);
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   CALLOUTS
+   ============================================================ */
+.callout{
+  border-inline-start: 3px solid var(--hoa);
+  background: var(--hoa-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: clamp(8px, 1.2vw, 12px) clamp(10px, 1.5vw, 16px);
+  font-size: var(--text-xs);
+  color: var(--hoa);
+  margin: clamp(8px, 1.2vw, 12px) 0;
+  line-height: 1.5;
+  inline-size: 100%;
+}
+
+.callout.warn{
+  border-inline-start-color: var(--anh);
+  background: var(--anh-soft);
+  color: var(--anh);
+}
+
+.callout.cool{
+  border-inline-start-color: var(--rest);
+  background: var(--rest-soft);
+  color: var(--rest);
+}
+
+/* ============================================================
+   STYLE GALLERY
+   ============================================================ */
+.gallerywrap{
+  border: 1px solid var(--line);
+  border-radius: clamp(10px, 1.8vw, 18px);
+  padding: clamp(10px, 1.5vw, 20px);
+  background: var(--paper-soft);
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+.theme-frame{
+  border-radius: var(--radius);
+  padding: clamp(10px, 1.8vw, 20px);
+  transition: background 0.25s, color 0.25s;
+  inline-size: 100%;
+  overflow: hidden;
+}
+
+/* Theme: Apple */
+.theme-apple{
+  background: #F5F5F7;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Helvetica, Arial, sans-serif;
+  color: #1D1D1F;
+}
+
+.theme-apple .ag-title{font-size: var(--text-xl); font-weight: 700; margin-block-end: 2px; letter-spacing: -0.01em;}
+.theme-apple .ag-sub{font-size: var(--text-xs); color: #6E6E73; margin-block-end: 12px;}
+.theme-apple .ag-row{
+  display: flex; align-items: center; gap: clamp(8px, 1.2vw, 12px);
+  background: #fff; border-radius: 12px; padding: clamp(8px, 1.2vw, 12px) clamp(10px, 1.5vw, 16px);
+  margin-block-end: 8px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.03), 0 4px 16px -12px rgba(0,0,0,.12);
+}
+.theme-apple .ag-time{font-size: var(--text-xs); color: #86868B; inline-size: clamp(52px, 14vw, 80px); font-weight: 600;}
+.theme-apple .ag-icon{
+  inline-size: clamp(26px, 6vw, 32px); block-size: clamp(26px, 6vw, 32px);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-sm); background: #E8F3FF; flex-shrink: 0;
+}
+.theme-apple .ag-text b{display: block; font-size: var(--text-xs); font-weight: 600; line-height: 1.2;}
+.theme-apple .ag-text span{font-size: var(--text-2xs); color: #6E6E73;}
+
+/* Theme: Notion */
+.theme-notion{
+  background: #FFFFFF; font-family: Helvetica, Arial, sans-serif;
+  color: #37352F; border: 1px solid #EBEAE7;
+}
+.theme-notion .ag-title{font-size: var(--text-xl); font-weight: 700; margin-block-end: 2px;}
+.theme-notion .ag-sub{font-size: var(--text-xs); color: #9B9A97; margin-block-end: 12px;}
+.theme-notion .ag-row{display: flex; align-items: center; gap: 8px; padding: 5px 4px; border-radius: 3px;}
+.theme-notion .ag-row:hover{background: #F7F6F3;}
+.theme-notion .ag-icon{inline-size: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0;}
+.theme-notion .ag-time{
+  font-family: 'IBM Plex Mono', monospace; font-size: var(--text-2xs);
+  color: #9B9A97; inline-size: clamp(52px, 14vw, 80px);
+}
+.theme-notion .ag-text b{font-size: var(--text-xs); font-weight: 500; border-block-end: 1px solid #EBEAE7; padding-block-end: 1px;}
+.theme-notion .ag-text span{display: block; font-size: var(--text-2xs); color: #9B9A97;}
+.theme-notion .ag-row + .ag-row{border-block-start: 1px solid #F1F0EC;}
+
+/* Theme: Cyberpunk */
+.theme-cyberpunk{
+  background: #0B0B14; font-family: 'IBM Plex Mono', monospace;
+  color: #E7FBFF; border: 1px solid #232140;
+  box-shadow: 0 0 30px -8px rgba(255,0,200,.12) inset;
+}
+.theme-cyberpunk .ag-title{
+  font-size: var(--text-lg); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; color: #FF2E9A;
+  text-shadow: 0 0 10px rgba(255,46,154,.5); margin-block-end: 4px;
+}
+.theme-cyberpunk .ag-sub{font-size: var(--text-2xs); color: #5BE6FF; letter-spacing: 0.06em; margin-block-end: 12px; text-transform: uppercase;}
+.theme-cyberpunk .ag-row{
+  display: flex; align-items: center; gap: clamp(6px, 1vw, 10px);
+  padding: 8px 10px; margin-block-end: 6px;
+  background: #11101F; border: 1px solid #2B2A4A;
+  border-inline-start: 3px solid #5BE6FF;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+}
+.theme-cyberpunk .ag-time{font-size: var(--text-2xs); color: #FF2E9A; inline-size: clamp(52px, 14vw, 80px); font-weight: 600;}
+.theme-cyberpunk .ag-icon{font-size: var(--text-sm);}
+.theme-cyberpunk .ag-text b{display: block; font-size: var(--text-xs); color: #E7FBFF; letter-spacing: 0.02em; line-height: 1.2;}
+.theme-cyberpunk .ag-text span{font-size: var(--text-2xs); color: #7E8AB8;}
+
+/* Theme: Minimalist */
+.theme-minimal{
+  background: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #111; border: 1px solid #000;
+}
+.theme-minimal .ag-title{font-size: var(--text-lg); font-weight: 400; letter-spacing: 0.02em; margin-block-end: 2px; text-transform: uppercase;}
+.theme-minimal .ag-sub{font-size: var(--text-2xs); color: #999; margin-block-end: 14px; letter-spacing: 0.04em;}
+.theme-minimal .ag-row{
+  display: grid; grid-template-columns: clamp(48px, 14vw, 70px) 1fr;
+  gap: clamp(8px, 1.2vw, 14px); padding: 8px 0; border-block-end: 1px solid #000;
+}
+.theme-minimal .ag-row:first-of-type{border-block-start: 1px solid #000;}
+.theme-minimal .ag-icon{display: none;}
+.theme-minimal .ag-time{font-family: 'IBM Plex Mono', monospace; font-size: var(--text-2xs); color: #111;}
+.theme-minimal .ag-text b{font-size: var(--text-xs); font-weight: 500; line-height: 1.2;}
+.theme-minimal .ag-text span{font-size: var(--text-2xs); color: #888;}
+
+/* Theme picker */
+.theme-pick{
+  display: flex; gap: clamp(4px, 0.6vw, 6px);
+  margin-block-end: clamp(10px, 1.5vw, 16px); flex-wrap: wrap;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer.note{
+  margin-block-start: clamp(20px, 4vw, 40px);
+  padding-block-start: clamp(10px, 1.5vw, 16px);
+  border-block-start: 1px solid var(--line);
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PORTRAIT OPTIMIZATIONS (320-430px)
+   ============================================================ */
+
+/* Base portrait - applies to all phones */
+@media (max-width: 480px) {
+  .hero{
+    padding: clamp(10px, 2vw, 16px) clamp(8px, 1.5vw, 14px);
+    border-radius: clamp(8px, 1.5vw, 14px);
+    margin-block-end: clamp(8px, 1.5vw, 14px);
+  }
+
+  .hero .eyebrow{
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+  }
+
+  .hero h2{
+    font-size: var(--text-lg);
+    line-height: 1.2;
+  }
+
+  .hero p.lede{
+    font-size: var(--text-2xs);
+    margin-block-end: clamp(8px, 1.2vw, 12px);
+  }
+
+  .statrow{gap: clamp(3px, 0.6vw, 6px);}
+  .stat{
+    padding: clamp(6px, 1vw, 10px) clamp(8px, 1.2vw, 12px);
+    border-radius: clamp(6px, 1vw, 10px);
+  }
+  .stat .num{font-size: var(--text-md);}
+  .stat .lab{font-size: var(--text-2xs);}
+
+  h3.sectiontitle{
+    font-size: var(--text-md);
+    margin: clamp(12px, 2vw, 20px) 0 clamp(6px, 1vw, 10px);
+    gap: 6px;
+  }
+
+  h3.sectiontitle .dot{inline-size: 6px; block-size: 6px;}
+
+  .card{
+    padding: clamp(8px, 1.5vw, 14px) clamp(8px, 1.5vw, 14px);
+    border-radius: clamp(8px, 1.5vw, 12px);
+    margin-block-end: clamp(6px, 1vw, 10px);
+  }
+
+  .analysis-grid{gap: clamp(6px, 1vw, 10px);}
+  .analysis-grid .card h4{font-size: var(--text-xs);}
+  .analysis-grid .card p,
+  .analysis-grid .card li{font-size: var(--text-2xs);}
+
+  .callout{
+    padding: clamp(6px, 1vw, 10px) clamp(8px, 1.2vw, 12px);
+    font-size: var(--text-2xs);
+    border-inline-start-width: 2px;
+    margin: clamp(6px, 1vw, 10px) 0;
+  }
+
+  .daynote{
+    font-size: var(--text-2xs);
+    padding: clamp(4px, 0.8vw, 8px) clamp(6px, 1vw, 10px);
+  }
+
+  .period-head{font-size: var(--text-2xs);}
+  table.sched{min-inline-size: 290px;}
+  table.sched td.time{inline-size: clamp(44px, 12vw, 58px);}
+  table.sched td.tag{inline-size: clamp(60px, 15vw, 90px);}
+
+  .tagpill{
+    font-size: var(--text-2xs);
+    padding: 2px 5px;
+    border-radius: 4px;
+    gap: 2px;
+  }
+
+  .legend{gap: clamp(3px, 0.6vw, 6px);}
+  .legend .item{font-size: var(--text-2xs); gap: 3px;}
+  .legend .sw{inline-size: 6px; block-size: 6px;}
+
+  .tm-row{
+    grid-template-columns: clamp(42px, 13vw, 60px) 1fr;
+    gap: clamp(4px, 0.8vw, 8px);
+    padding: clamp(4px, 0.6vw, 6px) 0;
+  }
+  .tm-row .tlab{font-size: var(--text-2xs);}
+  .tm-row .tbody b{font-size: var(--text-2xs);}
+  .tm-row .tbody span{font-size: var(--text-2xs);}
+
+  .gallerywrap{padding: clamp(8px, 1.2vw, 12px);}
+  .theme-frame{padding: clamp(8px, 1.2vw, 12px);}
+
+  footer.note{
+    margin-block-start: clamp(14px, 3vw, 24px);
+    padding-block-start: clamp(8px, 1vw, 12px);
+  }
+}
+
+/* iPhone 14/15/16 portrait: 390-393px */
+@media (min-width: 375px) and (max-width: 430px) {
+  .hero{padding: clamp(12px, 2vw, 18px) clamp(10px, 1.8vw, 16px);}
+  .hero h2{font-size: clamp(1rem, 0.85rem + 0.8vw, 1.25rem);}
+}
+
+/* Small phones: 320px */
+@media (max-width: 374px) {
+  .hero{padding: 8px 8px; border-radius: 8px;}
+  .hero h2{font-size: var(--text-md);}
+  .hero p.lede{font-size: 0.5625rem;}
+
+  .statrow{gap: 2px;}
+  .stat{padding: 6px 8px; border-radius: 6px;}
+  .stat .num{font-size: var(--text-sm);}
+  .stat .lab{font-size: 0.5rem;}
+
+  .mobiletabs .navbtn{
+    font-size: 0.5625rem;
+    padding: 5px 8px;
+    min-block-size: 32px;
+    min-inline-size: 32px;
+  }
+
+  .pill{
+    font-size: 0.5625rem;
+    padding: 5px 8px;
+    min-block-size: 32px;
+    min-inline-size: 32px;
+  }
+
+  .card{padding: 8px 10px; border-radius: 6px;}
+  .daynote{padding: 4px 6px;}
+  table.sched{min-inline-size: 260px;}
+  table.sched td{padding: 4px 2px;}
+  table.sched td.time{inline-size: 38px; font-size: 0.5rem;}
+  table.sched td.tag{inline-size: 55px;}
+  .tagpill{font-size: 0.5rem; padding: 1px 4px;}
+}
+
+/* ============================================================
+   LANDSCAPE PHONES
+   ============================================================ */
+@media (max-width: 932px) and (orientation: landscape) {
+  .main{padding: clamp(8px, 1.5vw, 14px);}
+
+  .statrow{grid-template-columns: repeat(4, 1fr);}
+
+  .analysis-grid{
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(6px, 1vw, 10px);
+  }
+
+  .hero{padding: clamp(10px, 1.8vw, 18px) clamp(10px, 1.8vw, 20px);}
+  .hero h2{font-size: var(--text-xl);}
+
+  .mobiletabs{
+    padding-block: clamp(4px, 0.8vw, 6px);
+  }
+}
+
+/* ============================================================
+   TABLET & DESKTOP
+   ============================================================ */
+@media (min-width: 769px) {
+  .app{flex-direction: row;}
+
+  .mobiletabs{display: none;}
+
+  .sidebar{
+    display: block;
+    inline-size: clamp(200px, 20vw, 260px);
+    min-inline-size: 200px;
+    flex-shrink: 0;
+    padding: clamp(20px, 3vw, 28px) clamp(14px, 2vw, 18px) 18px;
+    border-inline-end: 1px solid var(--line);
+    background: var(--paper-soft);
+    position: sticky;
+    inset-block-start: 0;
+    block-size: 100vh;
+    block-size: 100dvh;
+    overflow-y: auto;
+  }
+
+  .brand{
+    padding: 0 6px 22px;
+  }
+
+  .brand .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    color: var(--hoa);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .brand h1{
+    font-family: 'Fraunces', serif;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    margin: 6px 0 4px;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .brand p{
+    font-size: var(--text-xs);
+    color: var(--ink-soft);
+  }
+
+  .navgroup{margin-block-start: 10px;}
+
+  .navbtn{
+    inline-size: 100%;
+    padding: clamp(10px, 1.5vw, 12px);
+    margin-block-end: 4px;
+    font-size: var(--text-sm);
+    gap: 10px;
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+
+  .navbtn .ic{font-size: var(--text-md);}
+
+  .sidebar-foot{
+    margin-block-start: 22px;
+    padding: clamp(10px, 1.5vw, 14px);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    border: 1px solid var(--line);
+    font-size: var(--text-xs);
+    color: var(--ink-soft);
+  }
+
+  .sidebar-foot b{color: var(--ink);}
+
+  .main{
+    padding: clamp(20px, 3vw, 32px) clamp(16px, 4vw, 40px) clamp(60px, 8vw, 80px);
+    max-inline-size: 980px;
+  }
+
+  .statrow{grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));}
+  .analysis-grid{grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));}
+  .hero{padding: clamp(20px, 3vw, 32px) clamp(18px, 3vw, 34px);}
+  .hero h2{font-size: var(--text-3xl);}
+
+  table.sched{min-inline-size: 400px;}
+  table.sched td.time{inline-size: clamp(60px, 12vw, 78px);}
+  table.sched td.tag{inline-size: clamp(90px, 18vw, 150px);}
+}
+
+/* Desktop wide */
+@media (min-width: 1024px) {
+  .analysis-grid{grid-template-columns: 1fr 1fr;}
+}
+
+/* ============================================================
+   ORIENTATION HANDLING
+   ============================================================ */
+@media (orientation: portrait) {
+  .main{overflow-x: hidden;}
+}
+
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
+@media (forced-colors: active) {
+  .navbtn.active{border: 2px solid ButtonText;}
+  .pill.active{border: 2px solid ButtonText;}
+  .callout{border-inline-start: 3px solid ButtonText;}
+}
+</style>
+</head>
+<body>
+<div class="signature-strip" role="presentation" aria-hidden="true"></div>
+<div class="app">
+
+  <!-- SIDEBAR (desktop) -->
+  <nav class="sidebar" id="sidebarNav" aria-label="Điều hướng chính">
+    <div class="brand">
+      <div class="eyebrow">Lộ trình thi chuyên</div>
+      <h1>Nguyễn Doãn Hoàng</h1>
+      <p>🎯 Mục tiêu: Đỗ Chuyên Hóa — Quốc Học Huế</p>
+    </div>
+    <div class="navgroup" id="navgroup" role="tablist" aria-label="Danh mục"></div>
+    <div class="sidebar-foot">
+      <b>Hiện tại:</b> đang nghỉ hè 🌴 — lịch hè áp dụng đến hết <b>4/9</b>. Từ <b>5/9</b> chuyển sang lịch năm học.
+    </div>
+  </nav>
+
+  <!-- MOBILE TABS -->
+  <div class="mobiletabs" id="mobileNav" role="tablist" aria-label="Danh mục"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main" role="main"></main>
+</div>
+
+<script>
+/* ============================================================
+   DATA LAYER
+   ============================================================ */
+const TAGS = {
+  hoa:   {emoji:"🧪", name:"Hóa",        c:"--hoa",    cs:"--hoa-soft"},
+  toan:  {emoji:"📐", name:"Toán",       c:"--toan",   cs:"--toan-soft"},
+  anh:   {emoji:"🇬🇧", name:"T.Anh",     c:"--anh",    cs:"--anh-soft"},
+  de:    {emoji:"📝", name:"Làm đề",     c:"--de",     cs:"--de-soft"},
+  van:   {emoji:"📖", name:"Văn",        c:"--van",    cs:"--van-soft"},
+  sport: {emoji:"💪", name:"Thể thao",   c:"--sport",  cs:"--sport-soft"},
+  school:{emoji:"🏫", name:"Trường học", c:"--school", cs:"--school-soft"},
+  rest:  {emoji:"🌿", name:"Nghỉ/Tự do", c:"--rest",   cs:"--rest-soft"},
+  sleep: {emoji:"😴", name:"Ngủ",        c:"--sleep",  cs:"--sleep-soft"},
+  meal:  {emoji:"🍚", name:"Ăn uống",    c:"--meal",   cs:"--meal-soft"},
+  prep:  {emoji:"🎒", name:"Chuẩn bị",   c:"--prep",   cs:"--prep-soft"},
+};
+const PERIOD_LABEL = {sang:"🌅 Buổi sáng", chieu:"🌤️ Buổi chiều", toi:"🌙 Buổi tối"};
+
+// SUMMER schedules (giữ nguyên data từ bản gốc)
+const sumA = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân, uống 1 cốc nước lớn", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Calisthenics 30p (T7 đổi thành đi bộ/giãn cơ nhẹ)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng đầy đủ — không học khi đói", p:"sang"},
+  {t:"06:45–07:00", tag:"rest", n:"Khởi động trí não — xem nhanh 1 trang ghi chú Hóa hôm trước", p:"sang"},
+  {t:"07:00–08:30", tag:"hoa", n:"Học sâu kiến thức mới — đầu óc tỉnh táo nhất trong ngày", p:"sang"},
+  {t:"08:30–08:45", tag:"rest", n:"Nghỉ ngắn — đi lại, uống nước, không cầm điện thoại", p:"sang"},
+  {t:"08:45–10:15", tag:"toan", n:"Học sâu / chữa dạng bài khó", p:"sang"},
+  {t:"10:15–10:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:30–11:30", tag:"de", n:"Luyện đề tổng hợp Hóa + Toán — áp dụng ngay kiến thức vừa học", p:"sang"},
+  {t:"11:30–12:30", tag:"meal", n:"Ăn trưa cùng gia đình", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa — chợp mắt hoặc thư giãn để nạp lại năng lượng", p:"chieu"},
+  {t:"13:30–14:30", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"chieu"},
+  {t:"14:30–14:45", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"14:45–15:45", tag:"hoa", n:"Quay lại ôn phần Hóa/Toán còn yếu trong tuần", p:"chieu"},
+  {t:"15:45–16:45", tag:"rest", n:"Thời gian tự do — chơi, nghe nhạc, KHÔNG học (bắt buộc)", p:"chieu"},
+  {t:"16:45–17:00", tag:"prep", n:"Phụ giúp gia đình chuẩn bị bữa tối", p:"chieu"},
+  {t:"17:00–18:00", tag:"meal", n:"Ăn tối + sinh hoạt gia đình", p:"toi"},
+  {t:"18:00–19:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — nộp bài cô Trang Anh", p:"toi"},
+  {t:"19:00–20:00", tag:"rest", n:"Tự do / thư giãn — đọc sách, nói chuyện gia đình", p:"toi"},
+  {t:"20:00–20:45", tag:"rest", n:"Tổng kết ngày — 3 điều làm tốt + việc cần làm ngày mai", p:"toi"},
+  {t:"20:45–21:30", tag:"prep", n:"Tắm rửa, chuẩn bị đồ dùng cho ngày mai", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Đọc nhẹ / nghe nhạc nhẹ — KHÔNG dùng điện thoại", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumB = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng", p:"sang"},
+  {t:"06:45–08:15", tag:"hoa", n:"Học sâu Hóa — môn ưu tiên số 1, làm trước trong ngày", p:"sang"},
+  {t:"08:15–08:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:30–09:30", tag:"de", n:"Luyện đề tổng hợp Hóa/Toán", p:"sang"},
+  {t:"09:30–09:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:45–10:30", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối nay bận", p:"sang"},
+  {t:"10:30–11:30", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"11:30–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"13:30–14:30", tag:"toan", n:"Xem lại bài cũ + chuẩn bị câu hỏi cho buổi học thêm tối nay", p:"chieu"},
+  {t:"14:30–16:30", tag:"rest", n:"Tự do / nghỉ ngơi dài hơn — tích năng lượng trước buổi học tối", p:"chieu"},
+  {t:"16:30–17:00", tag:"prep", n:"Chuẩn bị đồ dùng đi học thêm", p:"chieu"},
+  {t:"17:00–18:00", tag:"meal", n:"Ăn tối sớm", p:"toi"},
+  {t:"18:00–19:00", tag:"rest", n:"Nghỉ ngơi, thư giãn trước khi đi học", p:"toi"},
+  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN tại lớp (1h30)", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:30", tag:"rest", n:"Tắm rửa, ăn nhẹ nếu cần", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Thư giãn nhẹ — KHÔNG học thêm gì nữa, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumC = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng", p:"sang"},
+  {t:"06:45–08:15", tag:"de", n:"Luyện đề — áp dụng kiến thức, tối nay sẽ được củng cố thêm", p:"sang"},
+  {t:"08:15–08:30", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:30–09:30", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối nay học rất dài", p:"sang"},
+  {t:"09:30–09:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:45–10:45", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"10:45–11:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"11:00–12:00", tag:"hoa", n:"Ôn lại + xem trước nội dung buổi học thêm tối nay", p:"sang"},
+  {t:"12:00–13:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"13:00–14:00", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"14:00–15:00", tag:"toan", n:"Ôn lại + xem trước nội dung buổi học thêm tối nay", p:"chieu"},
+  {t:"15:00–16:00", tag:"rest", n:"Tự do / nghỉ ngơi — quan trọng trước buổi học 4 tiếng liền", p:"chieu"},
+  {t:"16:00–16:30", tag:"meal", n:"Ăn nhẹ no bụng trước khi đi (tối nay học liên tục 4 tiếng)", p:"chieu"},
+  {t:"16:30–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"16:45–17:00", tag:"prep", n:"Ổn định chỗ học", p:"toi"},
+  {t:"17:00–21:00", tag:"hoa", n:"Học thêm HÓA + TOÁN tại lớp (4 tiếng liên tục)", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:45", tag:"meal", n:"Ăn nhẹ + tắm rửa — nạp lại năng lượng sau buổi học dài", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sumD = [
+  {t:"05:30–06:00", tag:"rest", n:"Thức dậy thong thả, vệ sinh cá nhân", p:"sang"},
+  {t:"06:00–06:30", tag:"meal", n:"Ăn sáng thong thả", p:"sang"},
+  {t:"06:30–07:30", tag:"de", n:"Tổng ôn cả tuần — xem lại ghi chú Hóa+Toán, đánh dấu phần còn yếu", p:"sang"},
+  {t:"07:30–07:45", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"07:45–08:45", tag:"van", n:"Đọc — viết — cảm thụ văn học", p:"sang"},
+  {t:"08:45–09:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:00–10:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm, không để dồn", p:"sang"},
+  {t:"10:00–11:00", tag:"rest", n:"Thời gian tự do / sở thích cá nhân", p:"sang"},
+  {t:"11:00–12:00", tag:"rest", n:"Hoạt động ngoài trời / đi dạo cùng gia đình", p:"chieu"},
+  {t:"12:00–13:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"13:00–14:30", tag:"rest", n:"Nghỉ trưa dài hơn — ngày phục hồi", p:"chieu"},
+  {t:"14:30–15:30", tag:"toan", n:"Luyện đề nhẹ", p:"chieu"},
+  {t:"15:30–16:00", tag:"prep", n:"Ăn nhẹ, chuẩn bị đồ trước khi đi học thêm", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Thư giãn, chuẩn bị tinh thần cho buổi Hóa", p:"chieu"},
+  {t:"16:45–17:00", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"17:00–19:00", tag:"hoa", n:"Học thêm HÓA tại lớp", p:"toi"},
+  {t:"19:00–19:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"19:15–20:00", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"20:00–21:00", tag:"rest", n:"Thời gian gia đình / thư giãn", p:"toi"},
+  {t:"21:00–21:45", tag:"prep", n:"Chuẩn bị sách vở, lịch học cho tuần mới — nghi thức cuối tuần", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+
+// SCHOOL YEAR schedules
+const syNormal = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Calisthenics 30p (T2/T4/T6)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
+  {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
+  {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
+  {t:"11:30–11:45", tag:"prep", n:"Di chuyển về nhà", p:"chieu"},
+  {t:"11:45–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:30", tag:"rest", n:"Nghỉ trưa — sau buổi sáng dài cần nghỉ đủ", p:"chieu"},
+  {t:"13:30–15:00", tag:"hoa", n:"Học sâu Hóa", p:"chieu"},
+  {t:"15:00–15:15", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"15:15–16:15", tag:"toan", n:"Học sâu / chữa bài Toán", p:"chieu"},
+  {t:"16:15–16:30", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"16:30–17:15", tag:"de", n:"Luyện đề", p:"chieu"},
+  {t:"17:15–18:00", tag:"meal", n:"Ăn tối + sinh hoạt gia đình", p:"toi"},
+  {t:"18:00–18:45", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu", p:"toi"},
+  {t:"18:45–19:30", tag:"van", n:"Văn (có thể đổi thành luyện đề thêm nếu cần)", p:"toi"},
+  {t:"19:30–20:15", tag:"rest", n:"Tự do / giải trí", p:"toi"},
+  {t:"20:15–21:00", tag:"rest", n:"Ôn nhẹ + chuẩn bị ngày mai", p:"toi"},
+  {t:"21:00–21:30", tag:"prep", n:"Tắm rửa, thư giãn", p:"toi"},
+  {t:"21:30–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const syTutor = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ (không tập thể thao 2 ngày này)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
+  {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
+  {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
+  {t:"11:30–11:45", tag:"prep", n:"Di chuyển về nhà", p:"chieu"},
+  {t:"11:45–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:15", tag:"rest", n:"Nghỉ trưa (rút ngắn hơn ngày thường để có thêm giờ học)", p:"chieu"},
+  {t:"13:15–14:15", tag:"hoa", n:"Hóa — ưu tiên số 1, làm trước trong ngày bận", p:"chieu"},
+  {t:"14:15–14:30", tag:"rest", n:"Nghỉ ngắn", p:"chieu"},
+  {t:"14:30–15:15", tag:"de", n:"Luyện đề", p:"chieu"},
+  {t:"15:15–16:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối bận", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Tự do / nghỉ ngơi trước buổi học thêm tối", p:"chieu"},
+  {t:"16:45–17:15", tag:"meal", n:"Ăn tối sớm", p:"toi"},
+  {t:"17:15–19:00", tag:"rest", n:"T3: thư giãn, chuẩn bị đi học · T5: học thêm HÓA bắt đầu từ 17h00", p:"toi"},
+  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm (T3)", p:"toi"},
+  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN (T3) · T5: tiếp tục Hóa+Toán đến 21h00", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:45", tag:"rest", n:"Tắm rửa, ăn nhẹ nếu cần", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const sySun = [
+  {t:"05:30–06:00", tag:"rest", n:"Thức dậy thong thả", p:"sang"},
+  {t:"06:00–06:30", tag:"meal", n:"Ăn sáng thong thả", p:"sang"},
+  {t:"06:30–08:00", tag:"hoa", n:"Học sâu Hóa — ngày duy nhất trong tuần có khối thời gian dài buổi sáng", p:"sang"},
+  {t:"08:00–08:15", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"08:15–09:45", tag:"toan", n:"Học sâu Toán", p:"sang"},
+  {t:"09:45–10:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:00–11:00", tag:"de", n:"Luyện đề tổng hợp cả tuần", p:"sang"},
+  {t:"11:00–12:00", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:00–13:00", tag:"rest", n:"Nghỉ trưa", p:"chieu"},
+  {t:"13:00–13:45", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu", p:"chieu"},
+  {t:"13:45–14:30", tag:"van", n:"Văn", p:"chieu"},
+  {t:"14:30–15:30", tag:"rest", n:"Tự do / sở thích cá nhân — ngày của riêng em", p:"chieu"},
+  {t:"15:30–16:00", tag:"prep", n:"Ăn nhẹ, chuẩn bị đi học thêm", p:"chieu"},
+  {t:"16:00–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"17:00–19:00", tag:"hoa", n:"Học thêm HÓA tại lớp", p:"toi"},
+  {t:"19:00–19:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"19:15–20:00", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"20:00–21:00", tag:"rest", n:"Thời gian gia đình", p:"toi"},
+  {t:"21:00–21:45", tag:"prep", n:"Chuẩn bị sách vở, lịch học cho tuần mới", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+
+// CRAM
+const cram = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy — giữ ĐÚNG giờ như mọi ngày", p:"sang"},
+  {t:"05:45–06:15", tag:"sport", n:"Vận động nhẹ 30p — giảm lo âu thi cử", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng đầy đủ", p:"sang"},
+  {t:"06:45–08:15", tag:"de", n:"Làm 1 đề thi thử — bấm giờ như thi thật", p:"sang"},
+  {t:"08:15–08:45", tag:"de", n:"Chấm bài + khoanh vùng lỗi sai", p:"sang"},
+  {t:"08:45–09:00", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"09:00–10:00", tag:"hoa", n:"Ôn trọng điểm — CHỈ phần vừa sai", p:"sang"},
+  {t:"10:00–10:15", tag:"rest", n:"Nghỉ ngắn", p:"sang"},
+  {t:"10:15–11:15", tag:"toan", n:"Ôn trọng điểm — CHỈ phần vừa sai", p:"sang"},
+  {t:"11:15–12:15", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:15–13:15", tag:"rest", n:"Nghỉ trưa đủ", p:"chieu"},
+  {t:"13:15–14:15", tag:"de", n:"Luyện 1 dạng đề khác", p:"chieu"},
+  {t:"14:15–14:30", tag:"de", n:"Chấm nhanh, ghi chú lỗi", p:"chieu"},
+  {t:"14:30–15:00", tag:"rest", n:"Nghỉ ngắn / đi lại", p:"chieu"},
+  {t:"15:00–16:00", tag:"anh", n:"Tiếng Anh — vẫn giữ đều", p:"chieu"},
+  {t:"16:00–16:45", tag:"rest", n:"Tự do / thư giãn — BẮT BUỘC", p:"chieu"},
+  {t:"16:45–17:30", tag:"meal", n:"Ăn tối", p:"toi"},
+  {t:"17:30–18:30", tag:"hoa", n:"Đọc lại tổng hợp công thức/ghi chú", p:"toi"},
+  {t:"18:30–19:15", tag:"rest", n:"(Chèn buổi học thêm cố định nếu trùng)", p:"toi"},
+  {t:"19:15–20:15", tag:"rest", n:"Thư giãn — hít thở sâu", p:"toi"},
+  {t:"20:15–21:00", tag:"prep", n:"Chuẩn bị đồ dùng cho ngày mai", p:"toi"},
+  {t:"21:00–22:00", tag:"sleep", n:"Chuẩn bị ngủ SỚM hơn", p:"toi"},
+];
+
+const multiExample = [
+  {mon:"🧪 Hóa", date:"Thứ 4 (2 ngày nữa)", weight:"Rất quan trọng", confidence:"Đang yếu", priority:"① Ưu tiên cao nhất"},
+  {mon:"📐 Toán", date:"Thứ 5 (3 ngày nữa)", weight:"Rất quan trọng", confidence:"Khá ổn", priority:"② Ưu tiên cao"},
+  {mon:"🇬🇧 T.Anh", date:"Mỗi ngày", weight:"Trung bình", confidence:"Ổn định", priority:"③ Duy trì tối thiểu"},
+  {mon:"📖 Văn", date:"Thứ 6 (4 ngày nữa)", weight:"Thấp hơn", confidence:"Khá ổn", priority:"④ Ôn lướt"},
+];
+
+/* ============================================================
+   RENDER HELPERS
+   ============================================================ */
+function rowsToHTML(rows){
+  const groups = {sang:[], chieu:[], toi:[]};
+  rows.forEach(r=>groups[r.p].push(r));
+  let html = "";
+  ["sang","chieu","toi"].forEach(p=>{
+    if(groups[p].length===0) return;
+    html += `<div class="period-block"><div class="period-head">${PERIOD_LABEL[p]}<span class="bar" aria-hidden="true"></span></div>`;
+    html += `<div class="schedule-table-wrapper"><table class="sched" aria-label="Lịch ${PERIOD_LABEL[p]}"><tbody>`;
+    groups[p].forEach(r=>{
+      const tg = TAGS[r.tag];
+      html += `<tr>
+        <td class="time mono">${r.t}</td>
+        <td class="tag"><span class="tagpill" style="background:var(${tg.cs});color:var(${tg.c});">${tg.emoji} ${tg.name}</span></td>
+        <td class="note">${r.n}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div></div>`;
+  });
+  return html;
+}
+
+function legendHTML(keys){
+  return `<div class="legend">${keys.map(k=>{
+    const tg=TAGS[k];
+    return `<div class="item"><span class="sw" style="background:var(${tg.c});" aria-hidden="true"></span>${tg.emoji} ${tg.name}</div>`;
+  }).join("")}</div>`;
+}
+
+/* ============================================================
+   PANEL DEFINITIONS
+   ============================================================ */
+const NAV = [
+  {id:"overview", icon:"📊", label:"Tổng quan"},
+  {id:"summer",   icon:"☀️", label:"Lịch Hè"},
+  {id:"school",   icon:"🏫", label:"Năm Học"},
+  {id:"special",  icon:"🎯", label:"Đặc Biệt"},
+  {id:"gallery",  icon:"🎨", label:"Mẫu"},
+];
+
+function buildOverview(){
+  return `
+  <div class="hero">
+    <div class="eyebrow">Lộ trình cá nhân hóa</div>
+    <h2 class="display">7 tháng để biến mục tiêu Chuyên Hóa thành hiện thực</h2>
+    <p class="lede">Thời gian biểu thiết kế riêng theo nhịp sống thật: giờ học thêm cố định, giờ ngủ, 5 môn ưu tiên. Không phải lịch chung — đây là bản thiết kế cho Nguyễn Doãn Hoàng.</p>
+    <div class="statrow">
+      <div class="stat"><div class="num">5:30</div><div class="lab">Thức dậy</div></div>
+      <div class="stat"><div class="num">22:00</div><div class="lab">Đi ngủ</div></div>
+      <div class="stat"><div class="num">~6–7h</div><div class="lab">Tự học/ngày</div></div>
+      <div class="stat"><div class="num">3×30p</div><div class="lab">Thể thao/tuần</div></div>
+    </div>
+  </div>
+
+  <h3 class="sectiontitle"><span class="dot" aria-hidden="true"></span>Vì sao sắp xếp như vậy?</h3>
+  <p class="lead">Bốn nguyên tắc quyết định cấu trúc lịch — dựa trên cách bộ não hoạt động trong ngày.</p>
+  <div class="analysis-grid">
+    <div class="card">
+      <h4>🧠 Môn khó nhất → đầu óc tỉnh táo nhất</h4>
+      <p>Sau một đêm ngủ, não phục hồi năng lượng, tập trung tốt nhất 2–3 giờ đầu. <b>Hóa</b> (ưu tiên #1) luôn đặt 6h45–8h30.</p>
+    </div>
+    <div class="card">
+      <h4>📐 Toán đi liền sau Hóa</h4>
+      <p>Toán cần tư duy tương tự Hóa, học liền sau khi não đã "vào mạch" hiệu quả hơn tách rời.</p>
+    </div>
+    <div class="card">
+      <h4>📝 Làm đề → giữa buổi</h4>
+      <p>Luyện đề hiệu quả nhất khi áp dụng <i>ngay</i> kiến thức vừa học, lúc còn "nóng".</p>
+    </div>
+    <div class="card">
+      <h4>📖 Văn & Anh → năng lượng thấp</h4>
+      <p>Sau trưa cơ thể tụt năng lượng — lý tưởng cho Văn và Tiếng Anh, không cần tư duy logic căng.</p>
+    </div>
+  </div>
+
+  <h3 class="sectiontitle"><span class="dot" style="background:var(--anh);" aria-hidden="true"></span>Cách tránh quá tải</h3>
+  <div class="callout warn">⚠️ 7 giờ tự học/ngày mùa hè là cường độ <b>cao</b>, chỉ bền vững nếu có "van an toàn". Nếu thấy đuối, chuyển ngay sang lịch "Mất động lực" ở tab Đặc Biệt.</div>
+  <div class="analysis-grid">
+    <div class="card"><h4>⏱️ Nghỉ ngắn đều đặn</h4><p>Sau 60–90 phút học: 15 phút nghỉ thật, đứng dậy, uống nước.</p></div>
+    <div class="card"><h4>🌿 Khối tự do cố định</h4><p>Khung giờ <b>cố định, không thương lượng</b> mỗi ngày để chơi, thư giãn.</p></div>
+    <div class="card"><h4>🗓️ CN là ngày nhẹ nhất</h4><p>Cường độ thấp, chủ yếu tổng ôn và phục hồi.</p></div>
+    <div class="card"><h4>💪 Thể thao giảm stress</h4><p>30 phút vận động tăng tập trung, không nên cắt bỏ khi bận.</p></div>
+  </div>
+  <div class="callout cool">💡 Giấc ngủ: 5h30–22h00 = 7h30/ngày. Tuổi 14 cần 8–10h. Nếu được, ngủ sớm hơn 30p vào T2/4/6/7 để bù.</div>
+
+  <h3 class="sectiontitle"><span class="dot" style="background:var(--toan);" aria-hidden="true"></span>Cách duy trì lâu dài</h3>
+  <div class="timeline-map">
+    <div class="tm-row"><div class="tlab mono">Hằng ngày</div><div class="tbody"><b>Giữ đúng giờ dậy/ngủ</b><span>Đồng hồ sinh học ổn định là nền tảng của sự tập trung.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi tối</div><div class="tbody"><b>3 dòng tổng kết</b><span>Viết 3 điều đã làm tốt — duy trì động lực qua tiến bộ nhỏ.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi CN</div><div class="tbody"><b>Chuẩn bị tuần mới</b><span>Soạn sách vở, xem lịch — biến khởi đầu tuần thành tự động.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Mỗi tuần</div><div class="tbody"><b>Cho phép 1 buổi lệch</b><span>Đám tiệc, mệt, ốm — lệch 1 buổi không phải thất bại.</span></div></div>
+    <div class="tm-row"><div class="tlab mono">Luôn luôn</div><div class="tbody"><b>Người thân hỗ trợ nhẹ</b><span>Lời nhắc nhẹ nhàng hiệu quả hơn giám sát căng thẳng.</span></div></div>
+  </div>
+  <footer class="note">Thiết kế riêng cho Nguyễn Doãn Hoàng · Mục tiêu: Chuyên Hóa — Quốc Học Huế 🧪</footer>
+  `;
+}
+
+function buildSummer(){
+  return `
+  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">☀️ Lịch Hè hiện tại</h2>
+  <p class="lead">Áp dụng đến hết <b>4/9</b> — giai đoạn "vàng" xây nền Hóa/Toán thật chắc trước năm học.</p>
+  <div class="pillrow" id="summerPills" role="tablist" aria-label="Chọn ngày"></div>
+  ${legendHTML(["hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
+  <div class="card" id="summerTable"></div>
+  `;
+}
+
+function buildSchool(){
+  return `
+  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🏫 Lịch Năm Học</h2>
+  <p class="lead">Áp dụng từ <b>5/9</b> — buổi sáng 7h00–11h30, tự học dồn vào chiều/tối.</p>
+  <div class="pillrow" id="schoolPills" role="tablist" aria-label="Chọn ngày"></div>
+  ${legendHTML(["school","hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
+  <div class="card" id="schoolTable"></div>
+  `;
+}
+
+function buildSpecial(){
+  return `
+  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🎯 Tình Huống Đặc Biệt</h2>
+  <p class="lead">Ba "chế độ" dùng khi mọi thứ không diễn ra như bình thường.</p>
+  <div class="pillrow" id="specialPills" role="tablist" aria-label="Chọn chế độ"></div>
+  <div id="specialBody"></div>
+  `;
+}
+
+function specialCram(){
+  return `
+  <div class="callout">🚀 <b>Nước rút (1–2 tuần trước thi):</b> không học mới · chỉ ôn trọng điểm + luyện đề bấm giờ · phân tích lỗi sai kỹ · ngủ đủ tuyệt đối · giữ thể thao nhẹ.</div>
+  ${legendHTML(["de","hoa","toan","anh","sport","rest","meal","prep","sleep"])}
+  <div class="card">${rowsToHTML(cram)}</div>
+  `;
+}
+
+function specialLow(){
+  return `
+  <div class="callout warn">🔋 <b>Khi mất động lực:</b> mục tiêu là "không bỏ nếp". Giảm độ khó, giảm thời lượng, giữ đều đặn.</div>
+  <div class="analysis-grid">
+    <div class="card">
+      <h4>✅ 3 việc nhỏ thay cả thời gian biểu</h4>
+      <ul>
+        <li><b>1 việc dễ trước</b> (15p từ vựng) — tạo cảm giác "đã làm được".</li>
+        <li><b>1 khối 25–30p</b> Hóa hoặc Toán — chỉ cần bắt đầu.</li>
+        <li><b>1 việc tối thiểu</b>: nộp bài TA trước 23h.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>🌤️ Vẫn giữ</h4>
+      <ul>
+        <li>Giờ dậy & ngủ — KHÔNG đổi.</li>
+        <li>30p vận động ngoài trời.</li>
+        <li>Nói chuyện với người thân.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout cool">💬 Một ngày nhẹ không làm chậm mục tiêu — nó giúp không bỏ cuộc giữa đường.</div>
+  `;
+}
+
+function specialMulti(){
+  let rows = multiExample.map(r=>`
+    <tr>
+      <td class="note"><b>${r.mon}</b></td>
+      <td class="note">${r.date}</td>
+      <td class="note">${r.weight}</td>
+      <td class="note">${r.confidence}</td>
+      <td class="note"><b>${r.priority}</b></td>
+    </tr>`).join("");
+  return `
+  <div class="callout">⚠️ <b>Nhiều bài KT cùng lúc:</b> xếp ưu tiên theo: <b>ngày thi gần</b>, <b>mức quan trọng</b>, <b>mức tự tin</b>.</div>
+  <div class="card">
+    <h4 style="font-family:'Fraunces',serif;margin:0 0 8px;">📋 Ma trận ưu tiên</h4>
+    <div class="schedule-table-wrapper">
+      <table class="sched" aria-label="Ma trận ưu tiên"><tbody>
+        <tr style="border-block-end:2px solid var(--ink);">
+          <td class="note"><b>Môn</b></td><td class="note"><b>Ngày thi</b></td><td class="note"><b>Quan trọng</b></td><td class="note"><b>Tự tin</b></td><td class="note"><b>Ưu tiên</b></td>
+        </tr>
+        ${rows}
+      </tbody></table>
+    </div>
+  </div>
+  <div class="callout cool">💡 Hóa & Toán không về 0 — chỉ giảm tạm thời. Văn có thể "ôn lướt".</div>
+  `;
+}
+
+/* Gallery */
+const galleryRows = [
+  {t:"06:45", icon:"🧪", b:"Học sâu Hóa học", s:"Kiến thức mới — ưu tiên #1"},
+  {t:"08:45", icon:"📐", b:"Luyện Toán", s:"Chữa dạng bài khó"},
+  {t:"10:30", icon:"📝", b:"Làm đề tổng hợp", s:"Áp dụng kiến thức vừa học"},
+  {t:"18:00", icon:"🇬🇧", b:"Tiếng Anh", s:"Ngữ pháp + Từ vựng"},
+];
+function galleryHTML(){
+  return galleryRows.map(r=>`
+    <div class="ag-row">
+      <div class="ag-time mono">${r.t}</div>
+      <div class="ag-icon" aria-hidden="true">${r.icon}</div>
+      <div class="ag-text"><b>${r.b}</b><span>${r.s}</span></div>
+    </div>`).join("");
+}
+function buildGallery(){
+  return `
+  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🎨 Phong Cách Thiết Kế</h2>
+  <p class="lead">Cùng một lịch học — bốn ngôn ngữ thiết kế khác nhau.</p>
+  <div class="gallerywrap">
+    <div class="theme-pick" id="themePick" role="tablist" aria-label="Chọn theme"></div>
+    <div class="theme-frame theme-apple" id="themeFrame">
+      <div class="ag-title">Hôm nay</div>
+      <div class="ag-sub">Thứ Hai · Lịch hè</div>
+      ${galleryHTML()}
+    </div>
+  </div>
+  `;
+}
+const THEMES = [
+  {id:"apple", label:"🍎 Apple", cls:"theme-apple"},
+  {id:"notion", label:"◻️ Notion", cls:"theme-notion"},
+  {id:"cyberpunk", label:"⚡ Cyber", cls:"theme-cyberpunk"},
+  {id:"minimal", label:"⬜ Minimal", cls:"theme-minimal"},
+];
+
+/* ============================================================
+   APP WIRING
+   ============================================================ */
+const main = document.getElementById("main");
+const navgroup = document.getElementById("navgroup");
+const mobileNav = document.getElementById("mobileNav");
+
+function navButtonHTML(item, idPrefix){
+  return `<button class="navbtn" data-target="${item.id}" id="${idPrefix}-${item.id}" role="tab" aria-selected="false" aria-controls="panel-${item.id}"><span class="ic" aria-hidden="true">${item.icon}</span>${item.label}</button>`;
+}
+NAV.forEach(item=>{
+  if(navgroup) navgroup.insertAdjacentHTML("beforeend", navButtonHTML(item,"nav"));
+  if(mobileNav) mobileNav.insertAdjacentHTML("beforeend", navButtonHTML(item,"mnav"));
+});
+
+function renderPanel(id){
+  main.innerHTML = `<div class="panel active" id="panel-${id}" role="tabpanel" aria-label="${NAV.find(n=>n.id===id)?.label || ''}"></div>`;
+  const p = document.getElementById(`panel-${id}`);
+  if(id==="overview") p.innerHTML = buildOverview();
+  if(id==="summer"){ p.innerHTML = buildSummer(); wireSummer(); }
+  if(id==="school"){ p.innerHTML = buildSchool(); wireSchool(); }
+  if(id==="special"){ p.innerHTML = buildSpecial(); wireSpecial(); }
+  if(id==="gallery"){ p.innerHTML = buildGallery(); wireGallery(); }
+  
+  window.scrollTo({top: 0, behavior: 'instant'});
+  if(main) main.scrollTop = 0;
+}
+
+function setActiveNav(id){
+  document.querySelectorAll(".navbtn").forEach(b=>{
+    const isActive = b.dataset.target === id;
+    b.classList.toggle("active", isActive);
+    b.setAttribute("aria-selected", isActive.toString());
+  });
+  
+  if(window.innerWidth <= 768){
+    const btn = document.getElementById(`mnav-${id}`);
+    if(btn) btn.scrollIntoView({behavior: 'instant', block: 'nearest', inline: 'center'});
+  }
+}
+
+function goTo(id){
+  setActiveNav(id);
+  renderPanel(id);
+}
+
+document.querySelectorAll(".navbtn").forEach(b=>{
+  b.addEventListener("click", ()=>goTo(b.dataset.target));
+});
+
+/* Sub-tabs */
+const SUMMER_DAYS = [
+  {id:"A", label:"T2·4·6·7", data:sumA, note:"Ngày tự học toàn phần — khối thời gian dài nhất cho Hóa & Toán."},
+  {id:"B", label:"Thứ 3", data:sumB, note:"Học thêm TOÁN tối (19h30–21h00)."},
+  {id:"C", label:"Thứ 5", data:sumC, note:"Học thêm HÓA+TOÁN tối (17h00–21h00) — buổi dài nhất."},
+  {id:"D", label:"CN", data:sumD, note:"Học thêm HÓA chiều (17h00–19h00) — ngày phục hồi."},
+];
+let summerActive = "A";
+function wireSummer(){
+  const pillrow = document.getElementById("summerPills");
+  if(!pillrow) return;
+  pillrow.innerHTML = SUMMER_DAYS.map(d=>`<button class="pill ${d.id===summerActive?'active':''}" data-day="${d.id}" role="tab" aria-selected="${d.id===summerActive}">${d.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      summerActive = btn.dataset.day;
+      pillrow.querySelectorAll(".pill").forEach(b=>{
+        b.classList.toggle("active", b.dataset.day===summerActive);
+        b.setAttribute("aria-selected", (b.dataset.day===summerActive).toString());
+      });
+      renderSummerTable();
+    });
+  });
+  renderSummerTable();
+}
+function renderSummerTable(){
+  const d = SUMMER_DAYS.find(x=>x.id===summerActive);
+  const el = document.getElementById("summerTable");
+  if(!el) return;
+  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+}
+
+const SCHOOL_DAYS = [
+  {id:"N", label:"T2·4·6·7", data:syNormal, note:"Học chính khóa 7h00–11h30, không học thêm tối."},
+  {id:"T", label:"T3 & T5", data:syTutor, note:"Học chính khóa sáng + học thêm tối."},
+  {id:"S", label:"CN", data:sySun, note:"Ngày tự học quan trọng nhất tuần, học thêm Hóa chiều."},
+];
+let schoolActive = "N";
+function wireSchool(){
+  const pillrow = document.getElementById("schoolPills");
+  if(!pillrow) return;
+  pillrow.innerHTML = SCHOOL_DAYS.map(d=>`<button class="pill ${d.id===schoolActive?'active':''}" data-day="${d.id}" role="tab" aria-selected="${d.id===schoolActive}">${d.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      schoolActive = btn.dataset.day;
+      pillrow.querySelectorAll(".pill").forEach(b=>{
+        b.classList.toggle("active", b.dataset.day===schoolActive);
+        b.setAttribute("aria-selected", (b.dataset.day===schoolActive).toString());
+      });
+      renderSchoolTable();
+    });
+  });
+  renderSchoolTable();
+}
+function renderSchoolTable(){
+  const d = SCHOOL_DAYS.find(x=>x.id===schoolActive);
+  const el = document.getElementById("schoolTable");
+  if(!el) return;
+  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+}
+
+const SPECIAL_MODES = [
+  {id:"cram", label:"🚀 Nước rút", fn:specialCram},
+  {id:"low", label:"🔋 Mất động lực", fn:specialLow},
+  {id:"multi", label:"⚠️ Nhiều KT", fn:specialMulti},
+];
+let specialActive = "cram";
+function wireSpecial(){
+  const pillrow = document.getElementById("specialPills");
+  if(!pillrow) return;
+  pillrow.innerHTML = SPECIAL_MODES.map(m=>`<button class="pill ${m.id===specialActive?'active':''}" data-m="${m.id}" role="tab" aria-selected="${m.id===specialActive}">${m.label}</button>`).join("");
+  pillrow.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      specialActive = btn.dataset.m;
+      pillrow.querySelectorAll(".pill").forEach(b=>{
+        b.classList.toggle("active", b.dataset.m===specialActive);
+        b.setAttribute("aria-selected", (b.dataset.m===specialActive).toString());
+      });
+      renderSpecialBody();
+    });
+  });
+  renderSpecialBody();
+}
+function renderSpecialBody(){
+  const m = SPECIAL_MODES.find(x=>x.id===specialActive);
+  const el = document.getElementById("specialBody");
+  if(!el) return;
+  el.innerHTML = m.fn();
+}
+
+let themeActive = "apple";
+function wireGallery(){
+  const pick = document.getElementById("themePick");
+  if(!pick) return;
+  pick.innerHTML = THEMES.map(t=>`<button class="pill ${t.id===themeActive?'active':''}" data-theme="${t.id}" role="tab" aria-selected="${t.id===themeActive}">${t.label}</button>`).join("");
+  pick.querySelectorAll(".pill").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      themeActive = btn.dataset.theme;
+      pick.querySelectorAll(".pill").forEach(b=>{
+        b.classList.toggle("active", b.dataset.theme===themeActive);
+        b.setAttribute("aria-selected", (b.dataset.theme===themeActive).toString());
+      });
+      const frame = document.getElementById("themeFrame");
+      if(frame) frame.className = "theme-frame " + THEMES.find(t=>t.id===themeActive).cls;
+    });
+  });
+}
+
+/* Orientation handling */
+let resizeTimer;
+window.addEventListener('orientationchange', ()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(()=>{
+    if(window.innerWidth <= 768){
+      const activePanel = document.querySelector('.panel.active');
+      if(activePanel){
+        const panelId = activePanel.id.replace('panel-', '');
+        const btn = document.getElementById(`mnav-${panelId}`);
+        if(btn) btn.scrollIntoView({behavior: 'instant', block: 'nearest', inline: 'center'});
+      }
+    }
+  }, 200);
+});
+
+/* Prevent double-tap zoom */
+document.addEventListener('dblclick', (e)=>{
+  if(e.target.closest('button')) e.preventDefault();
+}, {passive: false});
+
+/* Init */
+goTo("overview");
+</script>
+</body>
+</html>
