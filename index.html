@@ -83,7 +83,7 @@
     --card:#2A2F2C;
     --ink:#E8EBE7;
     --ink-soft:#A8ADAA;
-    --ink-faint:#6B706D;
+    --ink-faint:#8A938D;
     --line:#3A3F3C;
     --line-soft:#333835;
 
@@ -210,18 +210,55 @@ img, svg{
 /* ============================================================
    MOBILE TABS
    ============================================================ */
-.mobiletabs{
-  display: flex;
-  gap: clamp(4px, 0.8vw, 6px);
-  overflow-x: auto;
+.mobile-sticky-header{
   position: sticky;
   inset-block-start: 3px;
   z-index: 150;
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+  padding-block-start: var(--safe-top);
+}
+
+.phase-banner{
+  display: none;
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.phase-banner.show{
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 0.8vw, 6px);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--ink);
+  padding: clamp(5px, 0.8vw, 7px) clamp(10px, 1.5vw, 14px);
+  border-block-end: 1px dashed var(--line);
+}
+.phase-banner:hover{background: var(--line-soft);}
+.phase-banner .pb-streak{
+  margin-inline-start: auto;
+  color: var(--ink-soft);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.phase-banner .pb-swap{
+  font-size: var(--text-2xs);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+.mobiletabs{
+  display: flex;
+  gap: clamp(4px, 0.8vw, 6px);
+  overflow-x: auto;
   padding: clamp(6px, 1vw, 10px) clamp(8px, 1.5vw, 14px);
-  padding-block-start: calc(clamp(6px, 1vw, 10px) + var(--safe-top));
   border-block-end: 1px solid var(--line);
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -564,6 +601,108 @@ table.sched td.tag{
 table.sched td.note{
   color: var(--ink);
   line-height: 1.4;
+}
+
+table.sched td.chk{
+  inline-size: clamp(26px, 6vw, 32px);
+  text-align: center;
+  padding-inline-end: 0;
+}
+
+.rowcheck{
+  appearance: none;
+  -webkit-appearance: none;
+  inline-size: 18px;
+  block-size: 18px;
+  border: 1.5px solid var(--line);
+  border-radius: 5px;
+  background: var(--card);
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.rowcheck:checked{
+  background: var(--hoa);
+  border-color: var(--hoa);
+}
+.rowcheck:checked::after{
+  content: "";
+  position: absolute;
+  inset-inline-start: 5px;
+  inset-block-start: 1px;
+  inline-size: 5px;
+  block-size: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+table.sched tr.now-row{
+  background: var(--hoa-soft);
+}
+table.sched tr.now-row td.time{
+  color: var(--hoa);
+  font-weight: 700;
+}
+table.sched tr.now-row td.time::before{
+  content: "▶ ";
+}
+
+table.sched tr.row-done td.note{
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-faint);
+  color: var(--ink-soft);
+}
+table.sched tr.row-done td.tag{opacity: 0.55;}
+
+.progress-note{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--hoa);
+  background: var(--hoa-soft);
+  border-radius: var(--radius-sm);
+  padding: clamp(6px, 1vw, 10px) clamp(8px, 1.2vw, 14px);
+  margin-block-end: clamp(8px, 1.2vw, 14px);
+  line-height: 1.45;
+}
+.progress-note .pn-count{font-family: 'IBM Plex Mono', monospace;}
+
+.panel-title{font-size: var(--text-2xl); margin: 0 0 6px;}
+
+.todaycard{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.5vw, 14px);
+}
+.todaycard .tc-info{flex: 1; min-inline-size: 180px;}
+.todaycard .tc-info b{display: block; font-size: var(--text-sm); margin-block-end: 2px; line-height: 1.3;}
+.todaycard .tc-info span{font-size: var(--text-2xs); color: var(--ink-soft); line-height: 1.4;}
+.todaycard .tc-cta{
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  padding: clamp(8px, 1.2vw, 10px) clamp(14px, 2vw, 18px);
+  border-radius: 999px;
+  border: none;
+  background: var(--ink);
+  color: var(--card);
+  cursor: pointer;
+  white-space: nowrap;
+  min-block-size: 40px;
+  flex-shrink: 0;
+}
+.todaycard .tc-cta:hover{opacity: .88;}
+.todaycard .tc-meta{
+  flex-basis: 100%;
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
 }
 
 .tagpill{
@@ -987,7 +1126,8 @@ footer.note{
 @media (min-width: 769px) {
   .app{flex-direction: row;}
 
-  .mobiletabs{display: none;}
+  .mobile-sticky-header{display: none;}
+  h1.sr-only{display: none;}
 
   .sidebar{
     display: block;
@@ -1057,6 +1197,20 @@ footer.note{
 
   .sidebar-foot b{color: var(--ink);}
 
+  .phase-swap-btn{
+    margin-block-start: 8px;
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    background: var(--paper-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .phase-swap-btn:hover{border-color: var(--ink-faint); color: var(--ink);}
+
   .main{
     padding: clamp(20px, 3vw, 32px) clamp(16px, 4vw, 40px) clamp(60px, 8vw, 80px);
     max-inline-size: 980px;
@@ -1096,6 +1250,7 @@ footer.note{
 </head>
 <body>
 <div class="signature-strip" role="presentation" aria-hidden="true"></div>
+<h1 class="sr-only">Lộ trình thi Chuyên Hóa — Nguyễn Doãn Hoàng</h1>
 <div class="app">
 
   <!-- SIDEBAR (desktop) -->
@@ -1106,13 +1261,14 @@ footer.note{
       <p>🎯 Mục tiêu: Đỗ Chuyên Hóa — Quốc Học Huế</p>
     </div>
     <div class="navgroup" id="navgroup" role="tablist" aria-label="Danh mục"></div>
-    <div class="sidebar-foot">
-      <b>Hiện tại:</b> đang nghỉ hè 🌴 — lịch hè áp dụng đến hết <b>4/9</b>. Từ <b>5/9</b> chuyển sang lịch năm học.
-    </div>
+    <div class="sidebar-foot" id="sidebarFoot"></div>
   </nav>
 
-  <!-- MOBILE TABS -->
-  <div class="mobiletabs" id="mobileNav" role="tablist" aria-label="Danh mục"></div>
+  <!-- MOBILE STICKY HEADER: trạng thái + tabs -->
+  <div class="mobile-sticky-header">
+    <button type="button" class="phase-banner" id="phaseBanner" aria-label="Trạng thái lịch hiện tại — bấm để đổi chế độ Hè/Năm học nếu không khớp thực tế"></button>
+    <div class="mobiletabs" id="mobileNav" role="tablist" aria-label="Danh mục"></div>
+  </div>
 
   <!-- MAIN CONTENT -->
   <main class="main" id="main" role="main"></main>
@@ -1260,9 +1416,9 @@ const syNormal = [
   {t:"21:30–22:00", tag:"rest", n:"Đọc nhẹ, chuẩn bị ngủ", p:"toi"},
   {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
 ];
-const syTutor = [
+const syT3 = [
   {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
-  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ (không tập thể thao 2 ngày này)", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ (không tập thể thao ngày này)", p:"sang"},
   {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
   {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
   {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
@@ -1275,11 +1431,33 @@ const syTutor = [
   {t:"15:15–16:00", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối bận", p:"chieu"},
   {t:"16:00–16:45", tag:"rest", n:"Tự do / nghỉ ngơi trước buổi học thêm tối", p:"chieu"},
   {t:"16:45–17:15", tag:"meal", n:"Ăn tối sớm", p:"toi"},
-  {t:"17:15–19:00", tag:"rest", n:"T3: thư giãn, chuẩn bị đi học · T5: học thêm HÓA bắt đầu từ 17h00", p:"toi"},
-  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm (T3)", p:"toi"},
-  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN (T3) · T5: tiếp tục Hóa+Toán đến 21h00", p:"toi"},
+  {t:"17:15–19:00", tag:"rest", n:"Thư giãn, chuẩn bị đi học thêm", p:"toi"},
+  {t:"19:00–19:30", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"19:30–21:00", tag:"toan", n:"Học thêm TOÁN tại lớp (1h30)", p:"toi"},
   {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
   {t:"21:15–21:45", tag:"rest", n:"Tắm rửa, ăn nhẹ nếu cần", p:"toi"},
+  {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
+  {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
+];
+const syT5 = [
+  {t:"05:30–05:45", tag:"rest", n:"Thức dậy, vệ sinh cá nhân", p:"sang"},
+  {t:"05:45–06:15", tag:"rest", n:"Thư giãn nhẹ / đọc lại bài cũ (không tập thể thao ngày này)", p:"sang"},
+  {t:"06:15–06:45", tag:"meal", n:"Ăn sáng + chuẩn bị đồ đi học", p:"sang"},
+  {t:"06:45–07:00", tag:"prep", n:"Di chuyển đến trường", p:"sang"},
+  {t:"07:00–11:30", tag:"school", n:"Học chính khóa tại trường (4h30)", p:"sang"},
+  {t:"11:30–11:45", tag:"prep", n:"Di chuyển về nhà", p:"chieu"},
+  {t:"11:45–12:30", tag:"meal", n:"Ăn trưa", p:"chieu"},
+  {t:"12:30–13:00", tag:"rest", n:"Nghỉ trưa (rút ngắn hơn vì tối nay học liên tục 4 tiếng)", p:"chieu"},
+  {t:"13:00–13:45", tag:"de", n:"Luyện đề", p:"chieu"},
+  {t:"13:45–14:30", tag:"anh", n:"Ngữ pháp + Từ vựng/Đọc hiểu — làm sớm vì tối nay học rất dài", p:"chieu"},
+  {t:"14:30–15:15", tag:"hoa", n:"Ôn lại + xem trước nội dung buổi học thêm tối nay", p:"chieu"},
+  {t:"15:15–16:00", tag:"rest", n:"Tự do / nghỉ ngơi — quan trọng trước buổi học 4 tiếng liền", p:"chieu"},
+  {t:"16:00–16:30", tag:"meal", n:"Ăn nhẹ no bụng trước khi đi (tối nay học liên tục 4 tiếng)", p:"chieu"},
+  {t:"16:30–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"16:45–17:00", tag:"prep", n:"Ổn định chỗ học", p:"toi"},
+  {t:"17:00–21:00", tag:"hoa", n:"Học thêm HÓA + TOÁN tại lớp (4 tiếng liên tục)", p:"toi"},
+  {t:"21:00–21:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
+  {t:"21:15–21:45", tag:"meal", n:"Ăn nhẹ + tắm rửa — nạp lại năng lượng sau buổi học dài", p:"toi"},
   {t:"21:45–22:00", tag:"rest", n:"Thư giãn nhẹ, chuẩn bị ngủ", p:"toi"},
   {t:"22:00", tag:"sleep", n:"Đi ngủ", p:"toi"},
 ];
@@ -1298,6 +1476,7 @@ const sySun = [
   {t:"14:30–15:30", tag:"rest", n:"Tự do / sở thích cá nhân — ngày của riêng em", p:"chieu"},
   {t:"15:30–16:00", tag:"prep", n:"Ăn nhẹ, chuẩn bị đi học thêm", p:"chieu"},
   {t:"16:00–16:45", tag:"prep", n:"Di chuyển đến lớp học thêm", p:"toi"},
+  {t:"16:45–17:00", tag:"prep", n:"Ổn định chỗ học", p:"toi"},
   {t:"17:00–19:00", tag:"hoa", n:"Học thêm HÓA tại lớp", p:"toi"},
   {t:"19:00–19:15", tag:"prep", n:"Di chuyển về nhà", p:"toi"},
   {t:"19:15–20:00", tag:"meal", n:"Ăn tối", p:"toi"},
@@ -1341,11 +1520,128 @@ const multiExample = [
 ];
 
 /* ============================================================
+   DATE / PHASE HELPERS
+   ============================================================ */
+const WEEKDAY_NAMES = ["Chủ Nhật","Thứ Hai","Thứ Ba","Thứ Tư","Thứ Năm","Thứ Sáu","Thứ Bảy"];
+
+// Heuristic: school year ~ Sept 5 → end of May; summer break ~ June 1 → Sept 4.
+// Can be overridden manually via the phase banner / sidebar button if it ever drifts
+// from the real calendar (e.g. school ends early, holidays shift).
+function detectPhase(date){
+  const m = date.getMonth(); // 0=Jan ... 11=Dec
+  if(m===5 || m===6 || m===7) return "summer";
+  if(m===8 && date.getDate() < 5) return "summer";
+  return "school";
+}
+
+let phaseOverride = null; // "summer" | "school" | null = theo tự động — được nạp lại ở phần Init dưới cùng
+function getPhase(){
+  return phaseOverride || detectPhase(new Date());
+}
+
+function summerDayIdFor(date){
+  const dow = date.getDay(); // 0=Sun..6=Sat
+  if(dow===0) return "D";
+  if(dow===2) return "B";
+  if(dow===4) return "C";
+  return "A"; // T2 · T4 · T6 · T7
+}
+function schoolDayIdFor(date){
+  const dow = date.getDay();
+  if(dow===0) return "S";
+  if(dow===2) return "T3";
+  if(dow===4) return "T5";
+  return "N"; // T2 · T4 · T6 · T7
+}
+
+function daysUntilSep5(date){
+  const y = date.getFullYear();
+  let target = new Date(y, 8, 5);
+  if(date >= target) target = new Date(y+1, 8, 5);
+  return Math.ceil((target - date) / 86400000);
+}
+
+/* ============================================================
+   LOCAL STORAGE — tick việc đã làm + streak
+   Lưu trên máy/trình duyệt này. Có dự phòng bộ nhớ tạm nếu trình
+   duyệt chặn localStorage (vd. xem trước trong khung chat) để
+   trang không bị lỗi — khi đó dữ liệu chỉ tồn tại trong phiên xem.
+   ============================================================ */
+const memoryStore = {};
+function storageGet(key){
+  try{ return window.localStorage.getItem(key); }
+  catch(e){ return (key in memoryStore) ? memoryStore[key] : null; }
+}
+function storageSet(key, val){
+  try{ window.localStorage.setItem(key, val); }
+  catch(e){ memoryStore[key] = val; }
+}
+
+function todayISO(d){
+  d = d || new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
+function getChecklist(){
+  try{ return JSON.parse(storageGet("choa_checklist") || "{}"); }
+  catch(e){ return {}; }
+}
+function setChecklist(obj){ storageSet("choa_checklist", JSON.stringify(obj)); }
+
+function isChecked(rowId){
+  const day = getChecklist()[todayISO()] || {};
+  return !!day[rowId];
+}
+function toggleChecked(rowId, checked){
+  const list = getChecklist();
+  const key = todayISO();
+  if(!list[key]) list[key] = {};
+  list[key][rowId] = checked;
+  setChecklist(list);
+  bumpActivity(key, list[key]);
+}
+
+function getActivity(){
+  try{ return JSON.parse(storageGet("choa_activity") || "{}"); }
+  catch(e){ return {}; }
+}
+function bumpActivity(dateKey, dayChecklist){
+  const count = Object.values(dayChecklist).filter(Boolean).length;
+  const act = getActivity();
+  act[dateKey] = count;
+  storageSet("choa_activity", JSON.stringify(act));
+}
+function getStreak(){
+  const act = getActivity();
+  let d = new Date();
+  if(!(act[todayISO(d)] > 0)) d.setDate(d.getDate()-1);
+  let streak = 0;
+  while(act[todayISO(d)] > 0){
+    streak++;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+/* ============================================================
    RENDER HELPERS
    ============================================================ */
-function rowsToHTML(rows){
+function isRowNow(timeStr, nowMinutes){
+  const parts = timeStr.split("–");
+  const toMin = (s)=>{ const hm = s.split(":").map(Number); return hm[0]*60+hm[1]; };
+  const start = toMin(parts[0]);
+  if(parts.length===1) return nowMinutes >= start && nowMinutes < start+15;
+  const end = toMin(parts[1]);
+  return nowMinutes >= start && nowMinutes < end;
+}
+
+function rowsToHTML(rows, opts){
+  opts = opts || {};
+  const datasetId = opts.datasetId || null;
+  const nowMinutes = opts.highlightNow ? (()=>{ const n=new Date(); return n.getHours()*60+n.getMinutes(); })() : null;
+
   const groups = {sang:[], chieu:[], toi:[]};
-  rows.forEach(r=>groups[r.p].push(r));
+  rows.forEach((r,i)=>groups[r.p].push({...r, _idx:i}));
   let html = "";
   ["sang","chieu","toi"].forEach(p=>{
     if(groups[p].length===0) return;
@@ -1353,7 +1649,12 @@ function rowsToHTML(rows){
     html += `<div class="schedule-table-wrapper"><table class="sched" aria-label="Lịch ${PERIOD_LABEL[p]}"><tbody>`;
     groups[p].forEach(r=>{
       const tg = TAGS[r.tag];
-      html += `<tr>
+      const rowId = datasetId ? `${datasetId}_${r._idx}` : null;
+      const checked = rowId ? isChecked(rowId) : false;
+      const isNow = nowMinutes!==null && isRowNow(r.t, nowMinutes);
+      const trClasses = [isNow?"now-row":"", checked?"row-done":""].filter(Boolean).join(" ");
+      html += `<tr${trClasses?` class="${trClasses}"`:""}>
+        ${rowId ? `<td class="chk"><input type="checkbox" class="rowcheck" aria-label="Đã hoàn thành: ${r.n}" ${checked?"checked":""} data-rowid="${rowId}"></td>` : ""}
         <td class="time mono">${r.t}</td>
         <td class="tag"><span class="tagpill" style="background:var(${tg.cs});color:var(${tg.c});">${tg.emoji} ${tg.name}</span></td>
         <td class="note">${r.n}</td>
@@ -1369,6 +1670,29 @@ function legendHTML(keys){
     const tg=TAGS[k];
     return `<div class="item"><span class="sw" style="background:var(${tg.c});" aria-hidden="true"></span>${tg.emoji} ${tg.name}</div>`;
   }).join("")}</div>`;
+}
+
+function progressNoteHTML(datasetId, total){
+  const day = getChecklist()[todayISO()] || {};
+  const done = Object.keys(day).filter(k=>k.startsWith(datasetId+"_") && day[k]).length;
+  return `<div class="progress-note">✅ Hoàn thành hôm nay <span class="pn-count" data-total="${total}">${done}/${total}</span></div>`;
+}
+
+function wireRowChecks(container, datasetId){
+  container.querySelectorAll(".rowcheck").forEach(cb=>{
+    cb.addEventListener("change", ()=>{
+      toggleChecked(cb.dataset.rowid, cb.checked);
+      const tr = cb.closest("tr");
+      if(tr) tr.classList.toggle("row-done", cb.checked);
+      const countEl = container.querySelector(".pn-count");
+      if(countEl){
+        const day = getChecklist()[todayISO()] || {};
+        const done = Object.keys(day).filter(k=>k.startsWith(datasetId+"_") && day[k]).length;
+        countEl.textContent = `${done}/${countEl.dataset.total}`;
+      }
+      refreshPhaseBanner();
+    });
+  });
 }
 
 /* ============================================================
@@ -1392,9 +1716,11 @@ function buildOverview(){
       <div class="stat"><div class="num">5:30</div><div class="lab">Thức dậy</div></div>
       <div class="stat"><div class="num">22:00</div><div class="lab">Đi ngủ</div></div>
       <div class="stat"><div class="num">~6–7h</div><div class="lab">Tự học/ngày</div></div>
-      <div class="stat"><div class="num">3×30p</div><div class="lab">Thể thao/tuần</div></div>
+      <div class="stat"><div class="num" id="statSport">3×30p</div><div class="lab">Thể thao/tuần</div></div>
     </div>
   </div>
+
+  <div class="card todaycard" id="todayCard"></div>
 
   <h3 class="sectiontitle"><span class="dot" aria-hidden="true"></span>Vì sao sắp xếp như vậy?</h3>
   <p class="lead">Bốn nguyên tắc quyết định cấu trúc lịch — dựa trên cách bộ não hoạt động trong ngày.</p>
@@ -1441,7 +1767,7 @@ function buildOverview(){
 
 function buildSummer(){
   return `
-  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">☀️ Lịch Hè hiện tại</h2>
+  <h2 class="display panel-title">☀️ Lịch Hè hiện tại</h2>
   <p class="lead">Áp dụng đến hết <b>4/9</b> — giai đoạn "vàng" xây nền Hóa/Toán thật chắc trước năm học.</p>
   <div class="pillrow" id="summerPills" role="tablist" aria-label="Chọn ngày"></div>
   ${legendHTML(["hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
@@ -1451,7 +1777,7 @@ function buildSummer(){
 
 function buildSchool(){
   return `
-  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🏫 Lịch Năm Học</h2>
+  <h2 class="display panel-title">🏫 Lịch Năm Học</h2>
   <p class="lead">Áp dụng từ <b>5/9</b> — buổi sáng 7h00–11h30, tự học dồn vào chiều/tối.</p>
   <div class="pillrow" id="schoolPills" role="tablist" aria-label="Chọn ngày"></div>
   ${legendHTML(["school","hoa","toan","anh","de","van","sport","rest","meal","prep","sleep"])}
@@ -1461,7 +1787,7 @@ function buildSchool(){
 
 function buildSpecial(){
   return `
-  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🎯 Tình Huống Đặc Biệt</h2>
+  <h2 class="display panel-title">🎯 Tình Huống Đặc Biệt</h2>
   <p class="lead">Ba "chế độ" dùng khi mọi thứ không diễn ra như bình thường.</p>
   <div class="pillrow" id="specialPills" role="tablist" aria-label="Chọn chế độ"></div>
   <div id="specialBody"></div>
@@ -1544,7 +1870,7 @@ function galleryHTML(){
 }
 function buildGallery(){
   return `
-  <h2 class="display" style="font-size:var(--text-2xl);margin:0 0 6px;">🎨 Phong Cách Thiết Kế</h2>
+  <h2 class="display panel-title">🎨 Phong Cách Thiết Kế</h2>
   <p class="lead">Cùng một lịch học — bốn ngôn ngữ thiết kế khác nhau.</p>
   <div class="gallerywrap">
     <div class="theme-pick" id="themePick" role="tablist" aria-label="Chọn theme"></div>
@@ -1581,7 +1907,7 @@ NAV.forEach(item=>{
 function renderPanel(id){
   main.innerHTML = `<div class="panel active" id="panel-${id}" role="tabpanel" aria-label="${NAV.find(n=>n.id===id)?.label || ''}"></div>`;
   const p = document.getElementById(`panel-${id}`);
-  if(id==="overview") p.innerHTML = buildOverview();
+  if(id==="overview"){ p.innerHTML = buildOverview(); applyOverviewDynamic(); }
   if(id==="summer"){ p.innerHTML = buildSummer(); wireSummer(); }
   if(id==="school"){ p.innerHTML = buildSchool(); wireSchool(); }
   if(id==="special"){ p.innerHTML = buildSpecial(); wireSpecial(); }
@@ -1620,7 +1946,7 @@ const SUMMER_DAYS = [
   {id:"C", label:"Thứ 5", data:sumC, note:"Học thêm HÓA+TOÁN tối (17h00–21h00) — buổi dài nhất."},
   {id:"D", label:"CN", data:sumD, note:"Học thêm HÓA chiều (17h00–19h00) — ngày phục hồi."},
 ];
-let summerActive = "A";
+let summerActive = summerDayIdFor(new Date());
 function wireSummer(){
   const pillrow = document.getElementById("summerPills");
   if(!pillrow) return;
@@ -1641,15 +1967,21 @@ function renderSummerTable(){
   const d = SUMMER_DAYS.find(x=>x.id===summerActive);
   const el = document.getElementById("summerTable");
   if(!el) return;
-  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+  const isToday = getPhase()==="summer" && summerActive===summerDayIdFor(new Date());
+  const datasetId = "sum"+d.id;
+  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` +
+    (isToday ? progressNoteHTML(datasetId, d.data.length) : "") +
+    rowsToHTML(d.data, isToday ? {datasetId, highlightNow:true} : {});
+  if(isToday) wireRowChecks(el, datasetId);
 }
 
 const SCHOOL_DAYS = [
   {id:"N", label:"T2·4·6·7", data:syNormal, note:"Học chính khóa 7h00–11h30, không học thêm tối."},
-  {id:"T", label:"T3 & T5", data:syTutor, note:"Học chính khóa sáng + học thêm tối."},
+  {id:"T3", label:"Thứ 3", data:syT3, note:"Học thêm TOÁN tối (19h30–21h00)."},
+  {id:"T5", label:"Thứ 5", data:syT5, note:"Học thêm HÓA+TOÁN tối (17h00–21h00) — buổi dài nhất."},
   {id:"S", label:"CN", data:sySun, note:"Ngày tự học quan trọng nhất tuần, học thêm Hóa chiều."},
 ];
-let schoolActive = "N";
+let schoolActive = schoolDayIdFor(new Date());
 function wireSchool(){
   const pillrow = document.getElementById("schoolPills");
   if(!pillrow) return;
@@ -1670,7 +2002,12 @@ function renderSchoolTable(){
   const d = SCHOOL_DAYS.find(x=>x.id===schoolActive);
   const el = document.getElementById("schoolTable");
   if(!el) return;
-  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` + rowsToHTML(d.data);
+  const isToday = getPhase()==="school" && schoolActive===schoolDayIdFor(new Date());
+  const datasetId = "sy"+d.id;
+  el.innerHTML = `<div class="daynote">📌 ${d.note}</div>` +
+    (isToday ? progressNoteHTML(datasetId, d.data.length) : "") +
+    rowsToHTML(d.data, isToday ? {datasetId, highlightNow:true} : {});
+  if(isToday) wireRowChecks(el, datasetId);
 }
 
 const SPECIAL_MODES = [
@@ -1720,6 +2057,101 @@ function wireGallery(){
   });
 }
 
+/* ============================================================
+   PHASE BANNER / SIDEBAR-FOOT / TODAY-CARD
+   Hiển thị giai đoạn (Hè/Năm học) + thứ hôm nay + streak,
+   tự nhận diện theo lịch nhưng có thể bấm để đổi tay nếu lệch
+   thực tế (vd. nghỉ hè sớm/muộn hơn dự kiến).
+   ============================================================ */
+function phaseBannerHTML(){
+  const phase = getPhase();
+  const today = new Date();
+  const dow = WEEKDAY_NAMES[today.getDay()];
+  const streak = getStreak();
+  const streakTxt = streak>0 ? `<span class="pb-streak">🔥 ${streak} ngày liên tục</span>` : `<span class="pb-streak">Bắt đầu hôm nay</span>`;
+  if(phase==="summer"){
+    return `🌴 Lịch Hè · ${dow} · còn ${daysUntilSep5(today)} ngày đến 5/9 ${streakTxt} <span class="pb-swap" aria-hidden="true">⇄</span>`;
+  }
+  return `🏫 Năm Học · ${dow} ${streakTxt} <span class="pb-swap" aria-hidden="true">⇄</span>`;
+}
+function renderPhaseBanner(){
+  const el = document.getElementById("phaseBanner");
+  if(!el) return;
+  el.innerHTML = phaseBannerHTML();
+  el.classList.add("show");
+}
+function sidebarFootHTML(){
+  const phase = getPhase();
+  const today = new Date();
+  const dow = WEEKDAY_NAMES[today.getDay()];
+  const streak = getStreak();
+  const body = phase==="summer"
+    ? `<b>Hiện tại:</b> đang nghỉ hè 🌴 — ${dow}. Lịch hè áp dụng đến hết <b>4/9</b> (còn ${daysUntilSep5(today)} ngày). Từ <b>5/9</b> chuyển sang lịch năm học.`
+    : `<b>Hiện tại:</b> đang trong năm học 🏫 — ${dow}.`;
+  const streakTxt = streak>0 ? `🔥 <b>${streak}</b> ngày liên tục giữ nếp.` : `Bắt đầu giữ nếp từ hôm nay 🔥`;
+  return `${body}<div style="margin-block-start:8px;">${streakTxt}</div>
+    <button type="button" class="phase-swap-btn" id="phaseSwapDesktop">⇄ Đổi chế độ Hè/Năm học</button>`;
+}
+function renderSidebarFoot(){
+  const el = document.getElementById("sidebarFoot");
+  if(!el) return;
+  el.innerHTML = sidebarFootHTML();
+  const btn = document.getElementById("phaseSwapDesktop");
+  if(btn) btn.addEventListener("click", swapPhaseOverride);
+}
+function refreshPhaseBanner(){
+  renderPhaseBanner();
+  renderSidebarFoot();
+  const tc = document.getElementById("todayCard");
+  if(tc) tc.innerHTML = todayCardHTML();
+  const statSport = document.getElementById("statSport");
+  if(statSport) statSport.textContent = getPhase()==="summer" ? "4×30p" : "3×30p";
+}
+function swapPhaseOverride(){
+  phaseOverride = (getPhase()==="summer") ? "school" : "summer";
+  storageSet("choa_phase_override", phaseOverride);
+  summerActive = summerDayIdFor(new Date());
+  schoolActive = schoolDayIdFor(new Date());
+  refreshPhaseBanner();
+  const activePanel = document.querySelector(".panel.active");
+  if(activePanel && activePanel.id==="panel-summer") renderSummerTable();
+  if(activePanel && activePanel.id==="panel-school") renderSchoolTable();
+}
+function todayCardHTML(){
+  const phase = getPhase();
+  const today = new Date();
+  const dow = WEEKDAY_NAMES[today.getDay()];
+  const dayId = phase==="summer" ? summerDayIdFor(today) : schoolDayIdFor(today);
+  const dataset = (phase==="summer" ? SUMMER_DAYS : SCHOOL_DAYS).find(x=>x.id===dayId);
+  return `
+    <div class="tc-info">
+      <b>📅 Hôm nay: ${dow} · ${phase==="summer"?"Lịch Hè":"Lịch Năm Học"}</b>
+      <span>${dataset ? dataset.note : ""}</span>
+    </div>
+    <button type="button" class="tc-cta" id="todayCardCta">Xem lịch hôm nay →</button>
+    <span class="tc-meta">💾 Tích hoàn thành được tự lưu trên máy/trình duyệt này.</span>
+  `;
+}
+function applyOverviewDynamic(){
+  const statSport = document.getElementById("statSport");
+  if(statSport) statSport.textContent = getPhase()==="summer" ? "4×30p" : "3×30p";
+  const tc = document.getElementById("todayCard");
+  if(tc){
+    tc.innerHTML = todayCardHTML();
+    const cta = document.getElementById("todayCardCta");
+    if(cta) cta.addEventListener("click", goToToday);
+  }
+}
+function goToToday(){
+  if(getPhase()==="summer"){
+    summerActive = summerDayIdFor(new Date());
+    goTo("summer");
+  }else{
+    schoolActive = schoolDayIdFor(new Date());
+    goTo("school");
+  }
+}
+
 /* Orientation handling */
 let resizeTimer;
 window.addEventListener('orientationchange', ()=>{
@@ -1741,12 +2173,25 @@ document.addEventListener('dblclick', (e)=>{
   if(e.target.closest('button')) e.preventDefault();
 }, {passive: false});
 
+/* Phase banner: bấm để đổi tay Hè/Năm học nếu lệch thực tế */
+const phaseBannerBtn = document.getElementById("phaseBanner");
+if(phaseBannerBtn) phaseBannerBtn.addEventListener("click", swapPhaseOverride);
+
 /* Init */
+phaseOverride = storageGet("choa_phase_override") || null;
+summerActive = summerDayIdFor(new Date());
+schoolActive = schoolDayIdFor(new Date());
+renderPhaseBanner();
+renderSidebarFoot();
 goTo("overview");
+
+/* Cập nhật mỗi phút: streak, banner, và dòng "đang diễn ra" trong bảng */
+setInterval(()=>{
+  refreshPhaseBanner();
+  const activePanel = document.querySelector(".panel.active");
+  if(activePanel && activePanel.id==="panel-summer") renderSummerTable();
+  if(activePanel && activePanel.id==="panel-school") renderSchoolTable();
+}, 60000);
 </script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> dd15b9023b77d7875d69ded113a0b629a8b1188f
