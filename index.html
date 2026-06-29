@@ -129,7 +129,6 @@ html{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
 
 body{
@@ -164,6 +163,14 @@ img, svg{
 /* Utility */
 .mono{font-family: 'IBM Plex Mono', monospace;}
 .display{font-family: 'Fraunces', serif;}
+
+.icon{
+  inline-size: 1em;
+  block-size: 1em;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+}
+.icon-lg{inline-size: 1.5em; block-size: 1.5em;}
 
 .sr-only{
   position: absolute;
@@ -220,9 +227,16 @@ img, svg{
   padding-block-start: var(--safe-top);
 }
 
+.msh-row{
+  display: flex;
+  align-items: center;
+  border-block-end: 1px dashed var(--line);
+}
+
 .phase-banner{
   display: none;
-  width: 100%;
+  flex: 1;
+  min-inline-size: 0;
   border: none;
   background: transparent;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -238,7 +252,6 @@ img, svg{
   font-weight: 700;
   color: var(--ink);
   padding: clamp(5px, 0.8vw, 7px) clamp(10px, 1.5vw, 14px);
-  border-block-end: 1px dashed var(--line);
 }
 .phase-banner:hover{background: var(--line-soft);}
 .phase-banner .pb-streak{
@@ -252,6 +265,10 @@ img, svg{
   font-size: var(--text-2xs);
   opacity: 0.55;
   flex-shrink: 0;
+}
+.msh-row .theme-toggle-btn{
+  margin-inline-end: clamp(8px, 1.5vw, 12px);
+  inline-size: 30px; block-size: 30px;
 }
 
 .mobiletabs{
@@ -838,113 +855,139 @@ table.sched tr.row-done td.tag{opacity: 0.55;}
 }
 
 /* ============================================================
-   STYLE GALLERY
+   BACKGROUND MUSIC
    ============================================================ */
-.gallerywrap{
-  border: 1px solid var(--line);
-  border-radius: clamp(10px, 1.8vw, 18px);
-  padding: clamp(10px, 1.5vw, 20px);
-  background: var(--paper-soft);
+.music-frame{
+  position: relative;
   inline-size: 100%;
-  overflow: hidden;
-}
-
-.theme-frame{
+  aspect-ratio: 16/9;
   border-radius: var(--radius);
-  padding: clamp(10px, 1.8vw, 20px);
-  transition: background 0.25s, color 0.25s;
-  inline-size: 100%;
   overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: #000;
+}
+.music-frame iframe{
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
 }
 
-/* Theme: Apple */
-.theme-apple{
-  background: #F5F5F7;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Helvetica, Arial, sans-serif;
-  color: #1D1D1F;
+.music-meta{
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.2vw, 12px);
+  margin-block-end: clamp(8px, 1.2vw, 12px);
 }
+.music-meta .mm-emoji{font-size: var(--text-2xl); flex-shrink: 0;}
+.music-meta .mm-text b{display: block; font-size: var(--text-sm); line-height: 1.3;}
+.music-meta .mm-text span{font-size: var(--text-2xs); color: var(--ink-soft);}
 
-.theme-apple .ag-title{font-size: var(--text-xl); font-weight: 700; margin-block-end: 2px; letter-spacing: -0.01em;}
-.theme-apple .ag-sub{font-size: var(--text-xs); color: #6E6E73; margin-block-end: 12px;}
-.theme-apple .ag-row{
-  display: flex; align-items: center; gap: clamp(8px, 1.2vw, 12px);
-  background: #fff; border-radius: 12px; padding: clamp(8px, 1.2vw, 12px) clamp(10px, 1.5vw, 16px);
-  margin-block-end: 8px;
-  box-shadow: 0 1px 1px rgba(0,0,0,.03), 0 4px 16px -12px rgba(0,0,0,.12);
+/* ============================================================
+   STATISTICS — countdown, progress ring, heatmap
+   ============================================================ */
+.countdown-card{
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.5vw, 16px);
 }
-.theme-apple .ag-time{font-size: var(--text-xs); color: #86868B; inline-size: clamp(52px, 14vw, 80px); font-weight: 600;}
-.theme-apple .ag-icon{
-  inline-size: clamp(26px, 6vw, 32px); block-size: clamp(26px, 6vw, 32px);
-  border-radius: 8px; display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-sm); background: #E8F3FF; flex-shrink: 0;
+.countdown-card .cd-icon{color: var(--de); flex-shrink: 0;}
+.countdown-card .cd-body{display: flex; flex-direction: column; min-inline-size: 0;}
+.countdown-card .cd-label{font-size: var(--text-2xs); color: var(--ink-soft); line-height: 1.3;}
+.countdown-card .cd-days{
+  font-family: 'Fraunces', serif;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
 }
-.theme-apple .ag-text b{display: block; font-size: var(--text-xs); font-weight: 600; line-height: 1.2;}
-.theme-apple .ag-text span{font-size: var(--text-2xs); color: #6E6E73;}
+.countdown-card .cd-unit{font-size: var(--text-2xs); color: var(--ink-soft);}
+.cd-note{
+  font-size: var(--text-2xs);
+  color: var(--ink-faint);
+  margin-block-start: clamp(8px, 1.2vw, 12px);
+  line-height: 1.5;
+}
+.cd-note code{font-family: 'IBM Plex Mono', monospace; background: var(--paper-soft); padding: 1px 4px; border-radius: 4px;}
 
-/* Theme: Notion */
-.theme-notion{
-  background: #FFFFFF; font-family: Helvetica, Arial, sans-serif;
-  color: #37352F; border: 1px solid #EBEAE7;
+.stats-today-inner{
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+  flex-wrap: wrap;
 }
-.theme-notion .ag-title{font-size: var(--text-xl); font-weight: 700; margin-block-end: 2px;}
-.theme-notion .ag-sub{font-size: var(--text-xs); color: #9B9A97; margin-block-end: 12px;}
-.theme-notion .ag-row{display: flex; align-items: center; gap: 8px; padding: 5px 4px; border-radius: 3px;}
-.theme-notion .ag-row:hover{background: #F7F6F3;}
-.theme-notion .ag-icon{inline-size: 20px; text-align: center; font-size: var(--text-sm); flex-shrink: 0;}
-.theme-notion .ag-time{
-  font-family: 'IBM Plex Mono', monospace; font-size: var(--text-2xs);
-  color: #9B9A97; inline-size: clamp(52px, 14vw, 80px);
+.progress-ring{flex-shrink: 0;}
+.progress-ring-text{
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  fill: var(--ink);
 }
-.theme-notion .ag-text b{font-size: var(--text-xs); font-weight: 500; border-block-end: 1px solid #EBEAE7; padding-block-end: 1px;}
-.theme-notion .ag-text span{display: block; font-size: var(--text-2xs); color: #9B9A97;}
-.theme-notion .ag-row + .ag-row{border-block-start: 1px solid #F1F0EC;}
+.stats-today-inner .st-info{display: flex; flex-direction: column; gap: 6px; min-inline-size: 0;}
+.stats-today-inner .st-info b{font-size: var(--text-sm); line-height: 1.3;}
+.stats-today-inner .st-streak{
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--text-xs); color: var(--ink-soft); font-weight: 600;
+}
+.stats-today-inner .st-streak .icon{color: #E8762C;}
 
-/* Theme: Cyberpunk */
-.theme-cyberpunk{
-  background: #0B0B14; font-family: 'IBM Plex Mono', monospace;
-  color: #E7FBFF; border: 1px solid #232140;
-  box-shadow: 0 0 30px -8px rgba(255,0,200,.12) inset;
+.heatmap-wrap{overflow-x: auto; -webkit-overflow-scrolling: touch; padding-block-end: 2px;}
+.heatmap-grid{
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+  inline-size: max-content;
 }
-.theme-cyberpunk .ag-title{
-  font-size: var(--text-lg); font-weight: 600; text-transform: uppercase;
-  letter-spacing: 0.05em; color: #FF2E9A;
-  text-shadow: 0 0 10px rgba(255,46,154,.5); margin-block-end: 4px;
+.hm-cell{
+  inline-size: 11px; block-size: 11px;
+  border-radius: 3px;
+  background: var(--line-soft);
 }
-.theme-cyberpunk .ag-sub{font-size: var(--text-2xs); color: #5BE6FF; letter-spacing: 0.06em; margin-block-end: 12px; text-transform: uppercase;}
-.theme-cyberpunk .ag-row{
-  display: flex; align-items: center; gap: clamp(6px, 1vw, 10px);
-  padding: 8px 10px; margin-block-end: 6px;
-  background: #11101F; border: 1px solid #2B2A4A;
-  border-inline-start: 3px solid #5BE6FF;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 4px 100%, 0 calc(100% - 4px));
-}
-.theme-cyberpunk .ag-time{font-size: var(--text-2xs); color: #FF2E9A; inline-size: clamp(52px, 14vw, 80px); font-weight: 600;}
-.theme-cyberpunk .ag-icon{font-size: var(--text-sm);}
-.theme-cyberpunk .ag-text b{display: block; font-size: var(--text-xs); color: #E7FBFF; letter-spacing: 0.02em; line-height: 1.2;}
-.theme-cyberpunk .ag-text span{font-size: var(--text-2xs); color: #7E8AB8;}
+.hm-empty{background: transparent;}
+.hm-l1{background: var(--hoa-soft);}
+.hm-l2{background: color-mix(in srgb, var(--hoa) 45%, var(--hoa-soft));}
+.hm-l3{background: color-mix(in srgb, var(--hoa) 75%, var(--hoa-soft));}
+.hm-l4{background: var(--hoa);}
+.hm-today{outline: 1.5px solid var(--ink); outline-offset: 1px;}
 
-/* Theme: Minimalist */
-.theme-minimal{
-  background: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif;
-  color: #111; border: 1px solid #000;
+/* ============================================================
+   THEME TOGGLE — dark mode thủ công (ngoài prefers-color-scheme)
+   ============================================================ */
+:root[data-theme="dark"]{
+  --paper:#1A1F1C; --paper-soft:#222724; --card:#2A2F2C;
+  --ink:#E8EBE7; --ink-soft:#A8ADAA; --ink-faint:#8A938D;
+  --line:#3A3F3C; --line-soft:#333835;
+  --hoa-soft:#1A3D33; --toan-soft:#1A2340; --anh-soft:#3D2E14; --de-soft:#2D213D;
+  --van-soft:#3D2219; --sport-soft:#17373D; --school-soft:#2D2A23; --rest-soft:#1F2530;
+  --sleep-soft:#1A1C28; --meal-soft:#3D3018; --prep-soft:#262A21;
+  --shadow: 0 1px 2px rgba(0,0,0,.2), 0 4px 16px -6px rgba(0,0,0,.3);
 }
-.theme-minimal .ag-title{font-size: var(--text-lg); font-weight: 400; letter-spacing: 0.02em; margin-block-end: 2px; text-transform: uppercase;}
-.theme-minimal .ag-sub{font-size: var(--text-2xs); color: #999; margin-block-end: 14px; letter-spacing: 0.04em;}
-.theme-minimal .ag-row{
-  display: grid; grid-template-columns: clamp(48px, 14vw, 70px) 1fr;
-  gap: clamp(8px, 1.2vw, 14px); padding: 8px 0; border-block-end: 1px solid #000;
+:root[data-theme="light"]{
+  --paper:#FBF8F2; --paper-soft:#F2ECDE; --card:#FFFFFF;
+  --ink:#1E2622; --ink-soft:#5B665F; --ink-faint:#707B73;
+  --line:#E4DBC8; --line-soft:#EEE7D8;
+  --hoa-soft:#DBEEE5; --toan-soft:#DEE5FB; --anh-soft:#F6E8C8; --de-soft:#E9E1F1;
+  --van-soft:#EFE0D6; --sport-soft:#DBEFF1; --school-soft:#EAE4D8; --rest-soft:#E2E7EE;
+  --sleep-soft:#E4E3EF; --meal-soft:#F3E8CE; --prep-soft:#E5E8DD;
+  --shadow: 0 1px 2px rgba(30,38,34,.04), 0 4px 16px -6px rgba(30,38,34,.10);
 }
-.theme-minimal .ag-row:first-of-type{border-block-start: 1px solid #000;}
-.theme-minimal .ag-icon{display: none;}
-.theme-minimal .ag-time{font-family: 'IBM Plex Mono', monospace; font-size: var(--text-2xs); color: #111;}
-.theme-minimal .ag-text b{font-size: var(--text-xs); font-weight: 500; line-height: 1.2;}
-.theme-minimal .ag-text span{font-size: var(--text-2xs); color: #888;}
-
-/* Theme picker */
-.theme-pick{
-  display: flex; gap: clamp(4px, 0.6vw, 6px);
-  margin-block-end: clamp(10px, 1.5vw, 16px); flex-wrap: wrap;
+.theme-toggle-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 36px; block-size: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
 }
+.theme-toggle-btn:hover{color: var(--ink); border-color: var(--ink-faint);}
 
 /* ============================================================
    FOOTER
@@ -1266,7 +1309,10 @@ footer.note{
 
   <!-- MOBILE STICKY HEADER: trạng thái + tabs -->
   <div class="mobile-sticky-header">
-    <button type="button" class="phase-banner" id="phaseBanner" aria-label="Trạng thái lịch hiện tại — bấm để đổi chế độ Hè/Năm học nếu không khớp thực tế"></button>
+    <div class="msh-row">
+      <button type="button" class="phase-banner" id="phaseBanner" aria-label="Trạng thái lịch hiện tại — bấm để đổi chế độ Hè/Năm học nếu không khớp thực tế"></button>
+      <button type="button" class="theme-toggle-btn" id="themeToggleMobile" aria-label="Đổi giao diện sáng/tối"></button>
+    </div>
     <div class="mobiletabs" id="mobileNav" role="tablist" aria-label="Danh mục"></div>
   </div>
 
@@ -1276,20 +1322,53 @@ footer.note{
 
 <script>
 /* ============================================================
-   DATA LAYER
+   MODULE: ICONS
+   Bộ icon SVG dạng nét (stroke) thay cho emoji ở những chỗ mang
+   tính chức năng: điều hướng, nhãn môn học, banner trạng thái...
+   Emoji trang trí trong nội dung văn bản (card, callout) được
+   giữ nguyên — đó là phong cách viết, không phải icon hệ thống.
+   ============================================================ */
+function svgIcon(inner){
+  return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+}
+const ICONS = {
+  chart:    svgIcon('<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>'),
+  sun:      svgIcon('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>'),
+  building: svgIcon('<path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/><path d="M4 21h16"/>'),
+  target:   svgIcon('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>'),
+  music:    svgIcon('<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>'),
+  flask:    svgIcon('<path d="M9 2v6.3L4.6 17.8A2 2 0 0 0 6.4 21h11.2a2 2 0 0 0 1.8-3.2L15 8.3V2"/><path d="M8 2h8"/><path d="M8.5 13h7"/>'),
+  ruler:    svgIcon('<path d="M3 17 17 3l4 4L7 21z"/><path d="M14.5 5.5l2 2M11 9l2 2M7.5 12.5l2 2"/>'),
+  globe:    svgIcon('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/>'),
+  file:     svgIcon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/>'),
+  book:     svgIcon('<path d="M3 5a2 2 0 0 1 2-2h4a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5H3z"/><path d="M21 5a2 2 0 0 0-2-2h-4a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5H21z"/>'),
+  activity: svgIcon('<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'),
+  leaf:     svgIcon('<path d="M11 20A7 7 0 0 1 4 13c0-6 7-13 7-13s7 7 7 13a7 7 0 0 1-7 7z"/><path d="M11 20v-9"/>'),
+  moon:     svgIcon('<path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/>'),
+  bowl:     svgIcon('<path d="M4 12h16a8 8 0 0 1-16 0Z"/><path d="M4 12V9.5a8 4.5 0 0 1 16 0V12"/>'),
+  backpack: svgIcon('<path d="M6 8a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M9 4V2h6v2"/><path d="M9 12h6"/>'),
+  flame:    svgIcon('<path d="M12 2c2 3-2 4-2 7a3 3 0 0 0 6 0c2 2 2 5 0 8a7 7 0 0 1-12 0c-2-3-1-6 1-8 0 2 1 3 2 3 0-3 1-6 5-10z"/>'),
+  calendar: svgIcon('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>'),
+  repeat:   svgIcon('<path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>'),
+  save:     svgIcon('<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/>'),
+  check:    svgIcon('<path d="M20 6 9 17l-5-5"/>'),
+};
+
+/* ============================================================
+   MODULE: SCHEDULE DATA
    ============================================================ */
 const TAGS = {
-  hoa:   {emoji:"🧪", name:"Hóa",        c:"--hoa",    cs:"--hoa-soft"},
-  toan:  {emoji:"📐", name:"Toán",       c:"--toan",   cs:"--toan-soft"},
-  anh:   {emoji:"🇬🇧", name:"T.Anh",     c:"--anh",    cs:"--anh-soft"},
-  de:    {emoji:"📝", name:"Làm đề",     c:"--de",     cs:"--de-soft"},
-  van:   {emoji:"📖", name:"Văn",        c:"--van",    cs:"--van-soft"},
-  sport: {emoji:"💪", name:"Thể thao",   c:"--sport",  cs:"--sport-soft"},
-  school:{emoji:"🏫", name:"Trường học", c:"--school", cs:"--school-soft"},
-  rest:  {emoji:"🌿", name:"Nghỉ/Tự do", c:"--rest",   cs:"--rest-soft"},
-  sleep: {emoji:"😴", name:"Ngủ",        c:"--sleep",  cs:"--sleep-soft"},
-  meal:  {emoji:"🍚", name:"Ăn uống",    c:"--meal",   cs:"--meal-soft"},
-  prep:  {emoji:"🎒", name:"Chuẩn bị",   c:"--prep",   cs:"--prep-soft"},
+  hoa:   {icon:"flask",    name:"Hóa",        c:"--hoa",    cs:"--hoa-soft"},
+  toan:  {icon:"ruler",    name:"Toán",       c:"--toan",   cs:"--toan-soft"},
+  anh:   {icon:"globe",    name:"T.Anh",      c:"--anh",    cs:"--anh-soft"},
+  de:    {icon:"file",     name:"Làm đề",     c:"--de",     cs:"--de-soft"},
+  van:   {icon:"book",     name:"Văn",        c:"--van",    cs:"--van-soft"},
+  sport: {icon:"activity", name:"Thể thao",   c:"--sport",  cs:"--sport-soft"},
+  school:{icon:"building", name:"Trường học", c:"--school", cs:"--school-soft"},
+  rest:  {icon:"leaf",     name:"Nghỉ/Tự do", c:"--rest",   cs:"--rest-soft"},
+  sleep: {icon:"moon",     name:"Ngủ",        c:"--sleep",  cs:"--sleep-soft"},
+  meal:  {icon:"bowl",     name:"Ăn uống",    c:"--meal",   cs:"--meal-soft"},
+  prep:  {icon:"backpack", name:"Chuẩn bị",   c:"--prep",   cs:"--prep-soft"},
 };
 const PERIOD_LABEL = {sang:"🌅 Buổi sáng", chieu:"🌤️ Buổi chiều", toi:"🌙 Buổi tối"};
 
@@ -1656,7 +1735,7 @@ function rowsToHTML(rows, opts){
       html += `<tr${trClasses?` class="${trClasses}"`:""}>
         ${rowId ? `<td class="chk"><input type="checkbox" class="rowcheck" aria-label="Đã hoàn thành: ${r.n}" ${checked?"checked":""} data-rowid="${rowId}"></td>` : ""}
         <td class="time mono">${r.t}</td>
-        <td class="tag"><span class="tagpill" style="background:var(${tg.cs});color:var(${tg.c});">${tg.emoji} ${tg.name}</span></td>
+        <td class="tag"><span class="tagpill" style="background:var(${tg.cs});color:var(${tg.c});">${ICONS[tg.icon]}${tg.name}</span></td>
         <td class="note">${r.n}</td>
       </tr>`;
     });
@@ -1668,7 +1747,7 @@ function rowsToHTML(rows, opts){
 function legendHTML(keys){
   return `<div class="legend">${keys.map(k=>{
     const tg=TAGS[k];
-    return `<div class="item"><span class="sw" style="background:var(${tg.c});" aria-hidden="true"></span>${tg.emoji} ${tg.name}</div>`;
+    return `<div class="item"><span class="sw" style="background:var(${tg.c});" aria-hidden="true"></span>${ICONS[tg.icon]}${tg.name}</div>`;
   }).join("")}</div>`;
 }
 
@@ -1699,18 +1778,19 @@ function wireRowChecks(container, datasetId){
    PANEL DEFINITIONS
    ============================================================ */
 const NAV = [
-  {id:"overview", icon:"📊", label:"Tổng quan"},
-  {id:"summer",   icon:"☀️", label:"Lịch Hè"},
-  {id:"school",   icon:"🏫", label:"Năm Học"},
-  {id:"special",  icon:"🎯", label:"Đặc Biệt"},
-  {id:"gallery",  icon:"🎨", label:"Mẫu"},
+  {id:"overview", icon:"chart",    label:"Tổng quan"},
+  {id:"summer",   icon:"sun",      label:"Lịch Hè"},
+  {id:"school",   icon:"building", label:"Năm Học"},
+  {id:"special",  icon:"target",   label:"Đặc Biệt"},
+  {id:"stats",    icon:"flame",    label:"Thống Kê"},
+  {id:"music",    icon:"music",    label:"Nhạc Nền"},
 ];
 
 function buildOverview(){
   return `
   <div class="hero">
     <div class="eyebrow">Lộ trình cá nhân hóa</div>
-    <h2 class="display">7 tháng để biến mục tiêu Chuyên Hóa thành hiện thực</h2>
+    <h2 class="display">11 tháng để biến mục tiêu Chuyên Hóa thành hiện thực</h2>
     <p class="lede">Thời gian biểu thiết kế riêng theo nhịp sống thật: giờ học thêm cố định, giờ ngủ, 5 môn ưu tiên. Không phải lịch chung — đây là bản thiết kế cho Nguyễn Doãn Hoàng.</p>
     <div class="statrow">
       <div class="stat"><div class="num">5:30</div><div class="lab">Thức dậy</div></div>
@@ -1853,41 +1933,160 @@ function specialMulti(){
   `;
 }
 
-/* Gallery */
-const galleryRows = [
-  {t:"06:45", icon:"🧪", b:"Học sâu Hóa học", s:"Kiến thức mới — ưu tiên #1"},
-  {t:"08:45", icon:"📐", b:"Luyện Toán", s:"Chữa dạng bài khó"},
-  {t:"10:30", icon:"📝", b:"Làm đề tổng hợp", s:"Áp dụng kiến thức vừa học"},
-  {t:"18:00", icon:"🇬🇧", b:"Tiếng Anh", s:"Ngữ pháp + Từ vựng"},
+/* ============================================================
+   MODULE: MUSIC — nhạc nền gợi ý khi tự học
+   ============================================================ */
+const MUSIC_TRACKS = [
+  {id:"_dD7Vwy8U5o", title:"Homesick (prod. Primary)", note:"Weak Hero Class 1"},
 ];
-function galleryHTML(){
-  return galleryRows.map(r=>`
-    <div class="ag-row">
-      <div class="ag-time mono">${r.t}</div>
-      <div class="ag-icon" aria-hidden="true">${r.icon}</div>
-      <div class="ag-text"><b>${r.b}</b><span>${r.s}</span></div>
-    </div>`).join("");
-}
-function buildGallery(){
+function buildMusic(){
+  const t = MUSIC_TRACKS[0];
   return `
-  <h2 class="display panel-title">🎨 Phong Cách Thiết Kế</h2>
-  <p class="lead">Cùng một lịch học — bốn ngôn ngữ thiết kế khác nhau.</p>
-  <div class="gallerywrap">
-    <div class="theme-pick" id="themePick" role="tablist" aria-label="Chọn theme"></div>
-    <div class="theme-frame theme-apple" id="themeFrame">
-      <div class="ag-title">Hôm nay</div>
-      <div class="ag-sub">Thứ Hai · Lịch hè</div>
-      ${galleryHTML()}
+  <h2 class="display panel-title">Nhạc Nền</h2>
+  <p class="lead">Một gợi ý để mở khi tự học — có thể đổi sang playlist khác bất cứ lúc nào.</p>
+  <div class="card">
+    <div class="music-meta">
+      <span class="mm-emoji icon-lg" aria-hidden="true">${ICONS.music}</span>
+      <div class="mm-text"><b>${t.title}</b><span>${t.note}</span></div>
+    </div>
+    <div class="music-frame">
+      <iframe src="https://www.youtube.com/embed/${t.id}" title="${t.title}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-allowed" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+  <div class="callout cool">💡 Nhạc không lời / lo-fi thường ít gây phân tâm hơn nhạc có lời khi cần tập trung giải bài khó (Hóa, Toán). Nếu thấy mất tập trung, thử tắt nhạc lúc luyện đề.</div>
+  `;
+}
+
+/* ============================================================
+   MODULE: STATISTICS — đếm ngược, progress ring, heatmap
+   ============================================================ */
+// Lịch thi vào lớp 10 (gồm vòng chuyên Hóa) năm học 2027–2028 CHƯA được Sở
+// GD&ĐT TP Huế công bố chính thức (thường công bố khoảng tháng 2–3 của năm
+// thi). Ngày dưới đây là DỰ KIẾN, suy từ quy luật các năm gần nhất (kỳ thi
+// thường rơi vào cuối tháng 5). Sửa lại hằng số này ngay khi có lịch chính thức.
+const EXAM_TARGET_DATE = "2027-05-28";
+const EXAM_TARGET_LABEL = "Thi vào lớp 10 (vòng chuyên Hóa) — Quốc Học Huế";
+const EXAM_TARGET_IS_ESTIMATE = true;
+
+function daysUntilExam(){
+  const target = new Date(EXAM_TARGET_DATE + "T00:00:00");
+  const now = new Date();
+  const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((target - todayMidnight) / 86400000);
+}
+function countdownCardHTML(){
+  const days = daysUntilExam();
+  return `
+    <div class="countdown-card">
+      <span class="cd-icon icon-lg" aria-hidden="true">${ICONS.calendar}</span>
+      <div class="cd-body">
+        <span class="cd-label">${EXAM_TARGET_LABEL}</span>
+        <b class="cd-days">${days > 0 ? days : 0}</b>
+        <span class="cd-unit">${days > 0 ? "ngày nữa" : "đã qua mốc dự kiến"}</span>
+      </div>
+    </div>
+    ${EXAM_TARGET_IS_ESTIMATE ? `<p class="cd-note">⚠️ Ngày <b>dự kiến</b>, suy theo quy luật các năm trước — Sở GD&ĐT TP Huế thường công bố lịch chính thức vào khoảng tháng 2–3. Sửa hằng số <code>EXAM_TARGET_DATE</code> trong code khi có thông báo thật.</p>` : ""}
+  `;
+}
+
+function progressRingSVG(percent, size, strokeWidth){
+  size = size || 120;
+  strokeWidth = strokeWidth || 10;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - Math.max(0, Math.min(100, percent)) / 100);
+  const center = size / 2;
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" class="progress-ring" role="img" aria-label="Tiến độ hôm nay: ${Math.round(percent)}%">
+    <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="var(--line)" stroke-width="${strokeWidth}"/>
+    <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="var(--hoa)" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" transform="rotate(-90 ${center} ${center})" style="transition: stroke-dashoffset .4s ease;"/>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" class="progress-ring-text">${Math.round(percent)}%</text>
+  </svg>`;
+}
+
+function todayCompletionStats(){
+  const phase = getPhase();
+  const dayId = phase==="summer" ? summerDayIdFor(new Date()) : schoolDayIdFor(new Date());
+  const dataset = (phase==="summer" ? SUMMER_DAYS : SCHOOL_DAYS).find(d=>d.id===dayId);
+  if(!dataset) return {done:0, total:0, percent:0};
+  const datasetId = (phase==="summer"?"sum":"sy")+dayId;
+  const day = getChecklist()[todayISO()] || {};
+  const done = Object.keys(day).filter(k=>k.startsWith(datasetId+"_") && day[k]).length;
+  const total = dataset.data.length;
+  return {done, total, percent: total ? (done/total*100) : 0};
+}
+
+function heatmapHTML(weeks){
+  weeks = weeks || 12;
+  const totalDays = weeks * 7;
+  const activity = getActivity();
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const dates = [];
+  for(let i = totalDays - 1; i >= 0; i--){
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    dates.push(d);
+  }
+  const leadPad = dates[0].getDay(); // số ô trống để cột đầu thẳng hàng theo thứ
+  let cells = "";
+  for(let i = 0; i < leadPad; i++){
+    cells += `<span class="hm-cell hm-empty" aria-hidden="true"></span>`;
+  }
+  const todayKey = todayISO(today);
+  dates.forEach(d=>{
+    const key = todayISO(d);
+    const count = activity[key] || 0;
+    let level = 0;
+    if(count >= 1) level = 1;
+    if(count >= 4) level = 2;
+    if(count >= 8) level = 3;
+    if(count >= 14) level = 4;
+    const isToday = key === todayKey;
+    cells += `<span class="hm-cell hm-l${level}${isToday ? " hm-today" : ""}" title="${d.getDate()}/${d.getMonth()+1}: ${count} việc đã tick"></span>`;
+  });
+  return `<div class="heatmap-grid">${cells}</div>`;
+}
+
+function buildStats(){
+  return `
+  <h2 class="display panel-title">Thống Kê</h2>
+  <p class="lead">Đếm ngược đến kỳ thi, tiến độ hôm nay, và nếp giữ thói quen theo thời gian.</p>
+
+  <div class="card" id="countdownCard"></div>
+
+  <h3 class="sectiontitle"><span class="dot" aria-hidden="true"></span>Hôm nay</h3>
+  <div class="card" id="statsToday"></div>
+
+  <h3 class="sectiontitle"><span class="dot" style="background:var(--toan);" aria-hidden="true"></span>12 tuần gần đây</h3>
+  <div class="card">
+    <div class="heatmap-wrap" id="heatmapWrap"></div>
+    <div class="legend" style="margin-block-start:10px;">
+      <div class="item"><span class="sw" style="background:var(--line-soft);" aria-hidden="true"></span>0 việc</div>
+      <div class="item"><span class="sw" style="background:var(--hoa-soft);" aria-hidden="true"></span>1–3</div>
+      <div class="item"><span class="sw" style="background:color-mix(in srgb, var(--hoa) 60%, var(--hoa-soft));" aria-hidden="true"></span>4–13</div>
+      <div class="item"><span class="sw" style="background:var(--hoa);" aria-hidden="true"></span>14+</div>
     </div>
   </div>
   `;
 }
-const THEMES = [
-  {id:"apple", label:"🍎 Apple", cls:"theme-apple"},
-  {id:"notion", label:"◻️ Notion", cls:"theme-notion"},
-  {id:"cyberpunk", label:"⚡ Cyber", cls:"theme-cyberpunk"},
-  {id:"minimal", label:"⬜ Minimal", cls:"theme-minimal"},
-];
+function wireStats(){
+  const cd = document.getElementById("countdownCard");
+  if(cd) cd.innerHTML = countdownCardHTML();
+  const st = document.getElementById("statsToday");
+  if(st){
+    const s = todayCompletionStats();
+    st.innerHTML = `
+      <div class="stats-today-inner">
+        ${progressRingSVG(s.percent)}
+        <div class="st-info">
+          <b>${s.done}/${s.total} việc đã hoàn thành</b>
+          <span class="st-streak">${ICONS.flame} ${getStreak()} ngày liên tục giữ nếp</span>
+        </div>
+      </div>`;
+  }
+  const hm = document.getElementById("heatmapWrap");
+  if(hm) hm.innerHTML = heatmapHTML(12);
+}
 
 /* ============================================================
    APP WIRING
@@ -1897,7 +2096,7 @@ const navgroup = document.getElementById("navgroup");
 const mobileNav = document.getElementById("mobileNav");
 
 function navButtonHTML(item, idPrefix){
-  return `<button class="navbtn" data-target="${item.id}" id="${idPrefix}-${item.id}" role="tab" aria-selected="false" aria-controls="panel-${item.id}"><span class="ic" aria-hidden="true">${item.icon}</span>${item.label}</button>`;
+  return `<button class="navbtn" data-target="${item.id}" id="${idPrefix}-${item.id}" role="tab" aria-selected="false" aria-controls="panel-${item.id}"><span class="ic" aria-hidden="true">${ICONS[item.icon]}</span>${item.label}</button>`;
 }
 NAV.forEach(item=>{
   if(navgroup) navgroup.insertAdjacentHTML("beforeend", navButtonHTML(item,"nav"));
@@ -1911,7 +2110,8 @@ function renderPanel(id){
   if(id==="summer"){ p.innerHTML = buildSummer(); wireSummer(); }
   if(id==="school"){ p.innerHTML = buildSchool(); wireSchool(); }
   if(id==="special"){ p.innerHTML = buildSpecial(); wireSpecial(); }
-  if(id==="gallery"){ p.innerHTML = buildGallery(); wireGallery(); }
+  if(id==="stats"){ p.innerHTML = buildStats(); wireStats(); }
+  if(id==="music"){ p.innerHTML = buildMusic(); }
   
   window.scrollTo({top: 0, behavior: 'instant'});
   if(main) main.scrollTop = 0;
@@ -2039,24 +2239,6 @@ function renderSpecialBody(){
   el.innerHTML = m.fn();
 }
 
-let themeActive = "apple";
-function wireGallery(){
-  const pick = document.getElementById("themePick");
-  if(!pick) return;
-  pick.innerHTML = THEMES.map(t=>`<button class="pill ${t.id===themeActive?'active':''}" data-theme="${t.id}" role="tab" aria-selected="${t.id===themeActive}">${t.label}</button>`).join("");
-  pick.querySelectorAll(".pill").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      themeActive = btn.dataset.theme;
-      pick.querySelectorAll(".pill").forEach(b=>{
-        b.classList.toggle("active", b.dataset.theme===themeActive);
-        b.setAttribute("aria-selected", (b.dataset.theme===themeActive).toString());
-      });
-      const frame = document.getElementById("themeFrame");
-      if(frame) frame.className = "theme-frame " + THEMES.find(t=>t.id===themeActive).cls;
-    });
-  });
-}
-
 /* ============================================================
    PHASE BANNER / SIDEBAR-FOOT / TODAY-CARD
    Hiển thị giai đoạn (Hè/Năm học) + thứ hôm nay + streak,
@@ -2091,6 +2273,7 @@ function sidebarFootHTML(){
   const streakTxt = streak>0 ? `🔥 <b>${streak}</b> ngày liên tục giữ nếp.` : `Bắt đầu giữ nếp từ hôm nay 🔥`;
   return `${body}<div style="margin-block-start:8px;">${streakTxt}</div>
     <button type="button" class="phase-swap-btn" id="phaseSwapDesktop">⇄ Đổi chế độ Hè/Năm học</button>`;
+    const btn = document.getElementById('phaseSwapDesktop');
 }
 function renderSidebarFoot(){
   const el = document.getElementById("sidebarFoot");
